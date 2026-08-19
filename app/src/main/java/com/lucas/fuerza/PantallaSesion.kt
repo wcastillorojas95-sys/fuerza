@@ -315,14 +315,31 @@ private fun TarjetaEjercicio(
     val kg = kgTexto.replace(',', '.').toDoubleOrNull() ?: 0.0
     val reps = repsTexto.toIntOrNull() ?: 0
 
+    // La demostracion va plegada por defecto. Cuando ya te sabes el ejercicio
+    // estorba, y en una sesion de seis ejercicios son seis imagenes grandes que
+    // te obligan a bajar media pantalla para llegar al siguiente.
+    var demoAbierta by remember(ejercicio.ejercicioId) { mutableStateOf(false) }
+
     Tarjeta(borde = true) {
         Row(verticalAlignment = Alignment.Top) {
+            // La miniatura quieta hace de boton: al tocarla se abre la
+            // demostracion en grande y empieza a moverse.
+            DemoEjercicio(
+                ejercicioId = ejercicio.ejercicioId,
+                animar = false,
+                radio = 12.dp,
+                modifier = Modifier
+                    .width(78.dp)
+                    .height(52.dp)
+                    .clickable { demoAbierta = !demoAbierta }
+            )
+            Spacer(Modifier.width(12.dp))
             Column(Modifier.weight(1f)) {
                 Titular(
                     datos?.nombre ?: ejercicio.ejercicioId,
                     estilo = MaterialTheme.typography.headlineMedium
                 )
-                Spacer(Modifier.height(4.dp))
+                Spacer(Modifier.height(2.dp))
                 Text(
                     text = buildString {
                         if (bloque != null) append("${bloque.series} series x ${bloque.rango}   ")
@@ -340,8 +357,25 @@ private fun TarjetaEjercicio(
                 modifier = Modifier
                     .clip(RoundedCornerShape(50))
                     .clickable { onQuitar() }
-                    .padding(horizontal = 12.dp, vertical = 4.dp)
+                    .padding(horizontal = 10.dp, vertical = 4.dp)
             )
+        }
+
+        if (demoAbierta) {
+            Spacer(Modifier.height(12.dp))
+            DemoEjercicio(
+                ejercicioId = ejercicio.ejercicioId,
+                animar = true,
+                modifier = Modifier.fillMaxWidth().height(190.dp)
+            )
+            if (datos != null) {
+                Spacer(Modifier.height(10.dp))
+                Text(
+                    datos.claves,
+                    style = MaterialTheme.typography.bodyMedium,
+                    color = Humo
+                )
+            }
         }
 
         // Lo que hiciste la ultima vez, que es el dato que decide el peso de hoy.

@@ -1,6 +1,9 @@
 package com.lucas.fuerza
 
+import androidx.compose.animation.Crossfade
+import androidx.compose.animation.core.tween
 import androidx.compose.foundation.Canvas
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
@@ -9,6 +12,7 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
@@ -18,6 +22,11 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableIntStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -29,19 +38,21 @@ import androidx.compose.ui.graphics.Path
 import androidx.compose.ui.graphics.TransformOrigin
 import androidx.compose.ui.graphics.drawscope.Stroke
 import androidx.compose.ui.graphics.graphicsLayer
+import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
+import kotlinx.coroutines.delay
 
 /**
  * Un titular de los grandes.
  *
- * Va en caja alta y con una compresion horizontal del 90%. La referencia usa una
- * tipografia condensada de verdad; aqui se aprovecha la Outfit que ya viene con
- * la familia de apps y se le estrecha un pelin con graphicsLayer. A este tamano
- * y en mayusculas el resultado es practicamente el mismo, y son cero kilobytes
- * mas de fuentes en el APK.
+ * Va siempre en caja alta porque la Bebas Neue no tiene minusculas. El parametro
+ * [compresion] queda por si alguna vez hace falta estrechar un titulo largo para
+ * que quepa en una linea, pero por defecto va a 1: la Bebas ya es condensada de
+ * origen y estrecharla mas la vuelve ilegible.
  */
 @Composable
 fun Titular(
@@ -49,7 +60,7 @@ fun Titular(
     modifier: Modifier = Modifier,
     estilo: TextStyle = MaterialTheme.typography.displayMedium,
     color: Color = Color.White,
-    compresion: Float = 0.9f,
+    compresion: Float = 1f,
     alineacion: TextAlign? = null
 ) {
     Text(
@@ -124,7 +135,7 @@ fun BotonRojo(
         verticalAlignment = Alignment.CenterVertically,
         horizontalArrangement = Arrangement.SpaceBetween
     ) {
-        Titular(texto, estilo = MaterialTheme.typography.headlineSmall, color = tinta, compresion = 0.94f)
+        Titular(texto, estilo = MaterialTheme.typography.headlineSmall, color = tinta)
         Box(
             modifier = Modifier
                 .size(40.dp)
@@ -154,7 +165,7 @@ fun BotonBorde(
             .padding(vertical = 17.dp),
         contentAlignment = Alignment.Center
     ) {
-        Titular(texto, estilo = MaterialTheme.typography.headlineSmall, color = color, compresion = 0.94f)
+        Titular(texto, estilo = MaterialTheme.typography.headlineSmall, color = color)
     }
 }
 
@@ -223,8 +234,7 @@ fun FilaDatos(datos: List<Pair<String, String>>, modifier: Modifier = Modifier) 
                 Titular(
                     valor,
                     estilo = MaterialTheme.typography.headlineSmall,
-                    color = Rojo,
-                    compresion = 0.92f
+                    color = Rojo
                 )
             }
             if (i < datos.lastIndex) {
@@ -352,6 +362,73 @@ fun LogoF(modifier: Modifier = Modifier, color: Color = Rojo) {
             lineTo(23 * e, 86 * e); close()
         }
         drawPath(p, color)
+    }
+}
+
+
+/**
+ * La demostracion del ejercicio.
+ *
+ * Dos fotogramas -- posicion inicial y posicion final -- que se alternan cada
+ * segundo. No es un video, y no lo pretende: para acordarte de como se coloca la
+ * espalda en un remo, ver el principio y el final alternandose dice mas que doce
+ * segundos de video que hay que esperar a que carguen. Ademas funciona sin
+ * cobertura, que es donde se usa esto.
+ *
+ * Con [animar] a false se queda quieto en el primer fotograma. Es lo que usan
+ * las miniaturas de las listas: doce imagenes parpadeando a la vez en una
+ * pantalla no ayudan a nada y se comen la bateria.
+ */
+@Composable
+fun DemoEjercicio(
+    ejercicioId: String,
+    modifier: Modifier = Modifier,
+    animar: Boolean = true,
+    radio: Dp = 16.dp
+) {
+    val fotos = fotogramasDe(ejercicioId)
+    Box(
+        modifier = modifier
+            .clip(RoundedCornerShape(radio))
+            .background(CarbonAlto),
+        contentAlignment = Alignment.Center
+    ) {
+        if (fotos == null) {
+            Text(
+                "SIN FOTO",
+                style = MaterialTheme.typography.labelMedium,
+                color = HumoTenue
+            )
+        } else {
+            if (!animar) {
+                Image(
+                    painter = painterResource(fotos.mini),
+                    contentDescription = null,
+                    contentScale = ContentScale.Crop,
+                    modifier = Modifier.fillMaxSize()
+                )
+            } else {
+                var fotograma by remember(ejercicioId) { mutableIntStateOf(0) }
+                LaunchedEffect(ejercicioId) {
+                    while (true) {
+                        delay(950)
+                        fotograma = 1 - fotograma
+                    }
+                }
+                Crossfade(
+                    targetState = fotograma,
+                    animationSpec = tween(240),
+                    label = "demo"
+                ) { f ->
+                    Image(
+                        painter = painterResource(if (f == 0) fotos.inicio else fotos.fin),
+                        contentDescription = null,
+                        contentScale = ContentScale.Crop,
+                        modifier = Modifier.fillMaxSize()
+                    )
+                }
+            }
+        }
     }
 }
 

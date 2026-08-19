@@ -81,8 +81,7 @@ fun PantallaInicio(
                             Spacer(Modifier.width(9.dp))
                             Titular(
                                 "Fuerza",
-                                estilo = MaterialTheme.typography.headlineSmall,
-                                compresion = 0.94f
+                                estilo = MaterialTheme.typography.headlineSmall
                             )
                             Spacer(Modifier.weight(1f))
                             Text(
@@ -224,11 +223,11 @@ private fun FilaBloque(bloque: Bloque) {
         modifier = Modifier.fillMaxWidth().padding(vertical = 7.dp),
         verticalAlignment = Alignment.CenterVertically
     ) {
-        Box(
-            Modifier
-                .size(7.dp)
-                .clip(RoundedCornerShape(50))
-                .background(if (e?.compuesto == true) Rojo else Color(0xFF3A3A44))
+        DemoEjercicio(
+            ejercicioId = bloque.ejercicioId,
+            animar = false,
+            radio = 9.dp,
+            modifier = Modifier.width(52.dp).height(35.dp)
         )
         Spacer(Modifier.width(12.dp))
         Text(

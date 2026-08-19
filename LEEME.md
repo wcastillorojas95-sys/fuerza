@@ -22,27 +22,45 @@ del sistema: sin ese permiso, nada de lo que guarda puede salir del teléfono.
 
 Es además lo que hace que sirva en un gimnasio de sótano, donde no hay cobertura.
 
-## Por qué no hay vídeos
+## Las imágenes
 
-La alternativa era una API de pago con vídeos HD. Se descartó por tres motivos
-que solo se ven leyendo la letra pequeña:
+Cada uno de los 83 ejercicios lleva **dos fotogramas**: posición inicial y
+posición final. Alternándolos cada segundo se ve el movimiento. Van dentro del
+APK, en WebP, y los 83 completos ocupan menos de 4 MB — así que funcionan en un
+sótano sin cobertura, que es donde se usan.
 
-1. **Tope de ejercicios únicos al mes.** Los planes de entrada desbloquean entre
-   250 y 350 ejercicios distintos al mes de un catálogo de más de mil, y el
-   contador se reinicia cada mes.
-2. **Las URLs de vídeo caducan a las 48 horas y la documentación prohíbe
-   cachearlas.** Traducido: la app necesitaría internet cada vez que abres un
-   ejercicio.
-3. **El uso sin conexión solo está en el plan de 79 dólares al mes**, casi
-   novecientos al año antes de tener un solo usuario.
+Aparecen en tres sitios: miniatura en el entreno de hoy, miniatura en cada fila
+del catálogo, y a pantalla completa al tocar la tarjeta de un ejercicio durante
+la sesión, junto con las claves de técnica.
 
-El catálogo de esta app va compilado dentro del APK: 83 ejercicios con su grupo
-muscular, su material y dos frases de técnica. Los nombres y los músculos que
-trabaja cada movimiento son hechos, no obra de nadie; las descripciones están
-escritas para esta app.
+Las fotos vienen del conjunto público `free-exercise-db`. El repositorio se
+publica bajo Unlicense, pero **el origen de las imágenes no está del todo claro**
+y hay hilos abiertos preguntándolo. Para una app que te instalas tú por tu
+cuenta no hay problema; si algún día la subes a Play, esto hay que resolverlo
+antes.
 
-Si algún día quieres vídeo, el sitio por donde entra es `Ejercicios.kt`: cambias
-de dónde sale la lista y el resto de la app no se entera.
+### Por qué no vídeo
+
+Una API de vídeo HD era la alternativa. Sigue estando sobre la mesa, pero tiene
+letra pequeña que conviene saber: los planes de entrada desbloquean entre 250 y
+350 ejercicios distintos al mes de un catálogo de más de mil; las URLs de vídeo
+caducan a las 48 horas y la documentación prohíbe cachearlas, así que la app
+necesitaría internet cada vez que abres un ejercicio; y el uso sin conexión solo
+está en el plan de 79 dólares al mes.
+
+Si algún día quieres vídeo, el sitio por donde entra es `Imagenes.kt`: cambias de
+dónde salen los fotogramas y el resto de la app no se entera.
+
+## Las tipografías
+
+- **Bebas Neue** para los titulares. Es condensada y de caja alta — no tiene
+  minúsculas, y no le hacen falta. Un solo peso: pedirle un negrita haría que
+  Android se inventara uno engordando los trazos.
+- **Barlow** para el cuerpo y los datos. Misma familia grotesca, algo estrechada,
+  aire deportivo, y seis pesos con números de altura uniforme, que es lo que hace
+  falta cuando media pantalla son kilos y repeticiones.
+
+Las dos son SIL Open Font License; las licencias van en `tipografias/`.
 
 ## Cómo se guardan los entrenos
 

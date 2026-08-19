@@ -205,13 +205,11 @@ private fun FilaEjercicio(
         relleno = 16.dp
     ) {
         Row(verticalAlignment = Alignment.CenterVertically) {
-            // Una barrita de color por grupo muscular: se localiza el bloque de
-            // un vistazo al desplazar la lista.
-            Box(
-                Modifier
-                    .width(4.dp).height(34.dp)
-                    .clip(RoundedCornerShape(50))
-                    .background(if (ejercicio.compuesto) Rojo else Color(0xFF3A3A44))
+            DemoEjercicio(
+                ejercicioId = ejercicio.id,
+                animar = false,
+                radio = 12.dp,
+                modifier = Modifier.width(76.dp).height(52.dp)
             )
             Spacer(Modifier.width(12.dp))
             Column(Modifier.weight(1f)) {
@@ -240,6 +238,12 @@ private fun FilaEjercicio(
             }
         }
         if (desplegado) {
+            Spacer(Modifier.height(14.dp))
+            DemoEjercicio(
+                ejercicioId = ejercicio.id,
+                animar = true,
+                modifier = Modifier.fillMaxWidth().height(200.dp)
+            )
             Spacer(Modifier.height(12.dp))
             Text(
                 ejercicio.claves,

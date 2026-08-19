@@ -23,27 +23,25 @@ import androidx.compose.foundation.layout.fillMaxSize
  * distinguen de un vistazo en el cajon de aplicaciones, que es justo lo que se
  * busca teniendo tres apps del mismo autor instaladas a la vez.
  *
- *  - Titulares: Outfit Black en mayusculas, apretado y con un pelin de
- *    compresion horizontal (ver [Titular] en Componentes.kt). No es una
- *    condensada de verdad, pero puesta en caja alta y con el tracking en
- *    negativo da el mismo golpe.
- *  - Cuerpo y datos: Plus Jakarta Sans, que a tamano pequeno y sobre negro se
- *    lee mucho mejor que una geometrica.
+ *  - Titulares: Bebas Neue. Es una condensada de caja alta -- no tiene
+ *    minusculas, y no le hacen falta: los titulares de esta app van todos en
+ *    mayusculas. Un solo peso, asi que la familia se declara con Normal y todos
+ *    los estilos grandes lo usan; pedirle un Bold haria que Android se inventara
+ *    uno engordando los trazos, que es lo que hace que una condensada se vea
+ *    sucia.
+ *  - Cuerpo y datos: Barlow. Es la companera natural de la Bebas -- misma
+ *    familia grotesca, algo estrechada, aire deportivo -- y a diferencia de la
+ *    Bebas trae seis pesos y numeros de altura uniforme, que es lo que hace
+ *    falta cuando media pantalla son kilos y repeticiones.
  */
-val Titulares = FontFamily(
-    Font(R.font.outfit_medium, FontWeight.Medium),
-    Font(R.font.outfit_semibold, FontWeight.SemiBold),
-    Font(R.font.outfit_bold, FontWeight.Bold),
-    Font(R.font.outfit_extrabold, FontWeight.ExtraBold),
-    Font(R.font.outfit_black, FontWeight.Black)
-)
+val Titulares = FontFamily(Font(R.font.bebas_regular, FontWeight.Normal))
 
 val Cuerpo = FontFamily(
-    Font(R.font.jakarta_regular, FontWeight.Normal),
-    Font(R.font.jakarta_medium, FontWeight.Medium),
-    Font(R.font.jakarta_semibold, FontWeight.SemiBold),
-    Font(R.font.jakarta_bold, FontWeight.Bold),
-    Font(R.font.jakarta_extrabold, FontWeight.ExtraBold)
+    Font(R.font.barlow_regular, FontWeight.Normal),
+    Font(R.font.barlow_medium, FontWeight.Medium),
+    Font(R.font.barlow_semibold, FontWeight.SemiBold),
+    Font(R.font.barlow_bold, FontWeight.Bold),
+    Font(R.font.barlow_extrabold, FontWeight.ExtraBold)
 )
 
 // ---------------------------------------------------------------- colores ---
@@ -102,25 +100,31 @@ private val EsquemaOscuro = darkColorScheme(
 )
 
 private val Tipografia = Typography(
+    /*
+     * Los tamanos grandes suben respecto a la version anterior porque la Bebas
+     * es mucho mas estrecha: al mismo cuerpo ocupa un tercio menos de ancho y se
+     * queda pequena. El interlineado va casi igual al tamano porque en caja alta
+     * no hay nada que baje de la linea base.
+     */
     displayLarge = TextStyle(
-        fontFamily = Titulares, fontWeight = FontWeight.Black,
-        fontSize = 46.sp, lineHeight = 46.sp, letterSpacing = (-1.6).sp
+        fontFamily = Titulares, fontWeight = FontWeight.Normal,
+        fontSize = 54.sp, lineHeight = 52.sp, letterSpacing = 0.5.sp
     ),
     displayMedium = TextStyle(
-        fontFamily = Titulares, fontWeight = FontWeight.Black,
-        fontSize = 34.sp, lineHeight = 36.sp, letterSpacing = (-1.1).sp
+        fontFamily = Titulares, fontWeight = FontWeight.Normal,
+        fontSize = 41.sp, lineHeight = 41.sp, letterSpacing = 0.4.sp
     ),
     displaySmall = TextStyle(
-        fontFamily = Titulares, fontWeight = FontWeight.Black,
-        fontSize = 26.sp, lineHeight = 28.sp, letterSpacing = (-0.8).sp
+        fontFamily = Titulares, fontWeight = FontWeight.Normal,
+        fontSize = 31.sp, lineHeight = 32.sp, letterSpacing = 0.3.sp
     ),
     headlineMedium = TextStyle(
-        fontFamily = Titulares, fontWeight = FontWeight.ExtraBold,
-        fontSize = 21.sp, lineHeight = 25.sp, letterSpacing = (-0.4).sp
+        fontFamily = Titulares, fontWeight = FontWeight.Normal,
+        fontSize = 25.sp, lineHeight = 26.sp, letterSpacing = 0.3.sp
     ),
     headlineSmall = TextStyle(
-        fontFamily = Titulares, fontWeight = FontWeight.Bold,
-        fontSize = 18.sp, lineHeight = 22.sp, letterSpacing = (-0.2).sp
+        fontFamily = Titulares, fontWeight = FontWeight.Normal,
+        fontSize = 20.sp, lineHeight = 22.sp, letterSpacing = 0.4.sp
     ),
     titleMedium = TextStyle(
         fontFamily = Cuerpo, fontWeight = FontWeight.Bold,
@@ -128,7 +132,7 @@ private val Tipografia = Typography(
     ),
     titleSmall = TextStyle(
         fontFamily = Cuerpo, fontWeight = FontWeight.SemiBold,
-        fontSize = 14.sp, lineHeight = 18.sp
+        fontSize = 14.5.sp, lineHeight = 19.sp
     ),
     bodyLarge = TextStyle(
         fontFamily = Cuerpo, fontWeight = FontWeight.Normal,
@@ -136,24 +140,24 @@ private val Tipografia = Typography(
     ),
     bodyMedium = TextStyle(
         fontFamily = Cuerpo, fontWeight = FontWeight.Normal,
-        fontSize = 13.5.sp, lineHeight = 20.sp
+        fontSize = 14.sp, lineHeight = 20.sp
     ),
     bodySmall = TextStyle(
         fontFamily = Cuerpo, fontWeight = FontWeight.Normal,
-        fontSize = 12.sp, lineHeight = 16.sp
+        fontSize = 12.5.sp, lineHeight = 17.sp
     ),
     /**
      * Las etiquetitas en caja alta que van encima de cada dato
-     * ("MEMBRESIA", "SIGUIENTE ENTRENO"). El tracking abierto es lo que las
-     * hace legibles a ese tamano.
+     * ("RUTINA", "SIGUIENTE ENTRENO"). Van en Barlow y no en Bebas: a diez
+     * puntos, la Bebas se cierra tanto que deja de leerse.
      */
     labelLarge = TextStyle(
         fontFamily = Cuerpo, fontWeight = FontWeight.Bold,
-        fontSize = 10.5.sp, lineHeight = 13.sp, letterSpacing = 1.3.sp
+        fontSize = 11.sp, lineHeight = 14.sp, letterSpacing = 1.4.sp
     ),
     labelMedium = TextStyle(
         fontFamily = Cuerpo, fontWeight = FontWeight.Bold,
-        fontSize = 9.5.sp, lineHeight = 12.sp, letterSpacing = 1.1.sp
+        fontSize = 10.sp, lineHeight = 13.sp, letterSpacing = 1.2.sp
     )
 )
 

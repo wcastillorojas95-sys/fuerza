@@ -17,7 +17,20 @@ data class Bloque(
     val rango: String get() = if (repsMin == repsMax) "$repsMin" else "$repsMin-$repsMax"
 }
 
-data class DiaRutina(val nombre: String, val foco: String, val bloques: List<Bloque>)
+/**
+ * Un dia de la rutina.
+ *
+ * [foto] es la imagen de la cabecera cuando abres el dia. Va por musculo
+ * dominante y no una por dia: seis fotos cubren las diez jornadas de las tres
+ * rutinas, y repetir la de piernas en los tres dias de pierna no molesta a
+ * nadie -- lo que molesta es un APK con diez fotos casi iguales.
+ */
+data class DiaRutina(
+    val nombre: String,
+    val foco: String,
+    val bloques: List<Bloque>,
+    @androidx.annotation.DrawableRes val foto: Int? = null
+)
 
 /**
  * Cuarenta segundos por serie.
@@ -68,9 +81,11 @@ val RUTINAS: List<Rutina> = listOf(
         nombre = "Cuerpo completo",
         resumen = "Tres dias a la semana, todo el cuerpo cada dia. Es lo que mas rinde cuando llevas menos de un ano entrenando: cada musculo recibe tres estimulos por semana en vez de uno.",
         diasSemana = 3,
+        foto = R.drawable.foto_full_body,
         dias = listOf(
             DiaRutina(
                 nombre = "Dia A",
+                foto = R.drawable.foto_pecho,
                 foco = "Empuje dominante",
                 bloques = listOf(
                     Bloque("sentadilla", 3, 5, 8, 180),
@@ -83,6 +98,7 @@ val RUTINAS: List<Rutina> = listOf(
             ),
             DiaRutina(
                 nombre = "Dia B",
+                foto = R.drawable.foto_piernas,
                 foco = "Bisagra de cadera",
                 bloques = listOf(
                     Bloque("peso_muerto", 3, 4, 6, 210),
@@ -95,6 +111,7 @@ val RUTINAS: List<Rutina> = listOf(
             ),
             DiaRutina(
                 nombre = "Dia C",
+                foto = R.drawable.foto_biceps,
                 foco = "Volumen y accesorios",
                 bloques = listOf(
                     Bloque("sentadilla_frontal", 3, 6, 8, 180),
@@ -112,9 +129,11 @@ val RUTINAS: List<Rutina> = listOf(
         nombre = "Torso / Pierna",
         resumen = "Cuatro dias: dos de torso y dos de pierna. El punto dulce entre frecuencia y volumen, y el que mejor encaja si entrenas de lunes a jueves.",
         diasSemana = 4,
+        foto = R.drawable.foto_pecho,
         dias = listOf(
             DiaRutina(
                 nombre = "Torso 1",
+                foto = R.drawable.foto_pecho,
                 foco = "Pecho y hombro",
                 bloques = listOf(
                     Bloque("press_banca", 4, 5, 8, 180),
@@ -128,6 +147,7 @@ val RUTINAS: List<Rutina> = listOf(
             ),
             DiaRutina(
                 nombre = "Pierna 1",
+                foto = R.drawable.foto_piernas,
                 foco = "Cuadriceps",
                 bloques = listOf(
                     Bloque("sentadilla", 4, 5, 8, 210),
@@ -140,6 +160,7 @@ val RUTINAS: List<Rutina> = listOf(
             ),
             DiaRutina(
                 nombre = "Torso 2",
+                foto = R.drawable.foto_espalda,
                 foco = "Espalda y brazos",
                 bloques = listOf(
                     Bloque("dominadas", 4, 6, 10, 150),
@@ -153,6 +174,7 @@ val RUTINAS: List<Rutina> = listOf(
             ),
             DiaRutina(
                 nombre = "Pierna 2",
+                foto = R.drawable.foto_piernas,
                 foco = "Cadena posterior",
                 bloques = listOf(
                     Bloque("peso_muerto_rumano", 4, 6, 8, 180),
@@ -170,9 +192,11 @@ val RUTINAS: List<Rutina> = listOf(
         nombre = "Empuje / Tiron / Pierna",
         resumen = "Seis dias, dos vueltas por semana. Solo tiene sentido si duermes bien y comes en serio; si no, tres dias bien hechos rinden mas que seis a medias.",
         diasSemana = 6,
+        foto = R.drawable.foto_espalda,
         dias = listOf(
             DiaRutina(
                 nombre = "Empuje",
+                foto = R.drawable.foto_triceps,
                 foco = "Pecho, hombro y triceps",
                 bloques = listOf(
                     Bloque("press_banca", 4, 5, 8, 180),
@@ -185,6 +209,7 @@ val RUTINAS: List<Rutina> = listOf(
             ),
             DiaRutina(
                 nombre = "Tiron",
+                foto = R.drawable.foto_espalda,
                 foco = "Espalda y biceps",
                 bloques = listOf(
                     Bloque("dominadas", 4, 6, 10, 150),
@@ -198,6 +223,7 @@ val RUTINAS: List<Rutina> = listOf(
             ),
             DiaRutina(
                 nombre = "Pierna",
+                foto = R.drawable.foto_piernas,
                 foco = "Todo el tren inferior",
                 bloques = listOf(
                     Bloque("sentadilla", 4, 5, 8, 210),

@@ -250,9 +250,9 @@ fun PantallaSesion(
     if (eligiendo) {
         SelectorEjercicio(
             yaPuestos = ejercicios.map { it.ejercicioId }.toSet(),
-            onElegir = { id ->
+            onElegir = { ids ->
                 eligiendo = false
-                guardar(ejercicios + EjercicioSesion(id, emptyList()))
+                guardar(ejercicios + ids.map { EjercicioSesion(it, emptyList()) })
             },
             onCerrar = { eligiendo = false }
         )

@@ -12,6 +12,7 @@ import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.navigationBarsPadding
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.statusBarsPadding
@@ -438,25 +439,34 @@ private fun FilaEjercicio(
 }
 
 /**
- * El selector que sale al anadir un ejercicio a mitad de entreno.
+ * El selector que sale al anadir ejercicios a mitad de entreno.
  *
  * Es una pantalla completa y no un dialogo: en un dialogo la lista se queda en
  * un pisito de trescientos pixeles y hay que hacer scroll dentro del scroll.
+ *
+ * Y se eligen **varios de una vez**. Antes cada toque anadia uno y cerraba, asi
+ * que para meter tres ejercicios de biceps habia que entrar tres veces y volver
+ * a poner el filtro las tres. Ahora se marcan los que quieras y abajo aparece
+ * el boton con la cuenta.
  */
 @Composable
 fun SelectorEjercicio(
     yaPuestos: Set<String>,
-    onElegir: (String) -> Unit,
+    onElegir: (List<String>) -> Unit,
     onCerrar: () -> Unit
 ) {
     var texto by remember { mutableStateOf("") }
     var filtros by remember { mutableStateOf(Filtros()) }
+    var seleccion by remember { mutableStateOf(emptySet<String>()) }
     val lista = remember(texto, filtros) { filtrarCatalogo(texto, filtros) }
 
     Box(Modifier.fillMaxSize().background(Negro)) {
         LazyColumn(
             modifier = Modifier.fillMaxSize().statusBarsPadding(),
-            contentPadding = PaddingValues(start = 18.dp, end = 18.dp, top = 12.dp, bottom = 40.dp),
+            contentPadding = PaddingValues(
+                start = 18.dp, end = 18.dp, top = 12.dp,
+                bottom = if (seleccion.isEmpty()) 40.dp else 120.dp
+            ),
             verticalArrangement = Arrangement.spacedBy(8.dp)
         ) {
             item {
@@ -486,13 +496,16 @@ fun SelectorEjercicio(
 
             items(lista, key = { it.id }) { e ->
                 val puesto = yaPuestos.contains(e.id)
+                val marcado = seleccion.contains(e.id)
                 Row(
                     modifier = Modifier
                         .fillMaxWidth()
                         .clip(RoundedCornerShape(16.dp))
-                        .background(Carbon)
-                        .clickable(enabled = !puesto) { onElegir(e.id) }
-                        .padding(horizontal = 16.dp, vertical = 14.dp),
+                        .background(if (marcado) VioletaSuave else Carbon)
+                        .clickable(enabled = !puesto) {
+                            seleccion = if (marcado) seleccion - e.id else seleccion + e.id
+                        }
+                        .padding(horizontal = 14.dp, vertical = 12.dp),
                     verticalAlignment = Alignment.CenterVertically
                 ) {
                     DemoEjercicio(
@@ -518,15 +531,61 @@ fun SelectorEjercicio(
                     if (puesto) {
                         Text("puesto", style = MaterialTheme.typography.bodySmall, color = HumoTenue)
                     } else {
-                        IconoSvg(
-                            recurso = R.drawable.ic_plus,
-                            descripcion = "Anadir ${e.nombre}",
-                            color = Rojo,
-                            modifier = Modifier.size(22.dp)
-                        )
+                        Marca(marcado)
                     }
                 }
             }
+
+            if (lista.isEmpty()) {
+                item {
+                    Text(
+                        "Nada con eso. Prueba a quitar algun filtro.",
+                        style = MaterialTheme.typography.bodyMedium,
+                        color = HumoTenue,
+                        modifier = Modifier.padding(top = 30.dp)
+                    )
+                }
+            }
+        }
+
+        // El boton solo existe cuando hay algo marcado: un boton apagado ocupando
+        // sitio abajo no informa de nada que la lista no diga ya.
+        if (seleccion.isNotEmpty()) {
+            Column(
+                modifier = Modifier
+                    .align(Alignment.BottomCenter)
+                    .fillMaxWidth()
+                    .background(Negro)
+                    .navigationBarsPadding()
+                    .padding(start = 18.dp, end = 18.dp, top = 12.dp, bottom = 14.dp)
+            ) {
+                BotonRojo(
+                    if (seleccion.size == 1) "Anadir 1 ejercicio"
+                    else "Anadir ${seleccion.size} ejercicios",
+                    onClick = { onElegir(CATALOGO.filter { it.id in seleccion }.map { it.id }) }
+                )
+            }
+        }
+    }
+}
+
+/** El redondel de marcar, a la derecha de cada ejercicio del selector. */
+@Composable
+private fun Marca(marcado: Boolean) {
+    Box(
+        modifier = Modifier
+            .size(26.dp)
+            .clip(RoundedCornerShape(50))
+            .background(if (marcado) Rojo else CarbonAlto),
+        contentAlignment = Alignment.Center
+    ) {
+        if (marcado) {
+            IconoSvg(
+                recurso = R.drawable.ic_check,
+                descripcion = null,
+                color = SobreAcento,
+                modifier = Modifier.size(15.dp)
+            )
         }
     }
 }

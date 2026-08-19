@@ -1,5 +1,7 @@
 package com.lucas.fuerza
 
+import androidx.compose.foundation.Canvas
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
@@ -25,6 +27,9 @@ import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.graphics.Brush
+import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 
 /**
@@ -55,53 +60,7 @@ fun PantallaDia(
             contentPadding = PaddingValues(bottom = 130.dp),
             verticalArrangement = Arrangement.spacedBy(12.dp)
         ) {
-            item {
-                Cabecera(alto = 240.dp) {
-                    Box(
-                        modifier = Modifier
-                            .align(Alignment.TopStart)
-                            .statusBarsPadding()
-                            .padding(start = 14.dp, top = 6.dp)
-                            .clip(RoundedCornerShape(50))
-                            .background(Carbon)
-                            .clickable { onVolver() }
-                            .padding(11.dp)
-                    ) {
-                        IconoSvg(
-                            recurso = R.drawable.ic_close,
-                            descripcion = "Volver al plan",
-                            color = Tinta,
-                            modifier = Modifier.size(16.dp)
-                        )
-                    }
-
-                    Column(
-                        modifier = Modifier
-                            .align(Alignment.BottomStart)
-                            .padding(start = 18.dp, end = 18.dp, bottom = 20.dp)
-                    ) {
-                        Etiqueta(rutina.nombre, color = Rojo)
-                        Spacer(Modifier.height(6.dp))
-                        Titular(
-                            dia.nombre.uppercase(),
-                            estilo = MaterialTheme.typography.displayLarge
-                        )
-                        Spacer(Modifier.height(8.dp))
-                        Box(
-                            modifier = Modifier
-                                .clip(RoundedCornerShape(50))
-                                .background(Carbon)
-                                .padding(horizontal = 16.dp, vertical = 8.dp)
-                        ) {
-                            Text(
-                                dia.foco,
-                                style = MaterialTheme.typography.titleSmall,
-                                color = Rojo
-                            )
-                        }
-                    }
-                }
-            }
+            item { CabeceraDia(rutina, dia, onVolver) }
 
             item {
                 Tarjeta(
@@ -204,6 +163,89 @@ private fun FilaBloqueDia(bloque: Bloque, modifier: Modifier = Modifier) {
                 style = MaterialTheme.typography.labelMedium,
                 color = HumoTenue
             )
+        }
+    }
+}
+
+/**
+ * La cabecera del dia.
+ *
+ * Con foto va la foto y un velo encima; sin ella, el degradado de la casa. El
+ * velo no es decoracion: un titular blanco sobre una foto de gimnasio se lee en
+ * unas y desaparece en otras segun donde caiga el flash, y no hay forma de
+ * saberlo hasta que la ves puesta.
+ */
+@Composable
+private fun CabeceraDia(rutina: Rutina, dia: DiaRutina, onVolver: () -> Unit) {
+    val foto = dia.foto
+    val sobreFoto = foto != null
+    val principal = if (sobreFoto) SobreAcento else Tinta
+
+    Box(Modifier.fillMaxWidth().height(260.dp)) {
+        if (foto != null) {
+            Image(
+                painter = painterResource(foto),
+                contentDescription = null,
+                contentScale = ContentScale.Crop,
+                modifier = Modifier.fillMaxSize()
+            )
+            Canvas(Modifier.fillMaxSize()) {
+                drawRect(Rojo.copy(alpha = 0.20f))
+                drawRect(
+                    Brush.verticalGradient(
+                        0f to Tinta.copy(alpha = 0.50f),
+                        0.42f to Tinta.copy(alpha = 0.28f),
+                        1f to Tinta.copy(alpha = 0.90f)
+                    )
+                )
+            }
+        } else {
+            Cabecera(alto = 260.dp) {}
+        }
+
+        Box(
+            modifier = Modifier
+                .align(Alignment.TopStart)
+                .statusBarsPadding()
+                .padding(start = 14.dp, top = 6.dp)
+                .clip(RoundedCornerShape(50))
+                .background(Carbon)
+                .clickable { onVolver() }
+                .padding(11.dp)
+        ) {
+            IconoSvg(
+                recurso = R.drawable.ic_close,
+                descripcion = "Volver al plan",
+                color = Tinta,
+                modifier = Modifier.size(16.dp)
+            )
+        }
+
+        Column(
+            modifier = Modifier
+                .align(Alignment.BottomStart)
+                .padding(start = 18.dp, end = 18.dp, bottom = 20.dp)
+        ) {
+            Etiqueta(rutina.nombre, color = if (sobreFoto) SobreAcento.copy(alpha = 0.85f) else Rojo)
+            Spacer(Modifier.height(6.dp))
+            Titular(
+                dia.nombre.uppercase(),
+                estilo = MaterialTheme.typography.displayLarge,
+                color = principal
+            )
+            Spacer(Modifier.height(8.dp))
+            Box(
+                modifier = Modifier
+                    .clip(RoundedCornerShape(50))
+                    .background(Carbon)
+                    .padding(horizontal = 16.dp, vertical = 8.dp)
+            ) {
+                Text(
+                    dia.foco,
+                    style = MaterialTheme.typography.titleSmall,
+                    color = Rojo
+                )
+            }
         }
     }
 }

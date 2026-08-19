@@ -1,12 +1,22 @@
 package com.lucas.fuerza
 
 import android.content.Context
+import androidx.annotation.DrawableRes
 
-/** Para que entrenas. Cambia las repeticiones que sugiere la app, nada mas. */
-enum class Objetivo(val etiqueta: String, val corto: String) {
-    MUSCULO("Ganar musculo", "MUSCULO"),
-    FUERZA("Ganar fuerza", "FUERZA"),
-    MANTENER("Mantenerme", "MANTENER")
+/**
+ * Para que entrenas. Cambia las repeticiones que sugiere la app, nada mas.
+ *
+ * Cada uno lleva su dibujo porque los tres se eligen en la misma lista y de un
+ * vistazo: el biceps, el que marca fuerza y el de mantenerse en movimiento.
+ */
+enum class Objetivo(
+    val etiqueta: String,
+    val corto: String,
+    @DrawableRes val icono: Int
+) {
+    MUSCULO("Ganar musculo", "MUSCULO", R.drawable.ic_objetivo_musculo),
+    FUERZA("Ganar fuerza", "FUERZA", R.drawable.ic_objetivo_fuerza),
+    MANTENER("Mantenerme", "MANTENER", R.drawable.ic_objetivo_mantener)
 }
 
 /**

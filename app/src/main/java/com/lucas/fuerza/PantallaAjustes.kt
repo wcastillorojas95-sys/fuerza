@@ -72,6 +72,13 @@ fun PantallaAjustes(ajustes: Ajustes, almacen: Almacen, refresco: Int) {
                                 .padding(horizontal = 14.dp, vertical = 13.dp),
                             verticalAlignment = Alignment.CenterVertically
                         ) {
+                            IconoSvg(
+                                recurso = o.icono,
+                                descripcion = null,
+                                color = if (objetivo == o) Rojo else HumoTenue,
+                                modifier = Modifier.size(22.dp)
+                            )
+                            Spacer(Modifier.width(12.dp))
                             Text(
                                 o.etiqueta,
                                 style = MaterialTheme.typography.titleSmall,

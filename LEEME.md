@@ -107,23 +107,21 @@ siguiente, para cuando quieres ver el movimiento entero y tienes cobertura.
 
 Dos letras, cada una en lo suyo:
 
-- **Bricolage Grotesque** en los titulares y en las cifras grandes — el nombre
-  del día, los kilos de la semana, la cuenta atrás del descanso. Tiene arista, y
-  eso es lo que evita que un titular parezca un párrafo grande.
-- **Google Sans** en todo lo demás: textos, botones y etiquetas. Es la letra de
-  interfaz que ya lees a diario sin darte cuenta, y eso es exactamente lo que se
-  le pide a la letra con la que consultas una técnica a media serie.
+- **Anton** en los titulares y en las cifras grandes — el nombre del día, los
+  kilos de la semana, la cuenta atrás del descanso. Condensada y muy negra, de
+  cartel de gimnasio. Aguanta bien en grande y fatal en pequeño, así que no pisa
+  nunca un párrafo.
+- **Figtree** en todo lo demás: textos, botones y etiquetas. Geométrica y
+  abierta, que es justo lo que hace falta debajo de una condensada tan cerrada.
 
 Las dos son SIL Open Font License y sus licencias van en `tipografias/`.
 
-Los `.ttf` de Google Sans vienen de fábrica con 2 MB cada uno porque traen medio
-alfabeto del mundo. En el APK van **recortados** a lo que la app escribe de
-verdad — latino, puntuación y cuatro símbolos — y bajan a 91 KB. Los cuatro
-archivos suman 342 KB en vez de 8 MB. Si alguna vez aparece un carácter fuera
-del recorte, lo dibuja la letra del sistema; no se rompe nada.
+Los `.ttf` van **recortados** a lo que la app escribe de verdad — latino,
+puntuación y cuatro símbolos. Las cuatro suman 167 KB. Si alguna vez aparece un
+carácter fuera del recorte lo dibuja la letra del sistema; no se rompe nada.
 
-Va solo el grosor que se usa. Un grosor de más son 70 KB dentro del APK que
-nadie llega a ver nunca.
+Anton trae un solo grosor y de Figtree van tres. Un grosor de más son 30 KB
+dentro del APK que nadie llega a ver nunca.
 
 ## Cómo se guardan los entrenos
 

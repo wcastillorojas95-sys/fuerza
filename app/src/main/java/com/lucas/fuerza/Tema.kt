@@ -16,38 +16,32 @@ import androidx.compose.ui.unit.sp
 import androidx.compose.foundation.layout.fillMaxSize
 
 /**
- * La familia del texto: Google Sans.
+ * La familia del texto: Figtree.
  *
- * Es la letra de interfaz de Google, asi que el ojo ya la tiene aprendida de
- * leer notificaciones y ajustes todo el dia. Ni personalidad de mas ni de
- * menos, que es justo lo que se le pide a la letra con la que lees una tecnica
- * de ejercicio a media serie.
+ * Geometrica, de caja alta y con las formas muy abiertas. Debajo de una
+ * condensada tan cerrada como Anton hace falta justo eso: una letra que respire
+ * y que se lea de un vistazo con el movil apoyado en el banco.
  *
- * Los .ttf originales pesan 2 MB cada uno porque traen medio alfabeto del
- * mundo. Los que van aqui estan recortados a lo que usa la app -- latino,
- * puntuacion, simbolos -- y bajan a 91 KB. Lo que se salga del recorte lo
- * dibuja la letra del sistema, sin romperse.
+ * Van los tres grosores que se usan y ni uno mas.
  */
 val Cuerpo = FontFamily(
-    Font(R.font.google_sans_regular, FontWeight.Normal),
-    Font(R.font.google_sans_semibold, FontWeight.SemiBold),
-    Font(R.font.google_sans_bold, FontWeight.Bold)
+    Font(R.font.figtree_regular, FontWeight.Normal),
+    Font(R.font.figtree_semibold, FontWeight.SemiBold),
+    Font(R.font.figtree_bold, FontWeight.Bold)
 )
 
 /**
- * La familia de los titulares: Bricolage Grotesque.
+ * La familia de los titulares: Anton.
  *
- * Una grotesca con arista, que es lo que hace que el titular no parezca la
- * misma letra que el parrafo de debajo. Solo va en lo grande y corto: nombres
- * de dia, kilos, la cuenta atras del descanso.
+ * Condensada y muy negra, de cartel. Aguanta bien en grande y fatal en
+ * pequeno, asi que solo se usa en lo corto: nombres de dia, kilos, la cuenta
+ * atras del descanso. Nunca en un parrafo.
  *
- * Van los dos grosores que se usan y ni uno mas: cada grosor de sobra son 70 KB
- * dentro del APK que nadie llega a ver.
+ * Viene con un unico grosor -- por eso todos los estilos piden
+ * [FontWeight.Normal]. Si pidieran negrita, Android se la inventaria engordando
+ * el trazo y en una letra ya de por si negra eso se convierte en una mancha.
  */
-val Titulares = FontFamily(
-    Font(R.font.bricolage_bold, FontWeight.Bold),
-    Font(R.font.bricolage_extrabold, FontWeight.ExtraBold)
-)
+val Titulares = FontFamily(Font(R.font.anton_regular, FontWeight.Normal))
 
 // ---------------------------------------------------------------- colores ---
 
@@ -95,33 +89,35 @@ private val EsquemaClaro = lightColorScheme(
 )
 
 private val Tipografia = Typography(
-    // Los titulares, en Bricolage. Los cuerpos son los de siempre: al contrario
-    // que una condensada, esta ocupa el mismo ancho que la que habia.
+    // Los titulares, en Anton. Suben un punto respecto a lo que habia porque
+    // Anton es estrecha y al mismo cuerpo ocupa menos ancho. El espaciado va
+    // ligeramente positivo: apretada de fabrica, si ademas la cierras se
+    // emborrona.
     displayLarge = TextStyle(
-        fontFamily = Titulares, fontWeight = FontWeight.ExtraBold,
-        fontSize = 40.sp, lineHeight = 45.sp, letterSpacing = (-0.5).sp
+        fontFamily = Titulares, fontWeight = FontWeight.Normal,
+        fontSize = 42.sp, lineHeight = 46.sp, letterSpacing = 0.2.sp
     ),
     displayMedium = TextStyle(
-        fontFamily = Titulares, fontWeight = FontWeight.ExtraBold,
-        fontSize = 34.sp, lineHeight = 40.sp, letterSpacing = (-0.4).sp
+        fontFamily = Titulares, fontWeight = FontWeight.Normal,
+        fontSize = 36.sp, lineHeight = 40.sp, letterSpacing = 0.2.sp
     ),
     displaySmall = TextStyle(
-        fontFamily = Titulares, fontWeight = FontWeight.Bold,
-        fontSize = 28.sp, lineHeight = 33.sp, letterSpacing = (-0.3).sp
+        fontFamily = Titulares, fontWeight = FontWeight.Normal,
+        fontSize = 30.sp, lineHeight = 34.sp, letterSpacing = 0.15.sp
     ),
     headlineMedium = TextStyle(
-        fontFamily = Titulares, fontWeight = FontWeight.Bold,
-        fontSize = 23.sp, lineHeight = 28.sp, letterSpacing = (-0.2).sp
+        fontFamily = Titulares, fontWeight = FontWeight.Normal,
+        fontSize = 24.sp, lineHeight = 28.sp, letterSpacing = 0.1.sp
     ),
     headlineSmall = TextStyle(
-        fontFamily = Titulares, fontWeight = FontWeight.Bold,
-        fontSize = 19.sp, lineHeight = 24.sp
+        fontFamily = Titulares, fontWeight = FontWeight.Normal,
+        fontSize = 20.sp, lineHeight = 25.sp
     ),
     // La cifra suelta: la cuenta atras del descanso y cualquier numero que haya
     // que leer de un vistazo desde el suelo del gimnasio.
     titleLarge = TextStyle(
-        fontFamily = Titulares, fontWeight = FontWeight.Bold,
-        fontSize = 20.sp, lineHeight = 22.sp
+        fontFamily = Titulares, fontWeight = FontWeight.Normal,
+        fontSize = 21.sp, lineHeight = 23.sp
     ),
     titleMedium = TextStyle(
         fontFamily = Cuerpo, fontWeight = FontWeight.Bold,

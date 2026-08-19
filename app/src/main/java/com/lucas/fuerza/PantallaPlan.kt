@@ -1,6 +1,7 @@
 package com.lucas.fuerza
 
 import androidx.compose.foundation.Canvas
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
@@ -32,6 +33,8 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 
@@ -174,7 +177,27 @@ private fun PortadaRutina(rutina: Rutina, activa: Boolean, alto: Dp = 178.dp) {
             .clip(RoundedCornerShape(22.dp))
             .background(VioletaSuave)
     ) {
-        Canvas(Modifier.fillMaxSize()) {
+        val foto = rutina.foto
+        if (foto != null) {
+            Image(
+                painter = painterResource(foto),
+                contentDescription = null,
+                contentScale = ContentScale.Crop,
+                modifier = Modifier.fillMaxSize()
+            )
+            // El velo. Sin el, un titulo blanco sobre una foto de gimnasio se
+            // lee en unas y desaparece en otras segun donde caiga el flash.
+            Canvas(Modifier.fillMaxSize()) {
+                drawRect(Rojo.copy(alpha = 0.22f))
+                drawRect(
+                    Brush.verticalGradient(
+                        0f to Color.Transparent,
+                        0.45f to Tinta.copy(alpha = 0.35f),
+                        1f to Tinta.copy(alpha = 0.88f)
+                    )
+                )
+            }
+        } else Canvas(Modifier.fillMaxSize()) {
             drawRect(
                 Brush.linearGradient(
                     listOf(Color(0xFFE4DBFF), Color(0xFFF3EFFF)),
@@ -222,22 +245,25 @@ private fun PortadaRutina(rutina: Rutina, activa: Boolean, alto: Dp = 178.dp) {
                 .align(Alignment.BottomStart)
                 .padding(start = 20.dp, end = 20.dp, bottom = 18.dp)
         ) {
+            val principal = if (rutina.foto != null) SobreAcento else Tinta
+            val secundario = if (rutina.foto != null) SobreAcento.copy(alpha = 0.8f) else Humo
             Titular(
                 rutina.nombre.uppercase(),
-                estilo = MaterialTheme.typography.displaySmall
+                estilo = MaterialTheme.typography.displaySmall,
+                color = principal
             )
             Spacer(Modifier.height(2.dp))
             Row(verticalAlignment = Alignment.Bottom) {
                 Text(
                     "${rutina.diasSemana}",
                     style = MaterialTheme.typography.headlineSmall,
-                    color = Tinta
+                    color = principal
                 )
                 Spacer(Modifier.width(5.dp))
                 Text(
                     "dias por semana",
                     style = MaterialTheme.typography.bodyMedium,
-                    color = Humo
+                    color = secundario
                 )
             }
         }

@@ -31,6 +31,7 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.draw.rotate
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.SolidColor
 import androidx.compose.ui.unit.dp
@@ -53,15 +54,40 @@ fun sinAcentos(s: String): String {
     return sb.toString().lowercase()
 }
 
-/** Filtra el catalogo por texto libre y por musculo. */
-fun filtrarCatalogo(texto: String, musculo: Musculo?): List<Ejercicio> {
+/**
+ * Lo que hay marcado en la barra de filtros. Todo a null es "ensename todo".
+ */
+data class Filtros(
+    val musculo: Musculo? = null,
+    val equipo: Equipo? = null,
+    val nivel: Dificultad? = null,
+    val compuesto: Boolean? = null
+) {
+    val cuantos: Int
+        get() = listOfNotNull(musculo, equipo, nivel, compuesto).size
+}
+
+/**
+ * Filtra el catalogo.
+ *
+ * El musculo compara **solo con el principal**. Antes tambien miraba los
+ * secundarios y por eso filtrar por biceps sacaba dominadas, jalones y los tres
+ * remos: son de espalda y llevan biceps de ayudante. Quien filtra por biceps
+ * quiere el dia de biceps, no la lista de todo lo que se los toca de pasada.
+ * Los secundarios siguen estando en la ficha y se pueden buscar escribiendolos.
+ */
+fun filtrarCatalogo(texto: String, f: Filtros = Filtros()): List<Ejercicio> {
     val q = sinAcentos(texto.trim())
     return CATALOGO.filter { e ->
-        (musculo == null || e.musculo == musculo || e.secundarios.contains(musculo)) &&
+        (f.musculo == null || e.musculo == f.musculo) &&
+            (f.equipo == null || e.equipo == f.equipo) &&
+            (f.nivel == null || e.dificultad == f.nivel) &&
+            (f.compuesto == null || e.compuesto == f.compuesto) &&
             (q.isEmpty() ||
                 sinAcentos(e.nombre).contains(q) ||
                 sinAcentos(e.musculo.etiqueta).contains(q) ||
-                sinAcentos(e.equipo.etiqueta).contains(q))
+                sinAcentos(e.equipo.etiqueta).contains(q) ||
+                e.secundarios.any { sinAcentos(it.etiqueta).contains(q) })
     }
 }
 
@@ -76,10 +102,10 @@ fun filtrarCatalogo(texto: String, musculo: Musculo?): List<Ejercicio> {
 @Composable
 fun PantallaEjercicios(almacen: Almacen) {
     var texto by remember { mutableStateOf("") }
-    var musculo by remember { mutableStateOf<Musculo?>(null) }
+    var filtros by remember { mutableStateOf(Filtros()) }
     var abierto by remember { mutableStateOf<String?>(null) }
 
-    val lista = remember(texto, musculo) { filtrarCatalogo(texto, musculo) }
+    val lista = remember(texto, filtros) { filtrarCatalogo(texto, filtros) }
 
     Box(Modifier.fillMaxSize().background(Negro)) {
         LazyColumn(
@@ -91,14 +117,15 @@ fun PantallaEjercicios(almacen: Almacen) {
                 Titular("Ejercicios", estilo = MaterialTheme.typography.displayMedium)
                 Spacer(Modifier.height(4.dp))
                 Text(
-                    "${CATALOGO.size} movimientos, todos dentro del telefono",
+                    if (lista.size == CATALOGO.size) "${CATALOGO.size} movimientos, todos dentro del telefono"
+                    else "${lista.size} de ${CATALOGO.size} movimientos",
                     style = MaterialTheme.typography.bodyMedium,
                     color = Humo
                 )
                 Spacer(Modifier.height(14.dp))
                 Buscador(texto) { texto = it }
                 Spacer(Modifier.height(12.dp))
-                FiltroMusculos(musculo) { musculo = it }
+                BarraFiltros(filtros) { filtros = it }
                 Spacer(Modifier.height(4.dp))
             }
 
@@ -114,7 +141,7 @@ fun PantallaEjercicios(almacen: Almacen) {
             if (lista.isEmpty()) {
                 item {
                     Text(
-                        "Nada con ese nombre. Prueba con el musculo o con el material.",
+                        "Nada con eso. Prueba a quitar algun filtro o a buscar por el material.",
                         style = MaterialTheme.typography.bodyMedium,
                         color = HumoTenue,
                         modifier = Modifier.padding(top = 30.dp)
@@ -174,15 +201,135 @@ fun Buscador(texto: String, onTexto: (String) -> Unit) {
     }
 }
 
+/**
+ * Los cuatro filtros del catalogo.
+ *
+ * Van como cuatro botones que se abren, y no como cuatro tiras de chips
+ * apiladas: cuarenta y tantas opciones a la vez ocupan media pantalla y la
+ * lista, que es a lo que vienes, se queda sin sitio. Se abre uno cada vez.
+ */
 @Composable
-fun FiltroMusculos(actual: Musculo?, onElegir: (Musculo?) -> Unit) {
-    LazyRow(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
-        item {
-            Chip("Todo", actual == null) { onElegir(null) }
+fun BarraFiltros(filtros: Filtros, onCambio: (Filtros) -> Unit) {
+    var abierto by remember { mutableStateOf<String?>(null) }
+
+    Column {
+        LazyRow(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
+            item {
+                ChipGrupo(
+                    texto = filtros.musculo?.etiqueta ?: "Musculo",
+                    marcado = filtros.musculo != null,
+                    desplegado = abierto == "musculo"
+                ) { abierto = if (abierto == "musculo") null else "musculo" }
+            }
+            item {
+                ChipGrupo(
+                    texto = filtros.equipo?.etiqueta ?: "Material",
+                    marcado = filtros.equipo != null,
+                    desplegado = abierto == "material"
+                ) { abierto = if (abierto == "material") null else "material" }
+            }
+            item {
+                ChipGrupo(
+                    texto = filtros.nivel?.etiqueta ?: "Nivel",
+                    marcado = filtros.nivel != null,
+                    desplegado = abierto == "nivel"
+                ) { abierto = if (abierto == "nivel") null else "nivel" }
+            }
+            item {
+                ChipGrupo(
+                    texto = when (filtros.compuesto) {
+                        true -> "Compuesto"
+                        false -> "Aislamiento"
+                        null -> "Tipo"
+                    },
+                    marcado = filtros.compuesto != null,
+                    desplegado = abierto == "tipo"
+                ) { abierto = if (abierto == "tipo") null else "tipo" }
+            }
+            if (filtros.cuantos > 0) {
+                item {
+                    Chip("Quitar filtros", false) { onCambio(Filtros()); abierto = null }
+                }
+            }
         }
-        items(Musculo.entries.toList()) { m ->
-            Chip(m.etiqueta, actual == m) { onElegir(m) }
+
+        if (abierto != null) {
+            Spacer(Modifier.height(8.dp))
+            LazyRow(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
+                when (abierto) {
+                    "musculo" -> {
+                        item { Chip("Todos", filtros.musculo == null) { onCambio(filtros.copy(musculo = null)) } }
+                        items(Musculo.entries.toList()) { m ->
+                            Chip(m.etiqueta, filtros.musculo == m) {
+                                onCambio(filtros.copy(musculo = if (filtros.musculo == m) null else m))
+                            }
+                        }
+                    }
+                    "material" -> {
+                        item { Chip("Todo", filtros.equipo == null) { onCambio(filtros.copy(equipo = null)) } }
+                        items(Equipo.entries.toList()) { q ->
+                            Chip(q.etiqueta, filtros.equipo == q) {
+                                onCambio(filtros.copy(equipo = if (filtros.equipo == q) null else q))
+                            }
+                        }
+                    }
+                    "nivel" -> {
+                        item { Chip("Todos", filtros.nivel == null) { onCambio(filtros.copy(nivel = null)) } }
+                        items(Dificultad.entries.toList()) { d ->
+                            Chip(d.etiqueta, filtros.nivel == d) {
+                                onCambio(filtros.copy(nivel = if (filtros.nivel == d) null else d))
+                            }
+                        }
+                    }
+                    else -> {
+                        item { Chip("Todo", filtros.compuesto == null) { onCambio(filtros.copy(compuesto = null)) } }
+                        item {
+                            Chip("Compuesto", filtros.compuesto == true) {
+                                onCambio(filtros.copy(compuesto = if (filtros.compuesto == true) null else true))
+                            }
+                        }
+                        item {
+                            Chip("Aislamiento", filtros.compuesto == false) {
+                                onCambio(filtros.copy(compuesto = if (filtros.compuesto == false) null else false))
+                            }
+                        }
+                    }
+                }
+            }
         }
+    }
+}
+
+/** El boton que abre un grupo de filtros. Marcado cuando ese grupo filtra algo. */
+@Composable
+private fun ChipGrupo(
+    texto: String,
+    marcado: Boolean,
+    desplegado: Boolean,
+    onClick: () -> Unit
+) {
+    Row(
+        modifier = Modifier
+            .clip(RoundedCornerShape(50))
+            .background(if (marcado) VioletaSuave else CarbonAlto)
+            .clickable(onClick = onClick)
+            .padding(start = 16.dp, end = 12.dp, top = 10.dp, bottom = 10.dp),
+        verticalAlignment = Alignment.CenterVertically
+    ) {
+        Text(
+            texto.uppercase(),
+            style = MaterialTheme.typography.labelLarge,
+            color = if (marcado) Rojo else Humo
+        )
+        Spacer(Modifier.width(6.dp))
+        IconoSvg(
+            recurso = R.drawable.ic_arrow_right,
+            descripcion = null,
+            color = if (marcado) Rojo else HumoTenue,
+            modifier = Modifier
+                .size(12.dp)
+                .rotate(if (desplegado) -90f else 90f)
+        )
     }
 }
 
@@ -216,37 +363,44 @@ private fun FilaEjercicio(
         relleno = 16.dp
     ) {
         Row(verticalAlignment = Alignment.CenterVertically) {
+            // Redonda, como en las apps que se miran de pie con una mano.
             DemoEjercicio(
                 ejercicioId = ejercicio.id,
                 animar = false,
-                radio = 12.dp,
+                radio = 28.dp,
                 modifier = Modifier.size(56.dp)
             )
-            Spacer(Modifier.width(12.dp))
+            Spacer(Modifier.width(14.dp))
             Column(Modifier.weight(1f)) {
                 Text(
                     ejercicio.nombre,
                     style = MaterialTheme.typography.titleMedium,
                     color = Tinta
                 )
-                Spacer(Modifier.height(2.dp))
-                Text(
-                    "${ejercicio.musculo.etiqueta} - ${ejercicio.equipo.etiqueta}",
-                    style = MaterialTheme.typography.bodySmall,
-                    color = HumoTenue
-                )
-            }
-            if (record != null) {
-                Column(horizontalAlignment = Alignment.End) {
-                    Etiqueta("Tu record")
-                    Spacer(Modifier.height(2.dp))
+                Spacer(Modifier.height(3.dp))
+                Row(verticalAlignment = Alignment.CenterVertically) {
                     Text(
-                        "${limpio(record.kg)}x${record.reps}",
-                        style = MaterialTheme.typography.titleSmall,
-                        color = Rojo
+                        "${ejercicio.musculo.etiqueta} - ${ejercicio.equipo.etiqueta}",
+                        style = MaterialTheme.typography.bodySmall,
+                        color = HumoTenue
                     )
+                    if (record != null) {
+                        Spacer(Modifier.width(8.dp))
+                        Text(
+                            "${limpio(record.kg)}x${record.reps}",
+                            style = MaterialTheme.typography.bodySmall,
+                            color = Rojo
+                        )
+                    }
                 }
             }
+            Spacer(Modifier.width(8.dp))
+            IconoSvg(
+                recurso = R.drawable.ic_info,
+                descripcion = if (desplegado) "Ocultar la ficha" else "Ver la ficha",
+                color = if (desplegado) Rojo else HumoTenue,
+                modifier = Modifier.size(24.dp)
+            )
         }
         if (desplegado) {
             Spacer(Modifier.height(14.dp))
@@ -263,14 +417,20 @@ private fun FilaEjercicio(
                 style = MaterialTheme.typography.bodyMedium,
                 color = Humo
             )
-            if (ejercicio.secundarios.isNotEmpty()) {
-                Spacer(Modifier.height(10.dp))
-                Text(
-                    "Tambien trabaja: " + ejercicio.secundarios.joinToString { it.etiqueta },
-                    style = MaterialTheme.typography.bodySmall,
-                    color = HumoTenue
-                )
-            }
+            Spacer(Modifier.height(10.dp))
+            Text(
+                buildString {
+                    append(if (ejercicio.compuesto) "Compuesto" else "Aislamiento")
+                    append(" - nivel ")
+                    append(ejercicio.dificultad.etiqueta.lowercase())
+                    if (ejercicio.secundarios.isNotEmpty()) {
+                        append(" - tambien trabaja ")
+                        append(ejercicio.secundarios.joinToString { it.etiqueta.lowercase() })
+                    }
+                },
+                style = MaterialTheme.typography.bodySmall,
+                color = HumoTenue
+            )
             Spacer(Modifier.height(14.dp))
             FilaVideo(ejercicio)
         }
@@ -290,8 +450,8 @@ fun SelectorEjercicio(
     onCerrar: () -> Unit
 ) {
     var texto by remember { mutableStateOf("") }
-    var musculo by remember { mutableStateOf<Musculo?>(null) }
-    val lista = remember(texto, musculo) { filtrarCatalogo(texto, musculo) }
+    var filtros by remember { mutableStateOf(Filtros()) }
+    val lista = remember(texto, filtros) { filtrarCatalogo(texto, filtros) }
 
     Box(Modifier.fillMaxSize().background(Negro)) {
         LazyColumn(
@@ -320,7 +480,7 @@ fun SelectorEjercicio(
                 Spacer(Modifier.height(14.dp))
                 Buscador(texto) { texto = it }
                 Spacer(Modifier.height(12.dp))
-                FiltroMusculos(musculo) { musculo = it }
+                BarraFiltros(filtros) { filtros = it }
                 Spacer(Modifier.height(4.dp))
             }
 
@@ -335,6 +495,13 @@ fun SelectorEjercicio(
                         .padding(horizontal = 16.dp, vertical = 14.dp),
                     verticalAlignment = Alignment.CenterVertically
                 ) {
+                    DemoEjercicio(
+                        ejercicioId = e.id,
+                        animar = false,
+                        radio = 24.dp,
+                        modifier = Modifier.size(48.dp)
+                    )
+                    Spacer(Modifier.width(12.dp))
                     Column(Modifier.weight(1f)) {
                         Text(
                             e.nombre,

@@ -44,7 +44,15 @@ data class Rutina(
     val nombre: String,
     val resumen: String,
     val diasSemana: Int,
-    val dias: List<DiaRutina>
+    val dias: List<DiaRutina>,
+    /**
+     * La foto de la portada, si la hay.
+     *
+     * A null la tarjeta se dibuja con el degradado de la casa. Es lo que hay
+     * hasta que entren las fotos: la app no tiene permiso de internet, asi que
+     * o van dentro del APK o no van.
+     */
+    @androidx.annotation.DrawableRes val foto: Int? = null
 )
 
 /**

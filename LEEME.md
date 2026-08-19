@@ -23,24 +23,39 @@ Es además lo que hace que sirva en un gimnasio de sótano, donde no hay cobertu
 
 ## Las imágenes
 
-Cada ejercicio lleva una **demostración animada de doce cuadros**: cuerpo gris
-con los músculos que trabajan en rojo, sobre fondo blanco. Es el mismo estilo que
-usan las apps de gimnasio de pago.
+Cada ejercicio lleva una **demostración**: cuerpo gris con los músculos que
+trabajan en rojo, sobre fondo blanco. Es el mismo estilo que usan las apps de
+gimnasio de pago, porque las imágenes son exactamente las mismas.
 
-Van dentro del APK y funcionan sin cobertura. Los doce cuadros de cada ejercicio
-vienen en una sola imagen, uno al lado del otro, y el reproductor dibuja el
-trozo que toca: doce cambios por segundo, un ciclo completo cada segundo. Así se
-mueve sin añadir un decodificador de GIF ni descomprimir doce bitmaps. Los 82
-ejercicios completos ocupan 3 MB.
+### No son una animación, y conviene saberlo
 
-Los cuadros se cambian secos, sin fundido. Hubo un fundido entre cuadro y cuadro
-y hacía **parpadear** la figura: dibujar el cuadro que se va a media opacidad y
-encima el que entra también a media deja pasar por el medio el fondo de la
-tarjeta, así que doce veces por segundo el dibujo perdía un cuarto de su color.
-Un GIF tampoco funde.
+Los GIF originales de Gym visual no animan el movimiento. Traen **dos poses** —
+la de inicio y la de final — y se pasan de una a otra con un fundido. El GIF
+está un segundo quieto en cada pose y dedica medio segundo a cruzarlas con cinco
+cuadros de mezcla. Ese cuadro de en medio no es una postura intermedia: son los
+dos cuerpos superpuestos al 50%.
 
-Aparecen en tres sitios: miniatura quieta en el entreno de hoy y en cada fila del
-catálogo, y animada en grande al tocar la tarjeta de un ejercicio.
+Se comprobó ejercicio por ejercicio, ajustando cada cuadro como mezcla lineal de
+los dos extremos: encaja con un error de 2 sobre 255, que es el ruido de la
+paleta de 256 colores del GIF. De los 82, ochenta tienen dos poses; el paseo del
+granjero y el puente de glúteo tienen cuatro.
+
+Así que la app **guarda solo las poses de verdad** y hace el fundido ella:
+
+- Pesa cuatro veces menos: 0,7 MB en vez de 2,9.
+- El fundido va a la velocidad de la pantalla, no a cinco pasos.
+- No arrastra el emborronado de la paleta del GIF.
+- Y respeta los tiempos del original, que es lo que estaba roto: la app pasaba
+  los doce cuadros a intervalos iguales, así que la pausa de un segundo sobre
+  cada pose desaparecía y solo se veía el cruce. De ahí que pareciera que se
+  paraba y se entrecortaba.
+
+El fundido se dibuja con la pose de abajo opaca y la de encima a la mezcla que
+toque. Con las dos a medias —que es como estaba— las opacidades no suman uno,
+por el medio se cuela el fondo de la tarjeta y la figura pierde un cuarto de su
+color en cada cruce. Eso era el titileo.
+
+Van dentro del APK y funcionan sin cobertura.
 
 De los 83 del catálogo, **colgarse de la barra** se queda sin demostración porque
 no hay ninguna equivalente en el conjunto de datos. La app lo dibuja con su hueco

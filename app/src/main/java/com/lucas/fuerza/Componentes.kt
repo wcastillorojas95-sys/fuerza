@@ -22,7 +22,7 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.runtime.mutableIntStateOf
+import androidx.compose.runtime.mutableFloatStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.withFrameNanos
 import androidx.compose.ui.Alignment
@@ -371,31 +371,21 @@ fun LogoF(modifier: Modifier = Modifier, color: Color = Rojo) {
 
 
 /**
- * A cuantos cuadros por segundo va la demostracion.
- *
- * Doce, que son los cuadros que tiene cada ejercicio: asi el ciclo completo
- * dura un segundo justo, que es el ritmo de la repeticion que ensena.
- */
-private const val CUADROS_POR_SEGUNDO = 12L
-
-/**
  * La demostracion del ejercicio.
  *
- * Doce cuadros del movimiento que se van pasando: cuerpo gris con los musculos
- * que trabajan en rojo. Los cuadros vienen en una sola imagen, uno al lado del
- * otro, y aqui se dibuja el trozo que toca en cada momento. Eso evita meter una
- * libreria para leer GIF y, sobre todo, evita descomprimir doce bitmaps: se
- * carga uno y ya.
+ * Cuerpo gris con los musculos que trabajan en rojo. Las poses del movimiento
+ * vienen en una sola imagen, una al lado de otra, y aqui se dibuja la que toca
+ * y se funde con la siguiente. Ver [Fotos] para por que son poses y no cuadros
+ * de una animacion.
  *
- * Los cuadros se cambian secos, sin fundido entre uno y el siguiente. Hubo un
- * fundido y hacia parpadear la figura: al dibujar el cuadro viejo a media
- * opacidad y encima el nuevo tambien a media, lo que queda debajo -- el fondo
- * de la caja -- se cuela por el medio y el dibujo pierde un cuarto de su color
- * justo entre cuadro y cuadro. Doce veces por segundo, eso se ve como un
- * titileo. Un GIF tampoco funde: cambia de cuadro y ya.
+ * El fundido va con la de debajo opaca y la de encima a la mezcla que toque.
+ * Parece un detalle y no lo es: con las dos a medias -- que es como estaba --
+ * las opacidades no suman uno, por el medio se cuela el fondo de la caja y la
+ * figura pierde un cuarto de su color cada vez que pasa de una pose a otra. Eso
+ * es lo que se veia como un titileo.
  *
- * Con [animar] a false se queda quieto en el primer cuadro. Es lo que usan las
- * miniaturas de las listas: doce imagenes moviendose a la vez en una pantalla
+ * Con [animar] a false se queda quieto en la primera pose. Es lo que usan las
+ * miniaturas de las listas: ochenta figuras fundiendose a la vez en una lista
  * no ayudan a nada y se comen la bateria.
  *
  * El fondo va blanco porque las imagenes ya lo incorporan y asi se integran con
@@ -431,40 +421,48 @@ fun DemoEjercicio(
         } else {
             val tira = ImageBitmap.imageResource(fotos.tira)
 
-            // El cuadro que toca ahora mismo.
+            // Donde esta el movimiento ahora mismo, en poses.
             //
-            // Vive en un estado que solo se lee dentro del dibujo: asi cambiar
-            // de cuadro repinta el lienzo y no rehace el arbol de composicion.
-            // Y solo cambia doce veces por segundo, no en cada refresco.
-            val cuadro = remember(ejercicioId) { mutableIntStateOf(0) }
-            LaunchedEffect(ejercicioId, fotos.fotogramas) {
+            // Vive en un estado que solo se lee dentro del dibujo: asi cada
+            // frame repinta el lienzo y no rehace el arbol de composicion.
+            val posicion = remember(ejercicioId) { mutableFloatStateOf(0f) }
+            LaunchedEffect(ejercicioId, fotos) {
                 val inicio = withFrameNanos { it }
                 while (true) {
                     withFrameNanos { ahora ->
-                        val toca = (((ahora - inicio) * CUADROS_POR_SEGUNDO /
-                            1_000_000_000L) % fotos.fotogramas).toInt()
-                        if (cuadro.intValue != toca) cuadro.intValue = toca
+                        posicion.floatValue =
+                            fotos.posicionEn((ahora - inicio) / 1_000_000L)
                     }
                 }
             }
 
             Canvas(Modifier.fillMaxSize()) {
-                // Los cuadros son cuadrados. Se centra el mayor cuadrado que
+                // Las poses son cuadradas. Se centra el mayor cuadrado que
                 // quepa para que la figura no salga estirada sea cual sea la
                 // forma de la caja.
                 val lado = tira.height
                 val destino = minOf(size.width, size.height)
-                drawImage(
-                    image = tira,
-                    srcOffset = IntOffset(cuadro.intValue * lado, 0),
-                    srcSize = IntSize(lado, lado),
-                    dstOffset = IntOffset(
-                        ((size.width - destino) / 2f).toInt(),
-                        ((size.height - destino) / 2f).toInt()
-                    ),
-                    dstSize = IntSize(destino.toInt(), destino.toInt()),
-                    filterQuality = FilterQuality.High
+                val esquina = IntOffset(
+                    ((size.width - destino) / 2f).toInt(),
+                    ((size.height - destino) / 2f).toInt()
                 )
+                val medida = IntSize(destino.toInt(), destino.toInt())
+
+                fun pinta(pose: Int, alfa: Float) = drawImage(
+                    image = tira,
+                    srcOffset = IntOffset(pose * lado, 0),
+                    srcSize = IntSize(lado, lado),
+                    dstOffset = esquina,
+                    dstSize = medida,
+                    filterQuality = FilterQuality.High,
+                    alpha = alfa
+                )
+
+                val donde = posicion.floatValue
+                val pose = donde.toInt()
+                val mezcla = donde - pose
+                pinta(pose, 1f)
+                if (mezcla > 0f) pinta((pose + 1) % fotos.poses, mezcla)
             }
         }
     }

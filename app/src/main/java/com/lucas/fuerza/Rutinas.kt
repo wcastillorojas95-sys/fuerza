@@ -20,6 +20,19 @@ data class Bloque(
 data class DiaRutina(val nombre: String, val foco: String, val bloques: List<Bloque>)
 
 /**
+ * Cuarenta segundos por serie.
+ *
+ * Es lo que se tarda de verdad en hacer una serie contando montar el peso,
+ * colocarse y desmontar. No sale de ningun sitio mas que de cronometrarlo, y
+ * por eso lo que calcula con esto va siempre con un "unos" delante.
+ */
+private const val SEGUNDOS_POR_SERIE = 40
+
+/** Lo que dura el dia, aproximadamente, en minutos. */
+val DiaRutina.minutos: Int
+    get() = bloques.sumOf { it.series * (SEGUNDOS_POR_SERIE + it.descansoSeg) } / 60
+
+/**
  * Una rutina completa.
  *
  * [diasSemana] es cuantos dias pide, que no siempre coincide con cuantos dias

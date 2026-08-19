@@ -95,6 +95,15 @@ private fun App() {
     // La sesion en curso, si la hay. Mientras no sea null, ocupa toda la pantalla.
     var enSesion by remember { mutableStateOf<Sesion?>(null) }
 
+    /**
+     * El dia de rutina que estas mirando antes de entrenarlo.
+     *
+     * Se guarda por nombre y no por objeto para que sobreviva a un cambio de
+     * rutina sin arrastrar un dia que ya no existe: si no se encuentra, la
+     * pantalla simplemente no se abre.
+     */
+    var diaAbierto by remember { mutableStateOf<Pair<String, String>?>(null) }
+
     val pedirAvisos = rememberLauncherForActivityResult(
         ActivityResultContracts.RequestPermission()
     ) { }
@@ -132,6 +141,24 @@ private fun App() {
         return
     }
 
+    // ------------------------------------------------------- dia por delante ---
+    val abierto = diaAbierto
+    val rutinaAbierta = abierto?.let { rutinaDe(it.first) }
+    val diaEnPantalla = rutinaAbierta?.dias?.firstOrNull { it.nombre == abierto.second }
+    if (rutinaAbierta != null && diaEnPantalla != null) {
+        PantallaDia(
+            rutina = rutinaAbierta,
+            dia = diaEnPantalla,
+            almacen = almacen,
+            onVolver = { diaAbierto = null },
+            onComenzar = {
+                enSesion = nuevaSesion(ajustes, almacen, rutinaAbierta, diaEnPantalla)
+                diaAbierto = null
+            }
+        )
+        return
+    }
+
     // ------------------------------------------------------------ navegacion ---
     Box(Modifier.fillMaxSize().background(Negro)) {
         AnimatedContent(
@@ -155,7 +182,8 @@ private fun App() {
                 Pestana.PLAN -> PantallaPlan(
                     ajustes = ajustes,
                     refresco = refresco,
-                    onCambio = { refresco++ }
+                    onCambio = { refresco++ },
+                    onAbrirDia = { r, d -> diaAbierto = r.id to d.nombre }
                 )
 
                 Pestana.PROGRESO -> PantallaProgreso(almacen = almacen, refresco = refresco)
@@ -181,14 +209,24 @@ private fun App() {
 /**
  * Empieza un entreno.
  *
+ * Sin [rutinaElegida] hace el dia que toca hoy, que es lo que pide la portada.
+ * Con ella, el dia concreto que hayas abierto desde el plan.
+ *
  * Si quedaba uno abierto se retoma ese en vez de crear otro: dos sesiones
- * abiertas a la vez no significan nada y complican todas las consultas.
+ * abiertas a la vez no significan nada y complican todas las consultas. La
+ * pantalla del dia avisa de eso en el boton antes de que lo toques.
  */
-private fun nuevaSesion(ajustes: Ajustes, almacen: Almacen): Sesion {
+private fun nuevaSesion(
+    ajustes: Ajustes,
+    almacen: Almacen,
+    rutinaElegida: Rutina? = null,
+    diaElegido: DiaRutina? = null
+): Sesion {
     almacen.abierta()?.let { return it }
 
-    val rutina = ajustes.rutinaId?.let { rutinaDe(it) }
-    val dia = rutina?.dias?.getOrNull(ajustes.diaIndice % rutina.dias.size.coerceAtLeast(1))
+    val rutina = rutinaElegida ?: ajustes.rutinaId?.let { rutinaDe(it) }
+    val dia = diaElegido
+        ?: rutina?.dias?.getOrNull(ajustes.diaIndice % rutina.dias.size.coerceAtLeast(1))
     val sesion = Sesion(
         id = System.currentTimeMillis(),
         fecha = LocalDate.now().toString(),

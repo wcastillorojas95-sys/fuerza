@@ -297,10 +297,13 @@ private fun TarjetaVideo(videoId: String, onAbrir: () -> Unit, modifier: Modifie
 /**
  * El video, dentro de la app.
  *
- * Un WebView con el iframe de YouTube. Se carga con [WebView.loadDataWithBaseURL]
- * y no apuntando directamente a la url del embed porque asi la pagina que pide
- * el reproductor viene de youtube.com, que es lo que espera, y de paso el
- * player ocupa la caja entera sin los margenes de la pagina de YouTube.
+ * Un WebView con el iframe de YouTube, cargado con [WebView.loadDataWithBaseURL]
+ * desde [ORIGEN]. Asi el player ocupa la caja entera, sin los margenes de la
+ * pagina de YouTube, y el embebido llega con un origen que YouTube puede
+ * comprobar.
+ *
+ * Aun asi hay videos que su autor no deja incrustar en ningun sitio. Cuando
+ * pasa, el reproductor lo dice y de ahi el boton de abrirlo en YouTube.
  */
 @Composable
 private fun PopupVideo(videoId: String, ejercicio: Ejercicio, onCerrar: () -> Unit) {
@@ -346,7 +349,7 @@ private fun PopupVideo(videoId: String, ejercicio: Ejercicio, onCerrar: () -> Un
                             // abrir el popup, y parece que no funciona.
                             settings.mediaPlaybackRequiresUserGesture = false
                             loadDataWithBaseURL(
-                                "https://www.youtube.com",
+                                ORIGEN,
                                 paginaDelVideo(videoId),
                                 "text/html",
                                 "utf-8",
@@ -361,6 +364,13 @@ private fun PopupVideo(videoId: String, ejercicio: Ejercicio, onCerrar: () -> Un
                     }
                 )
             }
+            Spacer(Modifier.height(10.dp))
+            Text(
+                "Si sale que el video no esta disponible, es que su autor no deja " +
+                    "incrustarlo. Abrelo en YouTube.",
+                style = MaterialTheme.typography.bodySmall,
+                color = HumoTenue
+            )
             Spacer(Modifier.height(12.dp))
             Row(horizontalArrangement = Arrangement.spacedBy(10.dp)) {
                 Box(
@@ -398,14 +408,30 @@ private fun PopupVideo(videoId: String, ejercicio: Ejercicio, onCerrar: () -> Un
     }
 }
 
+/**
+ * De donde dice la app que viene el video incrustado.
+ *
+ * YouTube no reproduce un embebido si no puede comprobar quien lo incrusta:
+ * mira la cabecera `Referer` y, si falta o no le vale, corta con el error
+ * **152-4**. Aqui estaba cargando la pagina con https://www.youtube.com como
+ * origen, o sea diciendole a YouTube que quien lo incrusta es el propio
+ * YouTube. Eso no se lo traga.
+ *
+ * Vale cualquier origen https bien formado que no sea el suyo. Se usa el de tu
+ * GitHub porque existe de verdad y es tuyo, en vez de inventarse un dominio de
+ * otro.
+ */
+private const val ORIGEN = "https://wcastillorojas95-sys.github.io"
+
 /** El html minimo que envuelve al reproductor. */
 private fun paginaDelVideo(videoId: String): String = """
     <!doctype html><html><head>
     <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="referrer" content="origin">
     <style>html,body{margin:0;padding:0;height:100%;background:#000}
     iframe{border:0;width:100%;height:100%;display:block}</style>
     </head><body>
-    <iframe src="https://www.youtube.com/embed/$videoId?autoplay=1&playsinline=1&rel=0&modestbranding=1"
+    <iframe src="https://www.youtube.com/embed/$videoId?autoplay=1&playsinline=1&rel=0&modestbranding=1&enablejsapi=1&origin=$ORIGEN"
       allow="autoplay; encrypted-media; picture-in-picture" allowfullscreen></iframe>
     </body></html>
 """.trimIndent()

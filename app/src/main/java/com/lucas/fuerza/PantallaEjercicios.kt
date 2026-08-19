@@ -405,35 +405,28 @@ private fun FilaEjercicio(
         }
         if (desplegado) {
             Spacer(Modifier.height(14.dp))
-            DemoEjercicio(
-                ejercicioId = ejercicio.id,
-                animar = true,
-                modifier = Modifier.fillMaxWidth().height(240.dp)
-            )
-            Spacer(Modifier.height(6.dp))
-            CreditoImagenes()
-            Spacer(Modifier.height(12.dp))
-            Text(
-                ejercicio.claves,
-                style = MaterialTheme.typography.bodyMedium,
-                color = Humo
-            )
-            Spacer(Modifier.height(10.dp))
-            Text(
-                buildString {
-                    append(if (ejercicio.compuesto) "Compuesto" else "Aislamiento")
-                    append(" - nivel ")
-                    append(ejercicio.dificultad.etiqueta.lowercase())
-                    if (ejercicio.secundarios.isNotEmpty()) {
-                        append(" - tambien trabaja ")
-                        append(ejercicio.secundarios.joinToString { it.etiqueta.lowercase() })
-                    }
-                },
-                style = MaterialTheme.typography.bodySmall,
-                color = HumoTenue
-            )
-            Spacer(Modifier.height(14.dp))
-            FilaVideo(ejercicio)
+            DemostracionYVideo(ejercicio) {
+                Spacer(Modifier.height(12.dp))
+                Text(
+                    ejercicio.claves,
+                    style = MaterialTheme.typography.bodyMedium,
+                    color = Humo
+                )
+                Spacer(Modifier.height(10.dp))
+                Text(
+                    buildString {
+                        append(if (ejercicio.compuesto) "Compuesto" else "Aislamiento")
+                        append(" - nivel ")
+                        append(ejercicio.dificultad.etiqueta.lowercase())
+                        if (ejercicio.secundarios.isNotEmpty()) {
+                            append(" - tambien trabaja ")
+                            append(ejercicio.secundarios.joinToString { it.etiqueta.lowercase() })
+                        }
+                    },
+                    style = MaterialTheme.typography.bodySmall,
+                    color = HumoTenue
+                )
+            }
         }
     }
 }

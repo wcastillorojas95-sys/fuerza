@@ -16,10 +16,29 @@ clara, tarjetas blancas y un violeta deportivo como color principal.
 
 ## Privacidad
 
-**La app no tiene permiso de INTERNET.** No es una promesa, es una restricción
-del sistema: sin ese permiso, nada de lo que guarda puede salir del teléfono.
+Esto cambió, y merece contarse entero.
 
-Es además lo que hace que sirva en un gimnasio de sótano, donde no hay cobertura.
+Fuerza nació **sin permiso de INTERNET**, a propósito. Sin ese permiso, "nada de
+lo que guardas sale del teléfono" no era una promesa: era una restricción del
+sistema operativo, y no había que fiarse de nadie para creérsela.
+
+El permiso se añadió para poder ver el vídeo del ejercicio dentro de la app en
+vez de saltar a YouTube. A partir de ahí la garantía pasa a ser **confianza**, y
+eso es un escalón más abajo. Conviene decirlo claro en vez de disimularlo.
+
+Lo que sigue siendo cierto, y se puede comprobar leyendo el código:
+
+- Los entrenos siguen en un archivo JSON de la carpeta privada de la app. Nadie
+  los lee ni los envía a ningún sitio.
+- No hay analítica, ni cuentas, ni servidor propio. La app abre exactamente dos
+  cosas: la miniatura del vídeo que fijaste y el reproductor de YouTube, y solo
+  cuando tocas ese vídeo.
+- El catálogo, las demostraciones y las rutinas siguen compilados dentro del
+  APK. En un gimnasio de sótano sin cobertura la app funciona entera menos el
+  vídeo.
+
+Si algún día quieres la garantía de vuelta, es quitar una línea del manifest y
+el botón de vídeo vuelve a abrir YouTube por fuera.
 
 ## Las imágenes
 
@@ -88,17 +107,24 @@ cuando encuentras el vídeo que te gusta le das a **Fijar**, pegas el enlace, y 
 partir de ahí ese ejercicio abre siempre ese vídeo. En unas semanas tienes tu
 propia videoteca, elegida por ti y guardada en el teléfono.
 
-Va con un Intent y no con una API, y eso importa por tres cosas:
+Buscar abre YouTube por fuera; **ver** el vídeo fijado lo abre dentro de la app,
+en el reproductor incrustado de YouTube, sin salir de Fuerza. Y cuando hay vídeo
+fijado, el vídeo pasa a ser lo primero que ves en la ficha y el dibujo baja
+debajo: el vídeo enseña el movimiento entero, el dibujo funciona sin cobertura.
 
-1. **La app sigue sin permiso de INTERNET.** Lanzar un Intent no lo necesita:
-   quien se conecta es YouTube, no nosotros.
-2. **No cuesta nada y no caduca.** Se miraron dos APIs de pago (ymove y
+No se usa ninguna API de vídeo, y eso importa por dos cosas:
+
+1. **No cuesta nada y no caduca.** Se miraron dos APIs de pago (ymove y
    MuscleWiki). Ninguna deja guardar el vídeo en el teléfono — MuscleWiki lo dice
    con todas las letras: *"el vídeo nunca se escribe en disco, almacenamiento de
    objetos ni caché compartida"* — así que de todas formas hacía falta cobertura
    para verlos. Y el plan gratis de MuscleWiki no da clave de API, solo su web.
-3. **El autor del vídeo cobra sus visitas.** Bajarse el vídeo de otro y servirlo
-   desde tu app es justo lo que no hay que hacer.
+2. **El autor del vídeo cobra sus visitas.** Bajarse el vídeo de otro y servirlo
+   desde tu app es justo lo que no hay que hacer. Con el reproductor incrustado
+   la visita se la sigue llevando él.
+
+Hay vídeos que su autor no deja incrustar. Cuando pasa, el reproductor lo dice y
+el popup lleva un botón para abrirlo en YouTube.
 
 Las fotos siguen siendo lo primero porque funcionan siempre. El vídeo es el paso
 siguiente, para cuando quieres ver el movimiento entero y tienes cobertura.

@@ -363,22 +363,23 @@ private fun TarjetaEjercicio(
 
         if (demoAbierta) {
             Spacer(Modifier.height(12.dp))
-            DemoEjercicio(
-                ejercicioId = ejercicio.ejercicioId,
-                animar = true,
-                modifier = Modifier.fillMaxWidth().height(230.dp)
-            )
-            Spacer(Modifier.height(6.dp))
-            CreditoImagenes()
             if (datos != null) {
-                Spacer(Modifier.height(10.dp))
-                Text(
-                    datos.claves,
-                    style = MaterialTheme.typography.bodyMedium,
-                    color = Humo
+                DemostracionYVideo(datos, alto = 230.dp) {
+                    Spacer(Modifier.height(10.dp))
+                    Text(
+                        datos.claves,
+                        style = MaterialTheme.typography.bodyMedium,
+                        color = Humo
+                    )
+                }
+            } else {
+                DemoEjercicio(
+                    ejercicioId = ejercicio.ejercicioId,
+                    animar = true,
+                    modifier = Modifier.fillMaxWidth().height(230.dp)
                 )
-                Spacer(Modifier.height(14.dp))
-                FilaVideo(datos)
+                Spacer(Modifier.height(6.dp))
+                CreditoImagenes()
             }
         }
 

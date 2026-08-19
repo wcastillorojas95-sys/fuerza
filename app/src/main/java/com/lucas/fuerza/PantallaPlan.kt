@@ -52,17 +52,23 @@ import androidx.compose.ui.unit.dp
 @Composable
 fun PantallaPlan(
     ajustes: Ajustes,
+    biblioteca: Biblioteca,
     refresco: Int,
     onCambio: () -> Unit,
-    onAbrirDia: (Rutina, DiaRutina) -> Unit
+    onAbrirDia: (Rutina, DiaRutina) -> Unit,
+    onCrearRutina: () -> Unit
 ) {
     var elegida by remember(refresco) { mutableStateOf(ajustes.rutinaId) }
     val diaDeHoy = ajustes.diaIndice
 
+    // Las tres de serie y las tuyas. Se relee al cambiar [refresco], que es lo
+    // que sube al guardar o borrar una.
+    val rutinas = remember(refresco) { biblioteca.mias(); TODAS_LAS_RUTINAS }
+
     // El carrusel arranca en la rutina que sigues, no en la primera de la lista.
-    val arranque = RUTINAS.indexOfFirst { it.id == elegida }.coerceAtLeast(0)
-    val carrusel = rememberPagerState(initialPage = arranque) { RUTINAS.size }
-    val mirando = RUTINAS[carrusel.currentPage]
+    val arranque = rutinas.indexOfFirst { it.id == elegida }.coerceAtLeast(0)
+    val carrusel = rememberPagerState(initialPage = arranque) { rutinas.size }
+    val mirando = rutinas[carrusel.currentPage.coerceIn(0, rutinas.lastIndex)]
     val activa = mirando.id == elegida
 
     Box(Modifier.fillMaxSize().background(Negro)) {
@@ -85,14 +91,14 @@ fun PantallaPlan(
                     contentPadding = PaddingValues(horizontal = 18.dp),
                     pageSpacing = 12.dp
                 ) { pagina ->
-                    val r = RUTINAS[pagina]
+                    val r = rutinas[pagina]
                     PortadaRutina(rutina = r, activa = r.id == elegida)
                 }
             }
 
             item {
                 Puntitos(
-                    total = RUTINAS.size,
+                    total = rutinas.size,
                     actual = carrusel.currentPage,
                     modifier = Modifier.fillMaxWidth()
                 )
@@ -130,6 +136,28 @@ fun PantallaPlan(
                             ajustes.diaIndice = 0
                             onCambio()
                         })
+                        if (mirando.propia) {
+                            Spacer(Modifier.height(10.dp))
+                            BotonBorde("Borrar de tu biblioteca", color = Humo, onClick = {
+                                elegida = null
+                                ajustes.rutinaId = null
+                                ajustes.diaIndice = 0
+                                biblioteca.borrar(mirando.id)
+                                onCambio()
+                            })
+                        }
+                    } else if (mirando.propia) {
+                        BotonRojo("Seguir ${mirando.nombre}", onClick = {
+                            elegida = mirando.id
+                            ajustes.rutinaId = mirando.id
+                            ajustes.diaIndice = 0
+                            onCambio()
+                        })
+                        Spacer(Modifier.height(10.dp))
+                        BotonBorde("Borrar de tu biblioteca", color = Humo, onClick = {
+                            biblioteca.borrar(mirando.id)
+                            onCambio()
+                        })
                     } else {
                         BotonRojo("Seguir ${mirando.nombre}", onClick = {
                             elegida = mirando.id
@@ -138,6 +166,24 @@ fun PantallaPlan(
                             onCambio()
                         })
                     }
+                }
+            }
+
+            item {
+                Tarjeta(
+                    borde = true,
+                    modifier = Modifier.padding(horizontal = 18.dp)
+                ) {
+                    Etiqueta("Tu biblioteca", color = Rojo)
+                    Spacer(Modifier.height(8.dp))
+                    Text(
+                        "Montate la tuya: le pones nombre, eliges los ejercicios con los " +
+                            "filtros y se queda guardada aqui al lado de las de serie.",
+                        style = MaterialTheme.typography.bodyMedium,
+                        color = Humo
+                    )
+                    Spacer(Modifier.height(14.dp))
+                    BotonRojo("Crear una rutina", onClick = onCrearRutina)
                 }
             }
 

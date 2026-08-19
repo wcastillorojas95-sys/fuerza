@@ -2,14 +2,26 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android">
 
     <!--
-        Fuerza no habla con internet, igual que Foco. No hay permiso de INTERNET
-        a proposito: el catalogo va compilado dentro del APK y tus entrenos se
-        guardan en un archivo del propio telefono. Sin ese permiso, el sistema
-        garantiza que no pueden salir de aqui.
+        INTERNET, y conviene saber lo que costo.
 
-        Es ademas lo unico que hace que la app sirva en un gimnasio de sotano,
-        donde no hay cobertura.
+        Fuerza nacio sin este permiso a proposito. Sin el, "tus entrenos no
+        pueden salir del telefono" no era una promesa: era una restriccion que
+        imponia el sistema, y no habia que fiarse de nadie para creersela.
+
+        Se anadio para poder ver el video del ejercicio dentro de la app en vez
+        de saltar a YouTube. A partir de aqui esa garantia pasa a ser confianza.
+        Lo que sigue siendo cierto y se puede comprobar leyendo el codigo:
+
+          - Los entrenos siguen en un JSON de la carpeta privada de la app.
+            Nadie los lee ni los envia a ningun sitio.
+          - No hay analitica, ni cuentas, ni servidor propio. La unica conexion
+            que abre la app es el reproductor de YouTube, y solo cuando tocas
+            un video que has fijado tu.
+          - El catalogo, las demostraciones y las rutinas siguen compilados
+            dentro del APK, asi que en un sotano sin cobertura la app funciona
+            entera menos el video.
     -->
+    <uses-permission android:name="android.permission.INTERNET" />
 
     <!-- Aviso de fin de descanso. -->
     <uses-permission android:name="android.permission.POST_NOTIFICATIONS" />

@@ -29,7 +29,9 @@ data class DiaRutina(
     val nombre: String,
     val foco: String,
     val bloques: List<Bloque>,
-    @androidx.annotation.DrawableRes val foto: Int? = null
+    @androidx.annotation.DrawableRes val foto: Int? = null,
+    /** true si te la montaste tu. Las de serie no se pueden borrar. */
+    val propia: Boolean = false
 )
 
 /**
@@ -238,4 +240,21 @@ val RUTINAS: List<Rutina> = listOf(
     )
 )
 
-fun rutinaDe(id: String): Rutina? = RUTINAS.firstOrNull { it.id == id }
+/**
+ * Las rutinas que te has montado tu, cargadas de disco.
+ *
+ * Es una variable de modulo y no un parametro que se pasa por diez sitios a
+ * proposito: [rutinaDe] la usan pantallas que no tienen -- ni deberian tener --
+ * acceso al almacenamiento. [Biblioteca] la mantiene al dia cada vez que lee o
+ * escribe, que son los dos unicos momentos en que puede cambiar.
+ */
+private var propias: List<Rutina> = emptyList()
+
+internal fun registrarPropias(lista: List<Rutina>) {
+    propias = lista
+}
+
+/** Las tres de serie y las tuyas, en ese orden. */
+val TODAS_LAS_RUTINAS: List<Rutina> get() = RUTINAS + propias
+
+fun rutinaDe(id: String): Rutina? = TODAS_LAS_RUTINAS.firstOrNull { it.id == id }

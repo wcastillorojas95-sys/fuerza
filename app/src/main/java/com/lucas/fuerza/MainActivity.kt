@@ -79,6 +79,9 @@ private fun App() {
     val contexto = LocalContext.current
     val ajustes = remember { Ajustes(contexto.applicationContext) }
     val almacen = remember { Almacen(contexto.applicationContext) }
+    // Se leen al arrancar, no al abrir el Plan: si sigues una rutina tuya, la
+    // portada tiene que saber cual es antes de que toques nada.
+    val biblioteca = remember { Biblioteca(contexto.applicationContext).also { it.mias() } }
 
     var pestana by remember { mutableStateOf(Pestana.INICIO) }
 
@@ -103,6 +106,9 @@ private fun App() {
      * pantalla simplemente no se abre.
      */
     var diaAbierto by remember { mutableStateOf<Pair<String, String>?>(null) }
+
+    /** true mientras estas montando una rutina tuya. */
+    var creandoRutina by remember { mutableStateOf(false) }
 
     val pedirAvisos = rememberLauncherForActivityResult(
         ActivityResultContracts.RequestPermission()
@@ -137,6 +143,20 @@ private fun App() {
                 enSesion = null
                 refresco++
             }
+        )
+        return
+    }
+
+    // ---------------------------------------------------------- rutina nueva ---
+    if (creandoRutina) {
+        PantallaCrearRutina(
+            biblioteca = biblioteca,
+            onGuardada = {
+                creandoRutina = false
+                refresco++
+                pestana = Pestana.PLAN
+            },
+            onCerrar = { creandoRutina = false }
         )
         return
     }
@@ -176,14 +196,17 @@ private fun App() {
                     refresco = refresco,
                     onEmpezar = { enSesion = nuevaSesion(ajustes, almacen) },
                     onRetomar = { enSesion = almacen.abierta() },
-                    onIrPlan = { pestana = Pestana.PLAN }
+                    onIrPlan = { pestana = Pestana.PLAN },
+                    onCrearRutina = { creandoRutina = true }
                 )
 
                 Pestana.PLAN -> PantallaPlan(
                     ajustes = ajustes,
+                    biblioteca = biblioteca,
                     refresco = refresco,
                     onCambio = { refresco++ },
-                    onAbrirDia = { r, d -> diaAbierto = r.id to d.nombre }
+                    onAbrirDia = { r, d -> diaAbierto = r.id to d.nombre },
+                    onCrearRutina = { creandoRutina = true }
                 )
 
                 Pestana.PROGRESO -> PantallaProgreso(almacen = almacen, refresco = refresco)

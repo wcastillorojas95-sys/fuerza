@@ -46,7 +46,8 @@ fun PantallaInicio(
     refresco: Int,
     onEmpezar: () -> Unit,
     onRetomar: () -> Unit,
-    onIrPlan: () -> Unit
+    onIrPlan: () -> Unit,
+    onCrearRutina: () -> Unit
 ) {
     val hoy = remember(refresco) { LocalDate.now() }
     val rutina = remember(refresco) { ajustes.rutinaId?.let { rutinaDe(it) } }
@@ -174,6 +175,8 @@ fun PantallaInicio(
                         texto = if (dia != null) "Empezar entreno" else "Empezar sesion libre",
                         onClick = onEmpezar
                     )
+                    Spacer(Modifier.height(10.dp))
+                    BotonBorde("Crear rutina", onClick = onCrearRutina, color = Humo)
                 }
             }
 

@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Fuerza</string>
+    <string name="canal_descanso">Descansos</string>
+    <string name="canal_descanso_desc">Avisa cuando termina el descanso entre series</string>
+</resources>

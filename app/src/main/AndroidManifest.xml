@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <!--
+        Fuerza no habla con internet, igual que Foco. No hay permiso de INTERNET
+        a proposito: el catalogo va compilado dentro del APK y tus entrenos se
+        guardan en un archivo del propio telefono. Sin ese permiso, el sistema
+        garantiza que no pueden salir de aqui.
+
+        Es ademas lo unico que hace que la app sirva en un gimnasio de sotano,
+        donde no hay cobertura.
+    -->
+
+    <!-- Aviso de fin de descanso. -->
+    <uses-permission android:name="android.permission.POST_NOTIFICATIONS" />
+    <uses-permission android:name="android.permission.VIBRATE" />
+
+    <!--
+        Mantiene la pantalla encendida mientras registras una serie, para no
+        tener que desbloquear el telefono con las manos llenas de magnesio.
+    -->
+    <uses-permission android:name="android.permission.WAKE_LOCK" />
+
+    <application
+        android:allowBackup="true"
+        android:icon="@mipmap/ic_launcher"
+        android:label="@string/app_name"
+        android:roundIcon="@mipmap/ic_launcher_round"
+        android:supportsRtl="true"
+        android:theme="@style/Theme.Fuerza">
+
+        <activity
+            android:name=".MainActivity"
+            android:exported="true"
+            android:label="@string/app_name"
+            android:launchMode="singleTop"
+            android:theme="@style/Theme.Fuerza"
+            android:windowSoftInputMode="adjustResize">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+
+        <!--
+            Quien avisa de que se acabo el descanso.
+
+            No es un servicio en primer plano: es un BroadcastReceiver que
+            dispara AlarmManager. Un servicio obligaria a declarar tipo desde
+            Android 14 y a pelearse con los limites de tiempo; setAlarmClock, en
+            cambio, es exacto, atraviesa el modo Doze y no pide ningun permiso
+            especial. El precio es el iconito de alarma en la barra, que ademas
+            avisa de que el descanso corre.
+        -->
+        <receiver
+            android:name=".AvisoDescanso"
+            android:exported="false" />
+
+    </application>
+
+</manifest>

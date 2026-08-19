@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!--
+        Fuerza es oscura siempre, no sigue al sistema. Una app que se usa en un
+        gimnasio con luz de tubo fluorescente y el movil apoyado en un banco no
+        gana nada con un tema claro, y el negro ahorra bateria en pantallas OLED.
+    -->
+    <style name="Theme.Fuerza" parent="android:Theme.Material.NoActionBar">
+        <item name="android:statusBarColor">@android:color/transparent</item>
+        <item name="android:navigationBarColor">@android:color/transparent</item>
+        <item name="android:windowBackground">@color/negro_fondo</item>
+    </style>
+</resources>

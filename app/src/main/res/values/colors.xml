@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Solo lo que necesita el sistema antes de que Compose tome el control. -->
+    <color name="negro_fondo">#08080A</color>
+    <color name="ic_launcher_background">#0E0E11</color>
+</resources>

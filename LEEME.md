@@ -9,8 +9,7 @@ solo el descanso, y te avisa aunque tengas la pantalla apagada.
 Son tres proyectos independientes, con paquetes distintos (`com.lucas.foco`,
 `com.lucas.habitos` y `com.lucas.fuerza`), así que se instalan a la vez sin
 pisarse. Fuerza no comparte código con ninguna: lo único que hereda es la forma
-de trabajar (Kotlin, Compose, cero cuentas, APK por GitHub Actions) y las
-tipografías.
+de trabajar (Kotlin, Compose, cero cuentas, APK por GitHub Actions).
 
 Se distinguen a la primera en el cajón de aplicaciones: Fuerza usa una interfaz
 clara, tarjetas blancas y un violeta deportivo como color principal.
@@ -29,10 +28,16 @@ con los músculos que trabajan en rojo, sobre fondo blanco. Es el mismo estilo q
 usan las apps de gimnasio de pago.
 
 Van dentro del APK y funcionan sin cobertura. Los doce cuadros de cada ejercicio
-vienen en una sola imagen, uno al lado del otro. El reproductor sincroniza el
-movimiento con cada refresco de pantalla y mezcla el cuadro actual con el
-siguiente; así el movimiento se percibe continuo sin añadir un decodificador de
-GIF ni descomprimir doce bitmaps. Los 82 ejercicios completos ocupan 3 MB.
+vienen en una sola imagen, uno al lado del otro, y el reproductor dibuja el
+trozo que toca: doce cambios por segundo, un ciclo completo cada segundo. Así se
+mueve sin añadir un decodificador de GIF ni descomprimir doce bitmaps. Los 82
+ejercicios completos ocupan 3 MB.
+
+Los cuadros se cambian secos, sin fundido. Hubo un fundido entre cuadro y cuadro
+y hacía **parpadear** la figura: dibujar el cuadro que se va a media opacidad y
+encima el que entra también a media deja pasar por el medio el fondo de la
+tarjeta, así que doce veces por segundo el dibujo perdía un cuarto de su color.
+Un GIF tampoco funde.
 
 Aparecen en tres sitios: miniatura quieta en el entreno de hoy y en cada fila del
 catálogo, y animada en grande al tocar la tarjeta de un ejercicio.
@@ -85,9 +90,25 @@ siguiente, para cuando quieres ver el movimiento entero y tienes cobertura.
 
 ## La tipografía
 
-La interfaz usa **Barlow** en titulares, cuerpo y datos para mantener la jerarquía
-limpia y redondeada de la referencia. Es SIL Open Font License y su licencia va
-en `tipografias/`.
+Dos letras, cada una en lo suyo:
+
+- **Bricolage Grotesque** en los titulares y en las cifras grandes — el nombre
+  del día, los kilos de la semana, la cuenta atrás del descanso. Tiene arista, y
+  eso es lo que evita que un titular parezca un párrafo grande.
+- **Google Sans** en todo lo demás: textos, botones y etiquetas. Es la letra de
+  interfaz que ya lees a diario sin darte cuenta, y eso es exactamente lo que se
+  le pide a la letra con la que consultas una técnica a media serie.
+
+Las dos son SIL Open Font License y sus licencias van en `tipografias/`.
+
+Los `.ttf` de Google Sans vienen de fábrica con 2 MB cada uno porque traen medio
+alfabeto del mundo. En el APK van **recortados** a lo que la app escribe de
+verdad — latino, puntuación y cuatro símbolos — y bajan a 91 KB. Los cuatro
+archivos suman 342 KB en vez de 8 MB. Si alguna vez aparece un carácter fuera
+del recorte, lo dibuja la letra del sistema; no se rompe nada.
+
+Va solo el grosor que se usa. Un grosor de más son 70 KB dentro del APK que
+nadie llega a ver nunca.
 
 ## Cómo se guardan los entrenos
 

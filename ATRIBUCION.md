@@ -39,7 +39,16 @@ tintan desde Compose. Fuentes originales:
 
 ## Tipografías
 
-- **Barlow** — SIL Open Font License 1.1 (`tipografias/OFL-Barlow.txt`)
+- **Bricolage Grotesque** — SIL Open Font License 1.1
+  (`tipografias/OFL-BricolageGrotesque.txt`). Titulares y cifras.
+- **Google Sans** — SIL Open Font License 1.1 (`tipografias/OFL-GoogleSans.txt`).
+  Texto, botones y etiquetas.
+
+Los `.ttf` del proyecto van **recortados** a los caracteres que la app escribe,
+no son los archivos originales. La OFL permite modificar y redistribuir, y
+ninguna de las dos declara nombre de fuente reservado en su aviso de copyright,
+así que conservan su nombre. Las licencias completas, tal cual vienen, están en
+`tipografias/`.
 
 ## Vídeo
 

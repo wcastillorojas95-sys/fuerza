@@ -15,16 +15,39 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.sp
 import androidx.compose.foundation.layout.fillMaxSize
 
+/**
+ * La familia del texto: Google Sans.
+ *
+ * Es la letra de interfaz de Google, asi que el ojo ya la tiene aprendida de
+ * leer notificaciones y ajustes todo el dia. Ni personalidad de mas ni de
+ * menos, que es justo lo que se le pide a la letra con la que lees una tecnica
+ * de ejercicio a media serie.
+ *
+ * Los .ttf originales pesan 2 MB cada uno porque traen medio alfabeto del
+ * mundo. Los que van aqui estan recortados a lo que usa la app -- latino,
+ * puntuacion, simbolos -- y bajan a 91 KB. Lo que se salga del recorte lo
+ * dibuja la letra del sistema, sin romperse.
+ */
 val Cuerpo = FontFamily(
-    Font(R.font.barlow_regular, FontWeight.Normal),
-    Font(R.font.barlow_medium, FontWeight.Medium),
-    Font(R.font.barlow_semibold, FontWeight.SemiBold),
-    Font(R.font.barlow_bold, FontWeight.Bold),
-    Font(R.font.barlow_extrabold, FontWeight.ExtraBold)
+    Font(R.font.google_sans_regular, FontWeight.Normal),
+    Font(R.font.google_sans_semibold, FontWeight.SemiBold),
+    Font(R.font.google_sans_bold, FontWeight.Bold)
 )
 
-/** Una sola familia sans, limpia y amable como la referencia visual. */
-val Titulares = Cuerpo
+/**
+ * La familia de los titulares: Bricolage Grotesque.
+ *
+ * Una grotesca con arista, que es lo que hace que el titular no parezca la
+ * misma letra que el parrafo de debajo. Solo va en lo grande y corto: nombres
+ * de dia, kilos, la cuenta atras del descanso.
+ *
+ * Van los dos grosores que se usan y ni uno mas: cada grosor de sobra son 70 KB
+ * dentro del APK que nadie llega a ver.
+ */
+val Titulares = FontFamily(
+    Font(R.font.bricolage_bold, FontWeight.Bold),
+    Font(R.font.bricolage_extrabold, FontWeight.ExtraBold)
+)
 
 // ---------------------------------------------------------------- colores ---
 
@@ -72,17 +95,19 @@ private val EsquemaClaro = lightColorScheme(
 )
 
 private val Tipografia = Typography(
+    // Los titulares, en Bricolage. Los cuerpos son los de siempre: al contrario
+    // que una condensada, esta ocupa el mismo ancho que la que habia.
     displayLarge = TextStyle(
         fontFamily = Titulares, fontWeight = FontWeight.ExtraBold,
-        fontSize = 40.sp, lineHeight = 45.sp, letterSpacing = (-0.7).sp
+        fontSize = 40.sp, lineHeight = 45.sp, letterSpacing = (-0.5).sp
     ),
     displayMedium = TextStyle(
         fontFamily = Titulares, fontWeight = FontWeight.ExtraBold,
-        fontSize = 34.sp, lineHeight = 40.sp, letterSpacing = (-0.5).sp
+        fontSize = 34.sp, lineHeight = 40.sp, letterSpacing = (-0.4).sp
     ),
     displaySmall = TextStyle(
         fontFamily = Titulares, fontWeight = FontWeight.Bold,
-        fontSize = 28.sp, lineHeight = 33.sp, letterSpacing = (-0.35).sp
+        fontSize = 28.sp, lineHeight = 33.sp, letterSpacing = (-0.3).sp
     ),
     headlineMedium = TextStyle(
         fontFamily = Titulares, fontWeight = FontWeight.Bold,
@@ -91,6 +116,12 @@ private val Tipografia = Typography(
     headlineSmall = TextStyle(
         fontFamily = Titulares, fontWeight = FontWeight.Bold,
         fontSize = 19.sp, lineHeight = 24.sp
+    ),
+    // La cifra suelta: la cuenta atras del descanso y cualquier numero que haya
+    // que leer de un vistazo desde el suelo del gimnasio.
+    titleLarge = TextStyle(
+        fontFamily = Titulares, fontWeight = FontWeight.Bold,
+        fontSize = 20.sp, lineHeight = 22.sp
     ),
     titleMedium = TextStyle(
         fontFamily = Cuerpo, fontWeight = FontWeight.Bold,

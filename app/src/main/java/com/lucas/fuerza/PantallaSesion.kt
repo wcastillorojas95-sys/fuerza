@@ -553,7 +553,7 @@ private fun BarraDescanso(
                 )
                 Text(
                     "$restante",
-                    style = MaterialTheme.typography.titleMedium,
+                    style = MaterialTheme.typography.titleLarge,
                     color = Tinta
                 )
             }

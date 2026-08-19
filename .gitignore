@@ -12,3 +12,6 @@ local.properties
 
 # Carpeta puente: aqui van los archivos que el entorno remoto no puede borrar
 _borrar/
+
+# Buzon de descargas a medio recoger
+_entrantes/

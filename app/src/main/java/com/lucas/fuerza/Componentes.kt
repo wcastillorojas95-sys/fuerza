@@ -22,10 +22,8 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableLongStateOf
+import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
 import androidx.compose.runtime.withFrameNanos
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -50,7 +48,6 @@ import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.IntOffset
 import androidx.compose.ui.unit.IntSize
 import androidx.compose.ui.unit.dp
-import kotlin.math.floor
 
 /**
  * Un titular de los grandes.
@@ -374,6 +371,14 @@ fun LogoF(modifier: Modifier = Modifier, color: Color = Rojo) {
 
 
 /**
+ * A cuantos cuadros por segundo va la demostracion.
+ *
+ * Doce, que son los cuadros que tiene cada ejercicio: asi el ciclo completo
+ * dura un segundo justo, que es el ritmo de la repeticion que ensena.
+ */
+private const val CUADROS_POR_SEGUNDO = 12L
+
+/**
  * La demostracion del ejercicio.
  *
  * Doce cuadros del movimiento que se van pasando: cuerpo gris con los musculos
@@ -381,6 +386,13 @@ fun LogoF(modifier: Modifier = Modifier, color: Color = Rojo) {
  * otro, y aqui se dibuja el trozo que toca en cada momento. Eso evita meter una
  * libreria para leer GIF y, sobre todo, evita descomprimir doce bitmaps: se
  * carga uno y ya.
+ *
+ * Los cuadros se cambian secos, sin fundido entre uno y el siguiente. Hubo un
+ * fundido y hacia parpadear la figura: al dibujar el cuadro viejo a media
+ * opacidad y encima el nuevo tambien a media, lo que queda debajo -- el fondo
+ * de la caja -- se cuela por el medio y el dibujo pierde un cuarto de su color
+ * justo entre cuadro y cuadro. Doce veces por segundo, eso se ve como un
+ * titileo. Un GIF tampoco funde: cambia de cuadro y ya.
  *
  * Con [animar] a false se queda quieto en el primer cuadro. Es lo que usan las
  * miniaturas de las listas: doce imagenes moviendose a la vez en una pantalla
@@ -418,17 +430,24 @@ fun DemoEjercicio(
             )
         } else {
             val tira = ImageBitmap.imageResource(fotos.tira)
-            var transcurridoNanos by remember(ejercicioId) { mutableLongStateOf(0L) }
+
+            // El cuadro que toca ahora mismo.
+            //
+            // Vive en un estado que solo se lee dentro del dibujo: asi cambiar
+            // de cuadro repinta el lienzo y no rehace el arbol de composicion.
+            // Y solo cambia doce veces por segundo, no en cada refresco.
+            val cuadro = remember(ejercicioId) { mutableIntStateOf(0) }
             LaunchedEffect(ejercicioId, fotos.fotogramas) {
                 val inicio = withFrameNanos { it }
                 while (true) {
-                    withFrameNanos { ahora -> transcurridoNanos = ahora - inicio }
+                    withFrameNanos { ahora ->
+                        val toca = (((ahora - inicio) * CUADROS_POR_SEGUNDO /
+                            1_000_000_000L) % fotos.fotogramas).toInt()
+                        if (cuadro.intValue != toca) cuadro.intValue = toca
+                    }
                 }
             }
-            val posicion = ((transcurridoNanos / 1_000_000_000f) * 8.5f) % fotos.fotogramas
-            val cuadro = floor(posicion).toInt()
-            val siguiente = (cuadro + 1) % fotos.fotogramas
-            val mezcla = posicion - cuadro
+
             Canvas(Modifier.fillMaxSize()) {
                 // Los cuadros son cuadrados. Se centra el mayor cuadrado que
                 // quepa para que la figura no salga estirada sea cual sea la
@@ -437,27 +456,14 @@ fun DemoEjercicio(
                 val destino = minOf(size.width, size.height)
                 drawImage(
                     image = tira,
-                    srcOffset = IntOffset(cuadro * lado, 0),
+                    srcOffset = IntOffset(cuadro.intValue * lado, 0),
                     srcSize = IntSize(lado, lado),
                     dstOffset = IntOffset(
                         ((size.width - destino) / 2f).toInt(),
                         ((size.height - destino) / 2f).toInt()
                     ),
                     dstSize = IntSize(destino.toInt(), destino.toInt()),
-                    filterQuality = FilterQuality.High,
-                    alpha = 1f - mezcla
-                )
-                drawImage(
-                    image = tira,
-                    srcOffset = IntOffset(siguiente * lado, 0),
-                    srcSize = IntSize(lado, lado),
-                    dstOffset = IntOffset(
-                        ((size.width - destino) / 2f).toInt(),
-                        ((size.height - destino) / 2f).toInt()
-                    ),
-                    dstSize = IntSize(destino.toInt(), destino.toInt()),
-                    filterQuality = FilterQuality.High,
-                    alpha = mezcla
+                    filterQuality = FilterQuality.High
                 )
             }
         }

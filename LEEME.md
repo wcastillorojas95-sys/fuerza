@@ -24,20 +24,41 @@ Es además lo que hace que sirva en un gimnasio de sótano, donde no hay cobertu
 
 ## Las imágenes
 
-Cada uno de los 83 ejercicios lleva **dos fotogramas**: posición inicial y
-posición final. Alternándolos cada segundo se ve el movimiento. Van dentro del
-APK, en WebP, y los 83 completos ocupan menos de 4 MB — así que funcionan en un
-sótano sin cobertura, que es donde se usan.
+Cada ejercicio lleva una **demostración animada de doce cuadros**: cuerpo gris
+con los músculos que trabajan en rojo, sobre fondo blanco. Es el mismo estilo que
+usan las apps de gimnasio de pago.
 
-Aparecen en tres sitios: miniatura en el entreno de hoy, miniatura en cada fila
-del catálogo, y a pantalla completa al tocar la tarjeta de un ejercicio durante
-la sesión, junto con las claves de técnica.
+Van dentro del APK y funcionan sin cobertura. Los doce cuadros de cada ejercicio
+vienen en una sola imagen, uno al lado del otro, y la app dibuja el que toca en
+cada momento — así no hace falta una librería para leer GIF ni descomprimir doce
+bitmaps: se carga uno y ya. Los 82 ejercicios completos ocupan 3 MB.
 
-Las fotos vienen del conjunto público `free-exercise-db`. El repositorio se
-publica bajo Unlicense, pero **el origen de las imágenes no está del todo claro**
-y hay hilos abiertos preguntándolo. Para una app que te instalas tú por tu
-cuenta no hay problema; si algún día la subes a Play, esto hay que resolverlo
-antes.
+Aparecen en tres sitios: miniatura quieta en el entreno de hoy y en cada fila del
+catálogo, y animada en grande al tocar la tarjeta de un ejercicio.
+
+De los 83 del catálogo, **colgarse de la barra** se queda sin demostración porque
+no hay ninguna equivalente en el conjunto de datos. La app lo dibuja con su hueco
+en vez de enseñar otro ejercicio distinto.
+
+### De dónde salen y qué hay que respetar
+
+Las imágenes son **propiedad de Gym visual** (https://gymvisual.com/). Vienen del
+conjunto [hasaneyldrm/exercises-dataset](https://github.com/hasaneyldrm/exercises-dataset),
+que las redistribuye **con permiso escrito** del autor bajo dos condiciones:
+
+1. **180×180 como máximo.** Por eso las demostraciones no se escalan más allá de
+   su tamaño original y se ven algo suaves a pantalla completa. No es un
+   descuido: subirlas de tamaño incumpliría el permiso.
+2. **El crédito tiene que verse.** Va debajo de cada demostración grande, en
+   `CreditoImagenes()`. No lo quites.
+
+Los **datos** del conjunto — nombres, categorías, material e instrucciones en
+diez idiomas — son aparte y van bajo licencia MIT.
+
+Ese permiso es del repositorio, no tuyo: para una app que te instalas tú por tu
+cuenta, respetando las dos condiciones, esto es exactamente el uso que describe.
+Si algún día la subes a Play, saca tu propia licencia en Gym visual — venden los
+GIF sueltos a menos de un euro cada uno.
 
 ### El vídeo
 
@@ -50,11 +71,11 @@ Va con un Intent y no con una API, y eso importa por tres cosas:
 
 1. **La app sigue sin permiso de INTERNET.** Lanzar un Intent no lo necesita:
    quien se conecta es YouTube, no nosotros.
-2. **No cuesta nada y no caduca.** Se miraron dos APIs de pago, ymove y
-   MuscleWiki. Ninguna deja guardar el vídeo en el teléfono — MuscleWiki lo dice
+2. **No cuesta nada y no caduca.** Se miraron dos APIs de pago (ymove y
+   MuscleWiki). Ninguna deja guardar el vídeo en el teléfono — MuscleWiki lo dice
    con todas las letras: *"el vídeo nunca se escribe en disco, almacenamiento de
    objetos ni caché compartida"* — así que de todas formas hacía falta cobertura
-   para verlos. Y su plan gratis no da clave de API, solo acceso desde su web.
+   para verlos. Y el plan gratis de MuscleWiki no da clave de API, solo su web.
 3. **El autor del vídeo cobra sus visitas.** Bajarse el vídeo de otro y servirlo
    desde tu app es justo lo que no hay que hacer.
 

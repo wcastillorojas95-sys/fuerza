@@ -1,7 +1,5 @@
 package com.lucas.fuerza
 
-import androidx.compose.animation.Crossfade
-import androidx.compose.animation.core.tween
 import androidx.compose.foundation.Canvas
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
@@ -34,15 +32,20 @@ import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.geometry.Size
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.FilterQuality
+import androidx.compose.ui.graphics.ImageBitmap
 import androidx.compose.ui.graphics.Path
 import androidx.compose.ui.graphics.TransformOrigin
 import androidx.compose.ui.graphics.drawscope.Stroke
 import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.res.imageResource
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.Dp
+import androidx.compose.ui.unit.IntOffset
+import androidx.compose.ui.unit.IntSize
 import androidx.compose.ui.unit.dp
 import kotlinx.coroutines.delay
 
@@ -369,15 +372,18 @@ fun LogoF(modifier: Modifier = Modifier, color: Color = Rojo) {
 /**
  * La demostracion del ejercicio.
  *
- * Dos fotogramas -- posicion inicial y posicion final -- que se alternan cada
- * segundo. No es un video, y no lo pretende: para acordarte de como se coloca la
- * espalda en un remo, ver el principio y el final alternandose dice mas que doce
- * segundos de video que hay que esperar a que carguen. Ademas funciona sin
- * cobertura, que es donde se usa esto.
+ * Doce cuadros del movimiento que se van pasando: cuerpo gris con los musculos
+ * que trabajan en rojo. Los cuadros vienen en una sola imagen, uno al lado del
+ * otro, y aqui se dibuja el trozo que toca en cada momento. Eso evita meter una
+ * libreria para leer GIF y, sobre todo, evita descomprimir doce bitmaps: se
+ * carga uno y ya.
  *
- * Con [animar] a false se queda quieto en el primer fotograma. Es lo que usan
- * las miniaturas de las listas: doce imagenes parpadeando a la vez en una
- * pantalla no ayudan a nada y se comen la bateria.
+ * Con [animar] a false se queda quieto en el primer cuadro. Es lo que usan las
+ * miniaturas de las listas: doce imagenes moviendose a la vez en una pantalla
+ * no ayudan a nada y se comen la bateria.
+ *
+ * El fondo va blanco porque las imagenes lo tienen blanco. Sobre negro se veria
+ * un recuadro blanco flotando; asi parece una ficha, que es lo que es.
  */
 @Composable
 fun DemoEjercicio(
@@ -390,46 +396,67 @@ fun DemoEjercicio(
     Box(
         modifier = modifier
             .clip(RoundedCornerShape(radio))
-            .background(CarbonAlto),
+            .background(if (fotos == null) CarbonAlto else Color.White),
         contentAlignment = Alignment.Center
     ) {
         if (fotos == null) {
             Text(
-                "SIN FOTO",
+                "SIN DEMO",
                 style = MaterialTheme.typography.labelMedium,
                 color = HumoTenue
             )
+        } else if (!animar) {
+            Image(
+                painter = painterResource(fotos.mini),
+                contentDescription = null,
+                contentScale = ContentScale.Fit,
+                modifier = Modifier.fillMaxSize()
+            )
         } else {
-            if (!animar) {
-                Image(
-                    painter = painterResource(fotos.mini),
-                    contentDescription = null,
-                    contentScale = ContentScale.Crop,
-                    modifier = Modifier.fillMaxSize()
+            val tira = ImageBitmap.imageResource(fotos.tira)
+            var cuadro by remember(ejercicioId) { mutableIntStateOf(0) }
+            LaunchedEffect(ejercicioId, fotos.fotogramas) {
+                while (true) {
+                    delay(110)
+                    cuadro = (cuadro + 1) % fotos.fotogramas
+                }
+            }
+            Canvas(Modifier.fillMaxSize()) {
+                // Los cuadros son cuadrados. Se centra el mayor cuadrado que
+                // quepa para que la figura no salga estirada sea cual sea la
+                // forma de la caja.
+                val lado = tira.height
+                val destino = minOf(size.width, size.height)
+                drawImage(
+                    image = tira,
+                    srcOffset = IntOffset(cuadro * lado, 0),
+                    srcSize = IntSize(lado, lado),
+                    dstOffset = IntOffset(
+                        ((size.width - destino) / 2f).toInt(),
+                        ((size.height - destino) / 2f).toInt()
+                    ),
+                    dstSize = IntSize(destino.toInt(), destino.toInt()),
+                    filterQuality = FilterQuality.High
                 )
-            } else {
-                var fotograma by remember(ejercicioId) { mutableIntStateOf(0) }
-                LaunchedEffect(ejercicioId) {
-                    while (true) {
-                        delay(950)
-                        fotograma = 1 - fotograma
-                    }
-                }
-                Crossfade(
-                    targetState = fotograma,
-                    animationSpec = tween(240),
-                    label = "demo"
-                ) { f ->
-                    Image(
-                        painter = painterResource(if (f == 0) fotos.inicio else fotos.fin),
-                        contentDescription = null,
-                        contentScale = ContentScale.Crop,
-                        modifier = Modifier.fillMaxSize()
-                    )
-                }
             }
         }
     }
+}
+
+/**
+ * El credito de las imagenes.
+ *
+ * No es decoracion: la licencia con la que se pueden usar estas demostraciones
+ * exige que se vea. Va debajo de cada demostracion grande.
+ */
+@Composable
+fun CreditoImagenes(modifier: Modifier = Modifier) {
+    Text(
+        text = CREDITO_IMAGENES,
+        style = MaterialTheme.typography.labelMedium,
+        color = HumoTenue,
+        modifier = modifier
+    )
 }
 
 /** Un aro de progreso, para el temporizador de descanso. */

@@ -227,7 +227,7 @@ private fun FilaBloque(bloque: Bloque) {
             ejercicioId = bloque.ejercicioId,
             animar = false,
             radio = 9.dp,
-            modifier = Modifier.width(52.dp).height(35.dp)
+            modifier = Modifier.size(40.dp)
         )
         Spacer(Modifier.width(12.dp))
         Text(

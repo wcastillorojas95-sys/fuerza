@@ -329,8 +329,7 @@ private fun TarjetaEjercicio(
                 animar = false,
                 radio = 12.dp,
                 modifier = Modifier
-                    .width(78.dp)
-                    .height(52.dp)
+                    .size(58.dp)
                     .clickable { demoAbierta = !demoAbierta }
             )
             Spacer(Modifier.width(12.dp))
@@ -366,8 +365,10 @@ private fun TarjetaEjercicio(
             DemoEjercicio(
                 ejercicioId = ejercicio.ejercicioId,
                 animar = true,
-                modifier = Modifier.fillMaxWidth().height(190.dp)
+                modifier = Modifier.fillMaxWidth().height(230.dp)
             )
+            Spacer(Modifier.height(6.dp))
+            CreditoImagenes()
             if (datos != null) {
                 Spacer(Modifier.height(10.dp))
                 Text(

@@ -12,6 +12,7 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.statusBarsPadding
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
@@ -209,7 +210,7 @@ private fun FilaEjercicio(
                 ejercicioId = ejercicio.id,
                 animar = false,
                 radio = 12.dp,
-                modifier = Modifier.width(76.dp).height(52.dp)
+                modifier = Modifier.size(56.dp)
             )
             Spacer(Modifier.width(12.dp))
             Column(Modifier.weight(1f)) {
@@ -242,8 +243,10 @@ private fun FilaEjercicio(
             DemoEjercicio(
                 ejercicioId = ejercicio.id,
                 animar = true,
-                modifier = Modifier.fillMaxWidth().height(200.dp)
+                modifier = Modifier.fillMaxWidth().height(240.dp)
             )
+            Spacer(Modifier.height(6.dp))
+            CreditoImagenes()
             Spacer(Modifier.height(12.dp))
             Text(
                 ejercicio.claves,

@@ -29,9 +29,7 @@ data class DiaRutina(
     val nombre: String,
     val foco: String,
     val bloques: List<Bloque>,
-    @androidx.annotation.DrawableRes val foto: Int? = null,
-    /** true si te la montaste tu. Las de serie no se pueden borrar. */
-    val propia: Boolean = false
+    @androidx.annotation.DrawableRes val foto: Int? = null
 )
 
 /**
@@ -64,10 +62,12 @@ data class Rutina(
      * La foto de la portada, si la hay.
      *
      * A null la tarjeta se dibuja con el degradado de la casa. Es lo que hay
-     * hasta que entren las fotos: la app no tiene permiso de internet, asi que
-     * o van dentro del APK o no van.
+     * hasta que entraron las fotos: la app no baja nada, asi que o van dentro
+     * del APK o no van.
      */
-    @androidx.annotation.DrawableRes val foto: Int? = null
+    @androidx.annotation.DrawableRes val foto: Int? = null,
+    /** true si te la montaste tu. Las tres de serie no se pueden borrar. */
+    val propia: Boolean = false
 )
 
 /**

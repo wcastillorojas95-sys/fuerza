@@ -375,6 +375,8 @@ private fun TarjetaEjercicio(
                     style = MaterialTheme.typography.bodyMedium,
                     color = Humo
                 )
+                Spacer(Modifier.height(14.dp))
+                FilaVideo(datos)
             }
         }
 

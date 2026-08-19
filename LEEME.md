@@ -39,17 +39,27 @@ y hay hilos abiertos preguntándolo. Para una app que te instalas tú por tu
 cuenta no hay problema; si algún día la subes a Play, esto hay que resolverlo
 antes.
 
-### Por qué no vídeo
+### El vídeo
 
-Una API de vídeo HD era la alternativa. Sigue estando sobre la mesa, pero tiene
-letra pequeña que conviene saber: los planes de entrada desbloquean entre 250 y
-350 ejercicios distintos al mes de un catálogo de más de mil; las URLs de vídeo
-caducan a las 48 horas y la documentación prohíbe cachearlas, así que la app
-necesitaría internet cada vez que abres un ejercicio; y el uso sin conexión solo
-está en el plan de 79 dólares al mes.
+Cada ejercicio tiene un botón que abre YouTube. Por defecto lanza una búsqueda;
+cuando encuentras el vídeo que te gusta le das a **Fijar**, pegas el enlace, y a
+partir de ahí ese ejercicio abre siempre ese vídeo. En unas semanas tienes tu
+propia videoteca, elegida por ti y guardada en el teléfono.
 
-Si algún día quieres vídeo, el sitio por donde entra es `Imagenes.kt`: cambias de
-dónde salen los fotogramas y el resto de la app no se entera.
+Va con un Intent y no con una API, y eso importa por tres cosas:
+
+1. **La app sigue sin permiso de INTERNET.** Lanzar un Intent no lo necesita:
+   quien se conecta es YouTube, no nosotros.
+2. **No cuesta nada y no caduca.** Se miraron dos APIs de pago, ymove y
+   MuscleWiki. Ninguna deja guardar el vídeo en el teléfono — MuscleWiki lo dice
+   con todas las letras: *"el vídeo nunca se escribe en disco, almacenamiento de
+   objetos ni caché compartida"* — así que de todas formas hacía falta cobertura
+   para verlos. Y su plan gratis no da clave de API, solo acceso desde su web.
+3. **El autor del vídeo cobra sus visitas.** Bajarse el vídeo de otro y servirlo
+   desde tu app es justo lo que no hay que hacer.
+
+Las fotos siguen siendo lo primero porque funcionan siempre. El vídeo es el paso
+siguiente, para cuando quieres ver el movimiento entero y tienes cobertura.
 
 ## Las tipografías
 

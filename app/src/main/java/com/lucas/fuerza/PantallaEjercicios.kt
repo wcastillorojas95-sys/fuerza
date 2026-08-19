@@ -258,6 +258,8 @@ private fun FilaEjercicio(
                     color = HumoTenue
                 )
             }
+            Spacer(Modifier.height(14.dp))
+            FilaVideo(ejercicio)
         }
     }
 }

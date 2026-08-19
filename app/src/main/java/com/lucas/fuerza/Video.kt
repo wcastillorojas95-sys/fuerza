@@ -1,11 +1,16 @@
 package com.lucas.fuerza
 
+import android.app.Activity
 import android.content.ActivityNotFoundException
 import android.content.Context
+import android.content.ContextWrapper
+import android.content.pm.ActivityInfo
 import android.content.Intent
 import android.graphics.BitmapFactory
 import android.net.Uri
+import android.view.View
 import android.view.ViewGroup
+import android.widget.FrameLayout
 import android.webkit.WebChromeClient
 import android.webkit.WebView
 import androidx.compose.foundation.Image
@@ -31,6 +36,7 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.DisposableEffect
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -308,6 +314,31 @@ private fun TarjetaVideo(videoId: String, onAbrir: () -> Unit, modifier: Modifie
 @Composable
 private fun PopupVideo(videoId: String, ejercicio: Ejercicio, onCerrar: () -> Unit) {
     val contexto = LocalContext.current
+
+    /**
+     * La vista que YouTube quiere poner a pantalla completa.
+     *
+     * El boton de expandir del reproductor no hace nada por su cuenta: pide el
+     * fullscreen y espera a que la app se lo de. Si nadie implementa
+     * [WebChromeClient.onShowCustomView], la peticion se pierde y el icono
+     * parece roto. Aqui se recoge esa vista y se enseña en un dialogo aparte,
+     * que es lo mismo que hace el navegador.
+     */
+    var pantallaCompleta by remember { mutableStateOf<View?>(null) }
+    var salirDeCompleta by remember { mutableStateOf<WebChromeClient.CustomViewCallback?>(null) }
+
+    // La orientacion vuelve a lo que estaba aunque cierres el popup a medias.
+    DisposableEffect(Unit) {
+        onDispose { contexto.actividad()?.requestedOrientation = ActivityInfo.SCREEN_ORIENTATION_UNSPECIFIED }
+    }
+
+    fun cerrarCompleta() {
+        salirDeCompleta?.onCustomViewHidden()
+        salirDeCompleta = null
+        pantallaCompleta = null
+        contexto.actividad()?.requestedOrientation = ActivityInfo.SCREEN_ORIENTATION_UNSPECIFIED
+    }
+
     Dialog(
         onDismissRequest = onCerrar,
         properties = DialogProperties(usePlatformDefaultWidth = false)
@@ -342,7 +373,26 @@ private fun PopupVideo(videoId: String, ejercicio: Ejercicio, onCerrar: () -> Un
                                 ViewGroup.LayoutParams.MATCH_PARENT
                             )
                             setBackgroundColor(android.graphics.Color.BLACK)
-                            webChromeClient = WebChromeClient()
+                            webChromeClient = object : WebChromeClient() {
+                                override fun onShowCustomView(
+                                    view: View?,
+                                    callback: CustomViewCallback?
+                                ) {
+                                    pantallaCompleta = view
+                                    salirDeCompleta = callback
+                                    // Un video apaisado en un movil de pie son
+                                    // dos franjas negras y un sello en medio.
+                                    ctx.actividad()?.requestedOrientation =
+                                        ActivityInfo.SCREEN_ORIENTATION_SENSOR_LANDSCAPE
+                                }
+
+                                override fun onHideCustomView() {
+                                    pantallaCompleta = null
+                                    salirDeCompleta = null
+                                    ctx.actividad()?.requestedOrientation =
+                                        ActivityInfo.SCREEN_ORIENTATION_UNSPECIFIED
+                                }
+                            }
                             settings.javaScriptEnabled = true
                             settings.domStorageEnabled = true
                             // Sin esto el video espera un toque que ya diste al
@@ -406,6 +456,58 @@ private fun PopupVideo(videoId: String, ejercicio: Ejercicio, onCerrar: () -> Un
             }
         }
     }
+
+    // ------------------------------------------------------ a toda pantalla ---
+    val completa = pantallaCompleta
+    if (completa != null) {
+        Dialog(
+            onDismissRequest = { cerrarCompleta() },
+            properties = DialogProperties(
+                usePlatformDefaultWidth = false,
+                decorFitsSystemWindows = false
+            )
+        ) {
+            AndroidView(
+                modifier = Modifier.fillMaxSize(),
+                factory = { ctx ->
+                    FrameLayout(ctx).apply {
+                        setBackgroundColor(android.graphics.Color.BLACK)
+                    }
+                },
+                update = { marco ->
+                    if (completa.parent !== marco) {
+                        (completa.parent as? ViewGroup)?.removeView(completa)
+                        marco.addView(
+                            completa,
+                            FrameLayout.LayoutParams(
+                                ViewGroup.LayoutParams.MATCH_PARENT,
+                                ViewGroup.LayoutParams.MATCH_PARENT
+                            )
+                        )
+                    }
+                },
+                // Al salir, la vista se devuelve para que el reproductor la
+                // vuelva a colocar en su sitio dentro del WebView.
+                onRelease = { marco -> marco.removeAllViews() }
+            )
+        }
+    }
+}
+
+/**
+ * La Activity que hay detras de un Context de Compose.
+ *
+ * Hace falta para girar la pantalla al expandir el video. El contexto que da
+ * Compose suele venir envuelto en un [ContextWrapper], asi que hay que
+ * desenvolverlo hasta encontrarla.
+ */
+private fun Context.actividad(): Activity? {
+    var actual: Context = this
+    while (actual is ContextWrapper) {
+        if (actual is Activity) return actual
+        actual = actual.baseContext
+    }
+    return null
 }
 
 /**

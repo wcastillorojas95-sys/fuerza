@@ -41,8 +41,18 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Fuerza">
 
+        <!--
+            La rotacion la lleva la app, no el sistema.
+
+            Sin android:configChanges, girar el telefono destruye y recrea la
+            Activity. Eso importa aqui por el video a pantalla completa: al
+            expandirlo se pide horizontal, y sin esta linea la recreacion se
+            llevaria por delante el popup entero justo al abrirlo. Compose
+            recoloca solo lo que haga falta, asi que no se pierde nada.
+        -->
         <activity
             android:name=".MainActivity"
+            android:configChanges="orientation|screenSize|screenLayout|smallestScreenSize|keyboardHidden|uiMode"
             android:exported="true"
             android:label="@string/app_name"
             android:launchMode="singleTop"

@@ -2,6 +2,7 @@ package com.lucas.fuerza
 
 import android.os.Build
 import android.os.Bundle
+import androidx.annotation.DrawableRes
 import androidx.activity.ComponentActivity
 import androidx.activity.SystemBarStyle
 import androidx.activity.compose.rememberLauncherForActivityResult
@@ -18,12 +19,14 @@ import androidx.compose.animation.togetherWith
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.navigationBarsPadding
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
@@ -37,29 +40,32 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
 import java.time.LocalDate
 
-private enum class Pestana(val etiqueta: String, val simbolo: String) {
-    INICIO("Hoy", "⌂"),
-    PLAN("Plan", "▤"),
-    PROGRESO("Progreso", "◔"),
-    EJERCICIOS("Catalogo", "▦"),
-    AJUSTES("Ajustes", "⚙")
+private enum class Pestana(val etiqueta: String, @DrawableRes val icono: Int) {
+    INICIO("Inicio", R.drawable.ic_nav_home),
+    PLAN("Plan", R.drawable.ic_nav_plan),
+    PROGRESO("Progreso", R.drawable.ic_nav_progress),
+    EJERCICIOS("Ejercicios", R.drawable.ic_nav_exercises),
+    AJUSTES("Ajustes", R.drawable.ic_nav_settings)
 }
 
 class MainActivity : ComponentActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        // Barras transparentes y siempre con iconos claros. enableEdgeToEdge() a
-        // secas sigue al tema del sistema, asi que en un movil en modo claro los
-        // iconos saldrian oscuros sobre nuestra cabecera negra y no se verian.
+        // Barras transparentes con iconos oscuros, coherentes con el tema claro.
         enableEdgeToEdge(
-            statusBarStyle = SystemBarStyle.dark(android.graphics.Color.TRANSPARENT),
-            navigationBarStyle = SystemBarStyle.dark(android.graphics.Color.TRANSPARENT)
+            statusBarStyle = SystemBarStyle.light(
+                android.graphics.Color.TRANSPARENT,
+                android.graphics.Color.TRANSPARENT
+            ),
+            navigationBarStyle = SystemBarStyle.light(
+                android.graphics.Color.TRANSPARENT,
+                android.graphics.Color.TRANSPARENT
+            )
         )
 
         setContent {
@@ -197,45 +203,40 @@ private fun nuevaSesion(ajustes: Ajustes, almacen: Almacen): Sesion {
 }
 
 /**
- * La pildora flotante de navegacion.
- *
- * Cinco pestanas es el limite: con la etiqueta desplegada solo en la activa,
- * caben en un movil estrecho sin que los simbolos se toquen.
+ * Barra inferior clara con los cinco destinos siempre visibles.
  */
 @Composable
 private fun Pildora(actual: Pestana, onElegir: (Pestana) -> Unit, modifier: Modifier = Modifier) {
     Row(
         modifier = modifier
+            .fillMaxWidth()
+            .background(Carbon)
             .navigationBarsPadding()
-            .padding(bottom = 14.dp)
-            .clip(RoundedCornerShape(50))
-            .background(CarbonAlto)
-            .padding(horizontal = 6.dp, vertical = 6.dp),
+            .padding(start = 4.dp, top = 8.dp, end = 4.dp, bottom = 7.dp),
         verticalAlignment = Alignment.CenterVertically
     ) {
         Pestana.entries.forEach { p ->
             val activa = p == actual
-            Row(
+            Column(
                 modifier = Modifier
-                    .clip(RoundedCornerShape(50))
-                    .background(if (activa) Rojo else Color.Transparent)
+                    .weight(1f)
+                    .clip(RoundedCornerShape(12.dp))
                     .clickable { onElegir(p) }
-                    .padding(horizontal = if (activa) 15.dp else 13.dp, vertical = 11.dp),
-                verticalAlignment = Alignment.CenterVertically
+                    .padding(vertical = 5.dp),
+                horizontalAlignment = Alignment.CenterHorizontally
             ) {
-                Text(
-                    text = p.simbolo,
-                    style = MaterialTheme.typography.titleMedium,
-                    color = if (activa) Color.White else Humo
+                IconoSvg(
+                    recurso = p.icono,
+                    descripcion = p.etiqueta,
+                    color = if (activa) Rojo else HumoTenue,
+                    modifier = Modifier.size(22.dp)
                 )
-                if (activa) {
-                    Spacer(Modifier.width(7.dp))
-                    Text(
-                        text = p.etiqueta,
-                        style = MaterialTheme.typography.labelLarge,
-                        color = Color.White
-                    )
-                }
+                Box(Modifier.height(3.dp))
+                Text(
+                    text = p.etiqueta,
+                    style = MaterialTheme.typography.labelMedium,
+                    color = if (activa) Rojo else HumoTenue
+                )
             }
         }
     }

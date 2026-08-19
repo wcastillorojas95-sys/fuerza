@@ -262,7 +262,7 @@ fun PantallaSesion(
         AlertDialog(
             onDismissRequest = { confirmandoSalida = false },
             containerColor = Carbon,
-            title = { Text("Dejar el entreno", style = MaterialTheme.typography.headlineSmall, color = Color.White) },
+            title = { Text("Dejar el entreno", style = MaterialTheme.typography.headlineSmall, color = Tinta) },
             text = {
                 Text(
                     if (seriesHechas > 0)
@@ -349,14 +349,15 @@ private fun TarjetaEjercicio(
                     color = HumoTenue
                 )
             }
-            Text(
-                text = "x",
-                style = MaterialTheme.typography.titleMedium,
+            IconoSvg(
+                recurso = R.drawable.ic_close,
+                descripcion = "Quitar ejercicio",
                 color = HumoTenue,
                 modifier = Modifier
                     .clip(RoundedCornerShape(50))
                     .clickable { onQuitar() }
-                    .padding(horizontal = 10.dp, vertical = 4.dp)
+                    .padding(8.dp)
+                    .size(16.dp)
             )
         }
 
@@ -416,13 +417,13 @@ private fun TarjetaEjercicio(
                     Text(
                         "${limpio(s.kg)} kg",
                         style = MaterialTheme.typography.titleSmall,
-                        color = Color.White,
+                        color = Tinta,
                         modifier = Modifier.weight(1f)
                     )
                     Text(
                         "${s.reps} reps",
                         style = MaterialTheme.typography.titleSmall,
-                        color = Color.White
+                        color = Tinta
                     )
                     if (esRecord) {
                         Spacer(Modifier.width(8.dp))
@@ -461,10 +462,11 @@ private fun TarjetaEjercicio(
                     .clickable(enabled = reps > 0) { onAnotar(Serie(kg, reps)) },
                 contentAlignment = Alignment.Center
             ) {
-                Text(
-                    "OK",
-                    style = MaterialTheme.typography.titleSmall,
-                    color = if (reps > 0) Color.White else HumoTenue
+                IconoSvg(
+                    recurso = R.drawable.ic_check,
+                    descripcion = "Anotar serie",
+                    color = if (reps > 0) SobreAcento else HumoTenue,
+                    modifier = Modifier.size(24.dp)
                 )
             }
         }
@@ -491,29 +493,35 @@ private fun Campo(
                 .background(CarbonAlto),
             verticalAlignment = Alignment.CenterVertically
         ) {
-            Text(
-                "-",
-                style = MaterialTheme.typography.headlineMedium,
+            IconoSvg(
+                recurso = R.drawable.ic_minus,
+                descripcion = "Restar $etiqueta",
                 color = Humo,
-                modifier = Modifier.clickable { onMenos() }.padding(horizontal = 13.dp, vertical = 12.dp)
+                modifier = Modifier
+                    .clickable { onMenos() }
+                    .padding(horizontal = 13.dp, vertical = 17.dp)
+                    .size(15.dp)
             )
             BasicTextField(
                 value = valor,
                 onValueChange = onValor,
                 singleLine = true,
                 textStyle = MaterialTheme.typography.titleMedium.copy(
-                    color = Color.White,
+                    color = Tinta,
                     textAlign = TextAlign.Center
                 ),
                 cursorBrush = SolidColor(Rojo),
                 keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
                 modifier = Modifier.weight(1f)
             )
-            Text(
-                "+",
-                style = MaterialTheme.typography.headlineMedium,
+            IconoSvg(
+                recurso = R.drawable.ic_plus,
+                descripcion = "Sumar $etiqueta",
                 color = Humo,
-                modifier = Modifier.clickable { onMas() }.padding(horizontal = 13.dp, vertical = 12.dp)
+                modifier = Modifier
+                    .clickable { onMas() }
+                    .padding(horizontal = 13.dp, vertical = 17.dp)
+                    .size(15.dp)
             )
         }
     }
@@ -546,7 +554,7 @@ private fun BarraDescanso(
                 Text(
                     "$restante",
                     style = MaterialTheme.typography.titleMedium,
-                    color = Color.White
+                    color = Tinta
                 )
             }
             Spacer(Modifier.width(14.dp))
@@ -562,7 +570,7 @@ private fun BarraDescanso(
             Text(
                 "+30",
                 style = MaterialTheme.typography.titleSmall,
-                color = Color.White,
+                color = Tinta,
                 modifier = Modifier
                     .clip(RoundedCornerShape(50))
                     .background(Carbon)

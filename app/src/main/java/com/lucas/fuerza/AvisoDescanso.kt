@@ -1,5 +1,6 @@
 package com.lucas.fuerza
 
+import android.Manifest
 import android.app.AlarmManager
 import android.app.NotificationChannel
 import android.app.NotificationManager
@@ -7,11 +8,13 @@ import android.app.PendingIntent
 import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
+import android.content.pm.PackageManager
 import android.os.Build
 import android.os.VibrationEffect
 import android.os.Vibrator
 import android.os.VibratorManager
 import androidx.core.app.NotificationManagerCompat
+import androidx.core.content.ContextCompat
 
 /**
  * El aviso de fin de descanso.
@@ -67,7 +70,14 @@ class AvisoDescanso : BroadcastReceiver() {
             .setContentIntent(abrir)
             .build()
 
-        runCatching { NotificationManagerCompat.from(context).notify(ID_AVISO, aviso) }
+        val puedeNotificar = Build.VERSION.SDK_INT < Build.VERSION_CODES.TIRAMISU ||
+            ContextCompat.checkSelfPermission(
+                context,
+                Manifest.permission.POST_NOTIFICATIONS
+            ) == PackageManager.PERMISSION_GRANTED
+        if (puedeNotificar) {
+            NotificationManagerCompat.from(context).notify(ID_AVISO, aviso)
+        }
     }
 
     companion object {
@@ -76,7 +86,6 @@ class AvisoDescanso : BroadcastReceiver() {
         private const val EXTRA_EJERCICIO = "ejercicio"
 
         private fun crearCanal(context: Context) {
-            if (Build.VERSION.SDK_INT < Build.VERSION_CODES.O) return
             val gestor = context.getSystemService(NotificationManager::class.java) ?: return
             if (gestor.getNotificationChannel(CANAL) != null) return
             gestor.createNotificationChannel(

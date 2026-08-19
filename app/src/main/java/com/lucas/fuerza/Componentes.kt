@@ -1,5 +1,6 @@
 package com.lucas.fuerza
 
+import androidx.annotation.DrawableRes
 import androidx.compose.foundation.Canvas
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
@@ -22,9 +23,10 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableIntStateOf
+import androidx.compose.runtime.mutableLongStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
+import androidx.compose.runtime.withFrameNanos
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -32,6 +34,7 @@ import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.geometry.Size
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.ColorFilter
 import androidx.compose.ui.graphics.FilterQuality
 import androidx.compose.ui.graphics.ImageBitmap
 import androidx.compose.ui.graphics.Path
@@ -47,27 +50,25 @@ import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.IntOffset
 import androidx.compose.ui.unit.IntSize
 import androidx.compose.ui.unit.dp
-import kotlinx.coroutines.delay
+import kotlin.math.floor
 
 /**
  * Un titular de los grandes.
  *
- * Va siempre en caja alta porque la Bebas Neue no tiene minusculas. El parametro
- * [compresion] queda por si alguna vez hace falta estrechar un titulo largo para
- * que quepa en una linea, pero por defecto va a 1: la Bebas ya es condensada de
- * origen y estrecharla mas la vuelve ilegible.
+ * Conserva las mayusculas y minusculas que recibe para mantener el tono amable
+ * y editorial de la interfaz clara.
  */
 @Composable
 fun Titular(
     texto: String,
     modifier: Modifier = Modifier,
     estilo: TextStyle = MaterialTheme.typography.displayMedium,
-    color: Color = Color.White,
+    color: Color = Tinta,
     compresion: Float = 1f,
     alineacion: TextAlign? = null
 ) {
     Text(
-        text = texto.uppercase(),
+        text = texto,
         style = estilo,
         color = color,
         textAlign = alineacion,
@@ -89,12 +90,28 @@ fun Etiqueta(texto: String, modifier: Modifier = Modifier, color: Color = HumoTe
     )
 }
 
-/** La tarjeta oscura de siempre. */
+/** Iconos vectoriales procedentes de SVG Repo, tintados por la interfaz. */
+@Composable
+fun IconoSvg(
+    @DrawableRes recurso: Int,
+    descripcion: String?,
+    modifier: Modifier = Modifier,
+    color: Color = Tinta
+) {
+    Image(
+        painter = painterResource(recurso),
+        contentDescription = descripcion,
+        colorFilter = ColorFilter.tint(color),
+        modifier = modifier
+    )
+}
+
+/** Tarjeta blanca con borde opcional y esquinas amplias. */
 @Composable
 fun Tarjeta(
     modifier: Modifier = Modifier,
     color: Color = Carbon,
-    radio: Dp = 22.dp,
+    radio: Dp = 20.dp,
     relleno: Dp = 18.dp,
     borde: Boolean = false,
     contenido: @Composable androidx.compose.foundation.layout.ColumnScope.() -> Unit
@@ -104,7 +121,7 @@ fun Tarjeta(
             .clip(RoundedCornerShape(radio))
             .background(color)
             .then(
-                if (borde) Modifier.border(1.dp, Color(0xFF2A2A32), RoundedCornerShape(radio))
+                if (borde) Modifier.border(1.dp, Linea, RoundedCornerShape(radio))
                 else Modifier
             )
             .padding(relleno),
@@ -113,7 +130,7 @@ fun Tarjeta(
 }
 
 /**
- * El boton principal: pastilla roja con la flecha en su circulito.
+ * El boton principal: bloque violeta con texto centrado y flecha vectorial.
  *
  * Solo deberia haber uno por pantalla. En cuanto hay dos, ninguno es el
  * principal.
@@ -127,27 +144,25 @@ fun BotonRojo(
     color: Color = Rojo
 ) {
     val fondo = if (habilitado) color else CarbonAlto
-    val tinta = if (habilitado) Color.White else HumoTenue
-    Row(
+    val tinta = if (habilitado) SobreAcento else HumoTenue
+    Box(
         modifier = modifier
             .fillMaxWidth()
-            .clip(RoundedCornerShape(50))
+            .clip(RoundedCornerShape(14.dp))
             .background(fondo)
             .clickable(enabled = habilitado, onClick = onClick)
-            .padding(start = 26.dp, end = 8.dp, top = 8.dp, bottom = 8.dp),
-        verticalAlignment = Alignment.CenterVertically,
-        horizontalArrangement = Arrangement.SpaceBetween
+            .padding(horizontal = 20.dp, vertical = 16.dp),
+        contentAlignment = Alignment.Center
     ) {
-        Titular(texto, estilo = MaterialTheme.typography.headlineSmall, color = tinta)
-        Box(
+        Text(texto, style = MaterialTheme.typography.titleSmall, color = tinta)
+        IconoSvg(
+            recurso = R.drawable.ic_arrow_right,
+            descripcion = null,
+            color = tinta,
             modifier = Modifier
-                .size(40.dp)
-                .clip(RoundedCornerShape(50))
-                .background(if (habilitado) Color.White else Color(0xFF2A2A32)),
-            contentAlignment = Alignment.Center
-        ) {
-            Text("→", style = MaterialTheme.typography.titleMedium, color = if (habilitado) fondo else HumoTenue)
-        }
+                .align(Alignment.CenterEnd)
+                .size(18.dp)
+        )
     }
 }
 
@@ -157,18 +172,18 @@ fun BotonBorde(
     texto: String,
     onClick: () -> Unit,
     modifier: Modifier = Modifier,
-    color: Color = Color.White
+    color: Color = Tinta
 ) {
     Box(
         modifier = modifier
             .fillMaxWidth()
-            .clip(RoundedCornerShape(50))
-            .border(1.5.dp, Color(0xFF2E2E38), RoundedCornerShape(50))
+            .clip(RoundedCornerShape(14.dp))
+            .border(1.dp, color.copy(alpha = 0.28f), RoundedCornerShape(14.dp))
             .clickable(onClick = onClick)
-            .padding(vertical = 17.dp),
+            .padding(vertical = 15.dp),
         contentAlignment = Alignment.Center
     ) {
-        Titular(texto, estilo = MaterialTheme.typography.headlineSmall, color = color)
+        Text(texto, style = MaterialTheme.typography.titleSmall, color = color)
     }
 }
 
@@ -176,9 +191,8 @@ fun BotonBorde(
  * La cabecera con degradado que abre cada pantalla.
  *
  * Aqui es donde la referencia pone una foto de gimnasio. Se ha resuelto con un
- * degradado granate y un resplandor rojo en diagonal en vez de con fotografia,
- * por dos razones: cualquier foto decente de banco de imagenes tiene licencia
- * detras, y un JPEG a pantalla completa pesa mas que todo el resto del APK.
+ * degradado lavanda y un resplandor violeta en vez de con fotografia, para
+ * mantener la interfaz ligera y el texto siempre legible.
  *
  * Si algun dia quieres tus propias fotos, este es el sitio: mete el drawable en
  * res/drawable y pinta aqui debajo una Image con ContentScale.Crop y el mismo
@@ -193,8 +207,7 @@ fun Cabecera(
     Box(modifier = modifier.fillMaxWidth().height(alto)) {
         Canvas(Modifier.fillMaxWidth().height(alto)) {
             drawRect(DegradadoCabecera)
-            // El resplandor: un circulo rojo muy difuminado abajo a la derecha,
-            // que es lo que da la sensacion de foco de sala de pesas.
+            // Resplandor violeta muy suave para separar visualmente la cabecera.
             drawCircle(
                 brush = Brush.radialGradient(
                     listOf(Rojo.copy(alpha = 0.42f), Color.Transparent),
@@ -209,7 +222,7 @@ fun Cabecera(
             var x = -size.height
             while (x < size.width + size.height) {
                 drawLine(
-                    color = Color.White.copy(alpha = 0.035f),
+                    color = Rojo.copy(alpha = 0.05f),
                     start = Offset(x, size.height),
                     end = Offset(x + size.height * 0.55f, 0f),
                     strokeWidth = 2.5f
@@ -241,7 +254,7 @@ fun FilaDatos(datos: List<Pair<String, String>>, modifier: Modifier = Modifier) 
                 )
             }
             if (i < datos.lastIndex) {
-                Box(Modifier.width(1.dp).height(34.dp).background(Color(0xFF2A2A32)))
+                Box(Modifier.width(1.dp).height(34.dp).background(Linea))
                 Spacer(Modifier.width(14.dp))
             }
         }
@@ -281,7 +294,7 @@ fun Chispa(
             moveTo(punto(0).x, punto(0).y)
             for (i in 1 until valores.size) lineTo(punto(i).x, punto(i).y)
         }
-        // El relleno bajo la linea, que es lo que le da cuerpo sobre negro.
+        // El relleno bajo la linea le da cuerpo sobre la tarjeta blanca.
         val relleno = Path().apply {
             addPath(linea)
             lineTo(size.width, size.height)
@@ -331,7 +344,7 @@ fun Barras(
                         .clip(RoundedCornerShape(6.dp))
                         .background(
                             when {
-                                v <= 0.0 -> Color(0xFF23232B)
+                                v <= 0.0 -> Linea
                                 i == resaltado -> Rojo
                                 else -> Rojo.copy(alpha = 0.45f)
                             }
@@ -341,31 +354,22 @@ fun Barras(
                 Text(
                     text = etiquetas.getOrElse(i) { "" },
                     style = MaterialTheme.typography.labelMedium,
-                    color = if (i == resaltado) Color.White else HumoTenue
+                    color = if (i == resaltado) Tinta else HumoTenue
                 )
             }
         }
     }
 }
 
-/**
- * La F de la marca, dibujada con el mismo trazado que el icono del lanzador.
- *
- * Se dibuja en vez de escribirse con la fuente para que sea identica al icono
- * pase lo que pase con la tipografia.
- */
+/** Marca compacta: la mancuerna CC0 de SVG Repo usada también en el lanzador. */
 @Composable
 fun LogoF(modifier: Modifier = Modifier, color: Color = Rojo) {
-    Canvas(modifier.size(26.dp)) {
-        val e = size.minDimension / 108f
-        val p = Path().apply {
-            moveTo(40 * e, 26 * e); lineTo(84 * e, 26 * e); lineTo(80 * e, 40 * e)
-            lineTo(51 * e, 40 * e); lineTo(48 * e, 52 * e); lineTo(73 * e, 52 * e)
-            lineTo(69 * e, 66 * e); lineTo(45 * e, 66 * e); lineTo(38 * e, 86 * e)
-            lineTo(23 * e, 86 * e); close()
-        }
-        drawPath(p, color)
-    }
+    IconoSvg(
+        recurso = R.drawable.ic_nav_exercises,
+        descripcion = null,
+        color = color,
+        modifier = modifier.size(26.dp)
+    )
 }
 
 
@@ -382,8 +386,8 @@ fun LogoF(modifier: Modifier = Modifier, color: Color = Rojo) {
  * miniaturas de las listas: doce imagenes moviendose a la vez en una pantalla
  * no ayudan a nada y se comen la bateria.
  *
- * El fondo va blanco porque las imagenes lo tienen blanco. Sobre negro se veria
- * un recuadro blanco flotando; asi parece una ficha, que es lo que es.
+ * El fondo va blanco porque las imagenes ya lo incorporan y asi se integran con
+ * las tarjetas del tema claro.
  */
 @Composable
 fun DemoEjercicio(
@@ -396,7 +400,7 @@ fun DemoEjercicio(
     Box(
         modifier = modifier
             .clip(RoundedCornerShape(radio))
-            .background(if (fotos == null) CarbonAlto else Color.White),
+            .background(if (fotos == null) CarbonAlto else Carbon),
         contentAlignment = Alignment.Center
     ) {
         if (fotos == null) {
@@ -414,13 +418,17 @@ fun DemoEjercicio(
             )
         } else {
             val tira = ImageBitmap.imageResource(fotos.tira)
-            var cuadro by remember(ejercicioId) { mutableIntStateOf(0) }
+            var transcurridoNanos by remember(ejercicioId) { mutableLongStateOf(0L) }
             LaunchedEffect(ejercicioId, fotos.fotogramas) {
+                val inicio = withFrameNanos { it }
                 while (true) {
-                    delay(110)
-                    cuadro = (cuadro + 1) % fotos.fotogramas
+                    withFrameNanos { ahora -> transcurridoNanos = ahora - inicio }
                 }
             }
+            val posicion = ((transcurridoNanos / 1_000_000_000f) * 8.5f) % fotos.fotogramas
+            val cuadro = floor(posicion).toInt()
+            val siguiente = (cuadro + 1) % fotos.fotogramas
+            val mezcla = posicion - cuadro
             Canvas(Modifier.fillMaxSize()) {
                 // Los cuadros son cuadrados. Se centra el mayor cuadrado que
                 // quepa para que la figura no salga estirada sea cual sea la
@@ -436,7 +444,20 @@ fun DemoEjercicio(
                         ((size.height - destino) / 2f).toInt()
                     ),
                     dstSize = IntSize(destino.toInt(), destino.toInt()),
-                    filterQuality = FilterQuality.High
+                    filterQuality = FilterQuality.High,
+                    alpha = 1f - mezcla
+                )
+                drawImage(
+                    image = tira,
+                    srcOffset = IntOffset(siguiente * lado, 0),
+                    srcSize = IntSize(lado, lado),
+                    dstOffset = IntOffset(
+                        ((size.width - destino) / 2f).toInt(),
+                        ((size.height - destino) / 2f).toInt()
+                    ),
+                    dstSize = IntSize(destino.toInt(), destino.toInt()),
+                    filterQuality = FilterQuality.High,
+                    alpha = mezcla
                 )
             }
         }
@@ -473,7 +494,7 @@ fun Aro(
         val lado = size.minDimension - grosor.toPx()
         val esquina = Offset(margen + (size.width - size.minDimension) / 2, margen)
         drawArc(
-            color = Color(0xFF23232B),
+            color = Linea,
             startAngle = -90f, sweepAngle = 360f, useCenter = false,
             topLeft = esquina, size = Size(lado, lado), style = trazo
         )

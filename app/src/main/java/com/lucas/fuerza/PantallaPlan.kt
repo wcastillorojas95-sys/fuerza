@@ -135,7 +135,7 @@ private fun TarjetaRutina(
                         .background(Rojo)
                         .padding(horizontal = 12.dp, vertical = 6.dp)
                 ) {
-                    Text("ACTIVA", style = MaterialTheme.typography.labelMedium, color = Color.White)
+                    Text("ACTIVA", style = MaterialTheme.typography.labelMedium, color = SobreAcento)
                 }
             }
         }
@@ -180,7 +180,7 @@ private fun TarjetaRutina(
                     Text(
                         d.nombre.uppercase(),
                         style = MaterialTheme.typography.labelLarge,
-                        color = Color.White
+                        color = Tinta
                     )
                     Spacer(Modifier.width(8.dp))
                     Text(

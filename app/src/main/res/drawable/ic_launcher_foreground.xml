@@ -1,16 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!--
-    La marca de Fuerza: una F pesada e inclinada hacia delante.
-
-    Va dentro de la zona segura del icono adaptativo (los 72dp centrales de 108)
-    para que ningun lanzador le corte un brazo al recortarla en circulo.
--->
+<!-- Mancuerna CC0 de SVG Repo (svg/287300), adaptada al icono de Android. -->
 <vector xmlns:android="http://schemas.android.com/apk/res/android"
     android:width="108dp"
     android:height="108dp"
-    android:viewportWidth="108"
-    android:viewportHeight="108">
-    <path
-        android:fillColor="#E11D2A"
-        android:pathData="M40,26 L84,26 L80,40 L51,40 L48,52 L73,52 L69,66 L45,66 L38,86 L23,86 Z" />
+    android:viewportWidth="512"
+    android:viewportHeight="512">
+    <group
+        android:scaleX="0.65"
+        android:scaleY="0.65"
+        android:translateX="89.6"
+        android:translateY="89.6">
+        <path android:fillColor="#FFFFFFFF" android:pathData="M0,239.305h512v33.391H0z" />
+        <path android:fillColor="#FFFFFFFF" android:pathData="M78.348,368.105c-24.843,0 -45.055,-20.216 -45.055,-45.066V188.951c0,-24.838 20.211,-45.045 45.055,-45.045c24.847,0 45.061,20.206 45.061,45.045v134.088c0,24.85 -20.214,45.066 -45.061,45.066z M146.209,412.537c-24.847,0 -45.061,-20.216 -45.061,-45.066v-222.94c0,-24.85 20.214,-45.066 45.061,-45.066s45.062,20.216 45.062,45.066v222.94c0,24.849 -20.215,45.066 -45.062,45.066z M433.65,368.105c-24.847,0 -45.061,-20.216 -45.061,-45.066V188.951c0,-24.838 20.214,-45.045 45.061,-45.045c24.843,0 45.055,20.206 45.055,45.045v134.088c0,24.85 -20.21,45.066 -45.055,45.066z M365.79,412.537c-24.847,0 -45.061,-20.216 -45.061,-45.066v-222.94c0,-24.85 20.214,-45.066 45.061,-45.066s45.061,20.216 45.061,45.066v222.94c0,24.849 -20.214,45.066 -45.061,45.066z" />
+    </group>
 </vector>

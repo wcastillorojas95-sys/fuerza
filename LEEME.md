@@ -12,8 +12,8 @@ pisarse. Fuerza no comparte código con ninguna: lo único que hereda es la form
 de trabajar (Kotlin, Compose, cero cuentas, APK por GitHub Actions) y las
 tipografías.
 
-Se distinguen a la primera en el cajón de aplicaciones: Foco es lila y de día,
-Hábitos es naranja y crudo, Fuerza es negra y roja.
+Se distinguen a la primera en el cajón de aplicaciones: Fuerza usa una interfaz
+clara, tarjetas blancas y un violeta deportivo como color principal.
 
 ## Privacidad
 
@@ -29,9 +29,10 @@ con los músculos que trabajan en rojo, sobre fondo blanco. Es el mismo estilo q
 usan las apps de gimnasio de pago.
 
 Van dentro del APK y funcionan sin cobertura. Los doce cuadros de cada ejercicio
-vienen en una sola imagen, uno al lado del otro, y la app dibuja el que toca en
-cada momento — así no hace falta una librería para leer GIF ni descomprimir doce
-bitmaps: se carga uno y ya. Los 82 ejercicios completos ocupan 3 MB.
+vienen en una sola imagen, uno al lado del otro. El reproductor sincroniza el
+movimiento con cada refresco de pantalla y mezcla el cuadro actual con el
+siguiente; así el movimiento se percibe continuo sin añadir un decodificador de
+GIF ni descomprimir doce bitmaps. Los 82 ejercicios completos ocupan 3 MB.
 
 Aparecen en tres sitios: miniatura quieta en el entreno de hoy y en cada fila del
 catálogo, y animada en grande al tocar la tarjeta de un ejercicio.
@@ -82,16 +83,11 @@ Va con un Intent y no con una API, y eso importa por tres cosas:
 Las fotos siguen siendo lo primero porque funcionan siempre. El vídeo es el paso
 siguiente, para cuando quieres ver el movimiento entero y tienes cobertura.
 
-## Las tipografías
+## La tipografía
 
-- **Bebas Neue** para los titulares. Es condensada y de caja alta — no tiene
-  minúsculas, y no le hacen falta. Un solo peso: pedirle un negrita haría que
-  Android se inventara uno engordando los trazos.
-- **Barlow** para el cuerpo y los datos. Misma familia grotesca, algo estrechada,
-  aire deportivo, y seis pesos con números de altura uniforme, que es lo que hace
-  falta cuando media pantalla son kilos y repeticiones.
-
-Las dos son SIL Open Font License; las licencias van en `tipografias/`.
+La interfaz usa **Barlow** en titulares, cuerpo y datos para mantener la jerarquía
+limpia y redondeada de la referencia. Es SIL Open Font License y su licencia va
+en `tipografias/`.
 
 ## Cómo se guardan los entrenos
 

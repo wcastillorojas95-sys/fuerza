@@ -3,7 +3,7 @@ package com.lucas.fuerza
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Typography
-import androidx.compose.material3.darkColorScheme
+import androidx.compose.material3.lightColorScheme
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Brush
@@ -15,27 +15,6 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.sp
 import androidx.compose.foundation.layout.fillMaxSize
 
-/**
- * El aspecto de Fuerza.
- *
- * Negro y rojo, sin modo claro. Foco es lila y de dia; Habitos es naranja y
- * crudo; esta va de sala de pesas a las seis de la manana. Las tres se
- * distinguen de un vistazo en el cajon de aplicaciones, que es justo lo que se
- * busca teniendo tres apps del mismo autor instaladas a la vez.
- *
- *  - Titulares: Bebas Neue. Es una condensada de caja alta -- no tiene
- *    minusculas, y no le hacen falta: los titulares de esta app van todos en
- *    mayusculas. Un solo peso, asi que la familia se declara con Normal y todos
- *    los estilos grandes lo usan; pedirle un Bold haria que Android se inventara
- *    uno engordando los trazos, que es lo que hace que una condensada se vea
- *    sucia.
- *  - Cuerpo y datos: Barlow. Es la companera natural de la Bebas -- misma
- *    familia grotesca, algo estrechada, aire deportivo -- y a diferencia de la
- *    Bebas trae seis pesos y numeros de altura uniforme, que es lo que hace
- *    falta cuando media pantalla son kilos y repeticiones.
- */
-val Titulares = FontFamily(Font(R.font.bebas_regular, FontWeight.Normal))
-
 val Cuerpo = FontFamily(
     Font(R.font.barlow_regular, FontWeight.Normal),
     Font(R.font.barlow_medium, FontWeight.Medium),
@@ -44,35 +23,28 @@ val Cuerpo = FontFamily(
     Font(R.font.barlow_extrabold, FontWeight.ExtraBold)
 )
 
+/** Una sola familia sans, limpia y amable como la referencia visual. */
+val Titulares = Cuerpo
+
 // ---------------------------------------------------------------- colores ---
 
-/** Fondo de la app. No es negro puro: el negro puro hace que los bordes de las
- *  tarjetas desaparezcan y la pantalla parezca un agujero. */
-val Negro = Color(0xFF08080A)
-
-/** Tarjetas. */
-val Carbon = Color(0xFF141418)
-
-/** Tarjetas que van encima de otra tarjeta, y campos de texto. */
-val CarbonAlto = Color(0xFF1E1E24)
-
-/** El rojo de la marca. */
-val Rojo = Color(0xFFE11D2A)
-
-/** El mismo rojo un punto mas encendido, para acentos pequenos sobre negro. */
-val RojoVivo = Color(0xFFFF3040)
-
-/** Rojo muy oscuro, casi granate: el que tine los degradados de cabecera. */
-val RojoHondo = Color(0xFF43070D)
-
-val Humo = Color(0xFF8E8E99)
-val HumoTenue = Color(0xFF5A5A66)
-
-/** Verde de "hoy toca" y de record batido. Se usa con cuentagotas. */
-val Verde = Color(0xFF39D98A)
+/** Nombres conservados para no mezclar el rediseño con cambios de dominio. */
+val Negro = Color(0xFFF5F6FA)
+val Carbon = Color(0xFFFFFFFF)
+val CarbonAlto = Color(0xFFF0F1F6)
+val Rojo = Color(0xFF7146E8)
+val RojoVivo = Color(0xFF815AF0)
+val RojoHondo = Color(0xFFE9E1FF)
+val Tinta = Color(0xFF151826)
+val Humo = Color(0xFF686D7C)
+val HumoTenue = Color(0xFF9A9EAA)
+val Linea = Color(0xFFE3E5EC)
+val VioletaSuave = Color(0xFFF0EBFF)
+val SobreAcento = Color.White
+val Verde = Color(0xFF20A66A)
 
 /**
- * El degradado de las cabeceras: granate arriba, negro abajo.
+ * El degradado lavanda de las cabeceras del tema claro.
  *
  * Se usa detras de los titulares grandes. Sustituye a la fotografia de la
  * referencia sin arrastrar el problema de la fotografia, que es de donde sale.
@@ -80,51 +52,45 @@ val Verde = Color(0xFF39D98A)
  * Componentes.kt.
  */
 val DegradadoCabecera = Brush.verticalGradient(
-    0f to RojoHondo,
-    0.55f to Color(0xFF1A0407),
+    0f to Color(0xFFEAE3FF),
+    0.58f to Color(0xFFF4F0FF),
     1f to Negro
 )
 
-private val EsquemaOscuro = darkColorScheme(
+private val EsquemaClaro = lightColorScheme(
     primary = Rojo,
-    onPrimary = Color.White,
+    onPrimary = SobreAcento,
     secondary = RojoVivo,
     background = Negro,
-    onBackground = Color.White,
+    onBackground = Tinta,
     surface = Carbon,
-    onSurface = Color.White,
+    onSurface = Tinta,
     surfaceVariant = CarbonAlto,
     onSurfaceVariant = Humo,
-    outline = Color(0xFF2A2A32),
+    outline = Linea,
     error = RojoVivo
 )
 
 private val Tipografia = Typography(
-    /*
-     * Los tamanos grandes suben respecto a la version anterior porque la Bebas
-     * es mucho mas estrecha: al mismo cuerpo ocupa un tercio menos de ancho y se
-     * queda pequena. El interlineado va casi igual al tamano porque en caja alta
-     * no hay nada que baje de la linea base.
-     */
     displayLarge = TextStyle(
-        fontFamily = Titulares, fontWeight = FontWeight.Normal,
-        fontSize = 54.sp, lineHeight = 52.sp, letterSpacing = 0.5.sp
+        fontFamily = Titulares, fontWeight = FontWeight.ExtraBold,
+        fontSize = 40.sp, lineHeight = 45.sp, letterSpacing = (-0.7).sp
     ),
     displayMedium = TextStyle(
-        fontFamily = Titulares, fontWeight = FontWeight.Normal,
-        fontSize = 41.sp, lineHeight = 41.sp, letterSpacing = 0.4.sp
+        fontFamily = Titulares, fontWeight = FontWeight.ExtraBold,
+        fontSize = 34.sp, lineHeight = 40.sp, letterSpacing = (-0.5).sp
     ),
     displaySmall = TextStyle(
-        fontFamily = Titulares, fontWeight = FontWeight.Normal,
-        fontSize = 31.sp, lineHeight = 32.sp, letterSpacing = 0.3.sp
+        fontFamily = Titulares, fontWeight = FontWeight.Bold,
+        fontSize = 28.sp, lineHeight = 33.sp, letterSpacing = (-0.35).sp
     ),
     headlineMedium = TextStyle(
-        fontFamily = Titulares, fontWeight = FontWeight.Normal,
-        fontSize = 25.sp, lineHeight = 26.sp, letterSpacing = 0.3.sp
+        fontFamily = Titulares, fontWeight = FontWeight.Bold,
+        fontSize = 23.sp, lineHeight = 28.sp, letterSpacing = (-0.2).sp
     ),
     headlineSmall = TextStyle(
-        fontFamily = Titulares, fontWeight = FontWeight.Normal,
-        fontSize = 20.sp, lineHeight = 22.sp, letterSpacing = 0.4.sp
+        fontFamily = Titulares, fontWeight = FontWeight.Bold,
+        fontSize = 19.sp, lineHeight = 24.sp
     ),
     titleMedium = TextStyle(
         fontFamily = Cuerpo, fontWeight = FontWeight.Bold,
@@ -146,24 +112,19 @@ private val Tipografia = Typography(
         fontFamily = Cuerpo, fontWeight = FontWeight.Normal,
         fontSize = 12.5.sp, lineHeight = 17.sp
     ),
-    /**
-     * Las etiquetitas en caja alta que van encima de cada dato
-     * ("RUTINA", "SIGUIENTE ENTRENO"). Van en Barlow y no en Bebas: a diez
-     * puntos, la Bebas se cierra tanto que deja de leerse.
-     */
     labelLarge = TextStyle(
         fontFamily = Cuerpo, fontWeight = FontWeight.Bold,
-        fontSize = 11.sp, lineHeight = 14.sp, letterSpacing = 1.4.sp
+        fontSize = 11.sp, lineHeight = 14.sp, letterSpacing = 0.7.sp
     ),
     labelMedium = TextStyle(
         fontFamily = Cuerpo, fontWeight = FontWeight.Bold,
-        fontSize = 10.sp, lineHeight = 13.sp, letterSpacing = 1.2.sp
+        fontSize = 10.sp, lineHeight = 13.sp, letterSpacing = 0.6.sp
     )
 )
 
 @Composable
 fun FuerzaTheme(contenido: @Composable () -> Unit) {
-    MaterialTheme(colorScheme = EsquemaOscuro, typography = Tipografia) {
+    MaterialTheme(colorScheme = EsquemaClaro, typography = Tipografia) {
         Surface(Modifier.fillMaxSize(), color = Negro) { contenido() }
     }
 }

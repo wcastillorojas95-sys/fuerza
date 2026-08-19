@@ -123,20 +123,21 @@ fun PantallaInicio(
                 Column(Modifier.padding(horizontal = 18.dp)) {
                     if (abierta != null) {
                         Tarjeta(color = Rojo) {
-                            Etiqueta("Entreno a medias", color = Color.White.copy(alpha = 0.75f))
+                            Etiqueta("Entreno a medias", color = SobreAcento.copy(alpha = 0.78f))
                             Spacer(Modifier.height(6.dp))
                             Titular(
                                 abierta.diaNombre.ifBlank { "Sesion libre" },
-                                estilo = MaterialTheme.typography.headlineMedium
+                                estilo = MaterialTheme.typography.headlineMedium,
+                                color = SobreAcento
                             )
                             Spacer(Modifier.height(4.dp))
                             Text(
                                 "${abierta.totalSeries} series anotadas. Puedes seguir donde lo dejaste.",
                                 style = MaterialTheme.typography.bodySmall,
-                                color = Color.White.copy(alpha = 0.85f)
+                                color = SobreAcento.copy(alpha = 0.88f)
                             )
                             Spacer(Modifier.height(14.dp))
-                            BotonBorde("Retomar", onClick = onRetomar, color = Color.White)
+                            BotonBorde("Retomar", onClick = onRetomar, color = SobreAcento)
                         }
                         Spacer(Modifier.height(14.dp))
                     }
@@ -233,7 +234,7 @@ private fun FilaBloque(bloque: Bloque) {
         Text(
             text = e?.nombre ?: bloque.ejercicioId,
             style = MaterialTheme.typography.titleSmall,
-            color = Color.White,
+            color = Tinta,
             modifier = Modifier.weight(1f)
         )
         Text(

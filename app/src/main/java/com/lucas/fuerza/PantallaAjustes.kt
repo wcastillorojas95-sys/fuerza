@@ -12,6 +12,7 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.statusBarsPadding
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
@@ -74,11 +75,16 @@ fun PantallaAjustes(ajustes: Ajustes, almacen: Almacen, refresco: Int) {
                             Text(
                                 o.etiqueta,
                                 style = MaterialTheme.typography.titleSmall,
-                                color = if (objetivo == o) Color.White else Humo,
+                                color = if (objetivo == o) Tinta else Humo,
                                 modifier = Modifier.weight(1f)
                             )
                             if (objetivo == o) {
-                                Text("●", style = MaterialTheme.typography.bodySmall, color = Rojo)
+                                IconoSvg(
+                                    recurso = R.drawable.ic_check,
+                                    descripcion = "Seleccionado",
+                                    color = Rojo,
+                                    modifier = Modifier.size(20.dp)
+                                )
                             }
                         }
                     }
@@ -128,7 +134,7 @@ fun PantallaAjustes(ajustes: Ajustes, almacen: Almacen, refresco: Int) {
                                 Text(
                                     "${limpio(v)} kg",
                                     style = MaterialTheme.typography.titleSmall,
-                                    color = if (incremento == v) Color.White else Humo
+                                    color = if (incremento == v) SobreAcento else Humo
                                 )
                             }
                         }
@@ -180,7 +186,7 @@ private fun Interruptor(
 ) {
     Row(verticalAlignment = Alignment.Top) {
         Column(Modifier.weight(1f).padding(end = 14.dp)) {
-            Text(titulo, style = MaterialTheme.typography.titleSmall, color = Color.White)
+            Text(titulo, style = MaterialTheme.typography.titleSmall, color = Tinta)
             Spacer(Modifier.height(4.dp))
             Text(detalle, style = MaterialTheme.typography.bodySmall, color = HumoTenue)
         }
@@ -188,11 +194,11 @@ private fun Interruptor(
             checked = activo,
             onCheckedChange = onCambio,
             colors = SwitchDefaults.colors(
-                checkedThumbColor = Color.White,
+                checkedThumbColor = SobreAcento,
                 checkedTrackColor = Rojo,
                 uncheckedThumbColor = Humo,
                 uncheckedTrackColor = CarbonAlto,
-                uncheckedBorderColor = Color(0xFF2E2E38)
+                uncheckedBorderColor = Linea
             )
         )
     }

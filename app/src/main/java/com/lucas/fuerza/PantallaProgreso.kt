@@ -195,14 +195,14 @@ fun PantallaProgreso(almacen: Almacen, refresco: Int) {
                             Modifier
                                 .width(3.dp).height(28.dp)
                                 .clip(RoundedCornerShape(50))
-                                .background(if (elegido == id) Rojo else Color(0xFF33333D))
+                                .background(if (elegido == id) Rojo else Linea)
                         )
                         Spacer(Modifier.width(12.dp))
                         Column(Modifier.weight(1f)) {
                             Text(
                                 e.nombre,
                                 style = MaterialTheme.typography.titleSmall,
-                                color = Color.White
+                                color = Tinta
                             )
                             Spacer(Modifier.height(2.dp))
                             Text(
@@ -237,7 +237,7 @@ fun PantallaProgreso(almacen: Almacen, refresco: Int) {
                                 Text(
                                     s.diaNombre.ifBlank { "Sesion libre" },
                                     style = MaterialTheme.typography.titleSmall,
-                                    color = Color.White
+                                    color = Tinta
                                 )
                                 Spacer(Modifier.height(2.dp))
                                 Text(

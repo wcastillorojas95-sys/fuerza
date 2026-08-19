@@ -20,9 +20,25 @@ licencia MIT, © 2026 Hasan Emir Yıldırım.
 Los nombres en español, las claves de técnica y las rutinas de esta app están
 escritos para ella.
 
+## Iconos
+
+Los iconos de navegación y acciones proceden de [SVG Repo](https://www.svgrepo.com/)
+y están publicados bajo **CC0**. Se adaptaron a Android Vector Drawable y se
+tintan desde Compose. Fuentes originales:
+
+- [Home](https://www.svgrepo.com/svg/508300/home)
+- [Calendar](https://www.svgrepo.com/svg/378967/calendar)
+- [Progress chart](https://www.svgrepo.com/svg/85526/progress-chart)
+- [Dumbbell](https://www.svgrepo.com/svg/287300/dumbbell)
+- [Settings](https://www.svgrepo.com/svg/511122/settings)
+- [Search](https://www.svgrepo.com/svg/450490/search)
+- [Close](https://www.svgrepo.com/svg/431530/close)
+- [Arrow right](https://www.svgrepo.com/svg/500330/arrow-right)
+- [Plus](https://www.svgrepo.com/svg/55490/plus), [minus](https://www.svgrepo.com/svg/353208/minus) y [check](https://www.svgrepo.com/svg/442465/check)
+- [Play](https://www.svgrepo.com/svg/159868/play)
+
 ## Tipografías
 
-- **Bebas Neue** — SIL Open Font License 1.1 (`tipografias/OFL-BebasNeue.txt`)
 - **Barlow** — SIL Open Font License 1.1 (`tipografias/OFL-Barlow.txt`)
 
 ## Vídeo

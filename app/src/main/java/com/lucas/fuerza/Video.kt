@@ -14,6 +14,7 @@ import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.BasicTextField
@@ -143,16 +144,17 @@ fun FilaVideo(ejercicio: Ejercicio, modifier: Modifier = Modifier) {
                 .padding(horizontal = 18.dp, vertical = 13.dp),
             verticalAlignment = Alignment.CenterVertically
         ) {
-            Text(
-                "▶",
-                style = MaterialTheme.typography.bodyMedium,
-                color = if (fijado != null) Color.White else Rojo
+            IconoSvg(
+                recurso = R.drawable.ic_play,
+                descripcion = null,
+                color = if (fijado != null) SobreAcento else Rojo,
+                modifier = Modifier.size(18.dp)
             )
             Spacer(Modifier.width(10.dp))
             Text(
                 if (fijado != null) "VER VIDEO" else "BUSCAR VIDEO EN YOUTUBE",
                 style = MaterialTheme.typography.labelLarge,
-                color = if (fijado != null) Color.White else Humo
+                color = if (fijado != null) SobreAcento else Humo
             )
         }
         Spacer(Modifier.width(10.dp))
@@ -240,7 +242,7 @@ private fun DialogoFijarVideo(
                         value = texto,
                         onValueChange = { texto = it; malo = false },
                         singleLine = true,
-                        textStyle = MaterialTheme.typography.bodyMedium.copy(color = Color.White),
+                        textStyle = MaterialTheme.typography.bodyMedium.copy(color = Tinta),
                         cursorBrush = SolidColor(Rojo),
                         modifier = Modifier.fillMaxWidth()
                     )

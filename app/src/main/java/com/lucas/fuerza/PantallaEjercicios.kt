@@ -1,6 +1,7 @@
 package com.lucas.fuerza
 
 import androidx.compose.foundation.background
+import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -129,12 +130,18 @@ fun Buscador(texto: String, onTexto: (String) -> Unit) {
     Row(
         modifier = Modifier
             .fillMaxWidth()
-            .clip(RoundedCornerShape(50))
-            .background(CarbonAlto)
+            .clip(RoundedCornerShape(14.dp))
+            .background(Carbon)
+            .border(1.dp, Linea, RoundedCornerShape(14.dp))
             .padding(horizontal = 18.dp, vertical = 14.dp),
         verticalAlignment = Alignment.CenterVertically
     ) {
-        Text("⌕", style = MaterialTheme.typography.titleMedium, color = HumoTenue)
+        IconoSvg(
+            recurso = R.drawable.ic_search,
+            descripcion = null,
+            color = HumoTenue,
+            modifier = Modifier.size(19.dp)
+        )
         Spacer(Modifier.width(10.dp))
         Box(Modifier.weight(1f)) {
             if (texto.isEmpty()) {
@@ -148,17 +155,20 @@ fun Buscador(texto: String, onTexto: (String) -> Unit) {
                 value = texto,
                 onValueChange = onTexto,
                 singleLine = true,
-                textStyle = MaterialTheme.typography.bodyMedium.copy(color = Color.White),
+                textStyle = MaterialTheme.typography.bodyMedium.copy(color = Tinta),
                 cursorBrush = SolidColor(Rojo),
                 modifier = Modifier.fillMaxWidth()
             )
         }
         if (texto.isNotEmpty()) {
-            Text(
-                "✕",
-                style = MaterialTheme.typography.bodyMedium,
+            IconoSvg(
+                recurso = R.drawable.ic_close,
+                descripcion = "Limpiar busqueda",
                 color = Humo,
-                modifier = Modifier.clickable { onTexto("") }.padding(start = 8.dp)
+                modifier = Modifier
+                    .padding(start = 8.dp)
+                    .size(18.dp)
+                    .clickable { onTexto("") }
             )
         }
     }
@@ -188,7 +198,7 @@ fun Chip(texto: String, activo: Boolean, onClick: () -> Unit) {
         Text(
             texto.uppercase(),
             style = MaterialTheme.typography.labelLarge,
-            color = if (activo) Color.White else Humo
+            color = if (activo) SobreAcento else Humo
         )
     }
 }
@@ -217,7 +227,7 @@ private fun FilaEjercicio(
                 Text(
                     ejercicio.nombre,
                     style = MaterialTheme.typography.titleMedium,
-                    color = Color.White
+                    color = Tinta
                 )
                 Spacer(Modifier.height(2.dp))
                 Text(
@@ -329,7 +339,7 @@ fun SelectorEjercicio(
                         Text(
                             e.nombre,
                             style = MaterialTheme.typography.titleSmall,
-                            color = if (puesto) HumoTenue else Color.White
+                            color = if (puesto) HumoTenue else Tinta
                         )
                         Spacer(Modifier.height(2.dp))
                         Text(
@@ -338,11 +348,16 @@ fun SelectorEjercicio(
                             color = HumoTenue
                         )
                     }
-                    Text(
-                        if (puesto) "puesto" else "+",
-                        style = MaterialTheme.typography.titleMedium,
-                        color = if (puesto) HumoTenue else Rojo
-                    )
+                    if (puesto) {
+                        Text("puesto", style = MaterialTheme.typography.bodySmall, color = HumoTenue)
+                    } else {
+                        IconoSvg(
+                            recurso = R.drawable.ic_plus,
+                            descripcion = "Anadir ${e.nombre}",
+                            color = Rojo,
+                            modifier = Modifier.size(22.dp)
+                        )
+                    }
                 }
             }
         }

@@ -87,7 +87,7 @@ propio vídeo.
 Sigue siendo todo local: nada de streaming, así que en el sótano funcionan
 igual. De dónde salen y qué hay que tener en cuenta está en `ATRIBUCION.md`.
 
-De los 95 del catálogo, **colgarse de la barra** se queda sin demostración porque
+De los 96 del catálogo, **colgarse de la barra** se queda sin demostración porque
 no hay ninguna equivalente en el conjunto de datos. La app lo dibuja con su hueco
 en vez de enseñar otro ejercicio distinto.
 

@@ -798,34 +798,64 @@ val CATALOGO: List<Ejercicio> = listOf(
         Dificultad.PRINCIPIANTE
     ),
     Ejercicio(
-        "plancha", "Plancha",
+        "plancha", "Plancha de antebrazos",
         Musculo.CORE, listOf(Musculo.HOMBRO), Equipo.CORPORAL, false,
-        "Mete la cadera y aprieta gluteo: una plancha bien hecha cansa en treinta segundos. Si aguantas tres minutos, la estas haciendo mal.",
-        Dificultad.PRINCIPIANTE
+        "Aprieta abdomen y gluteos para mantener el cuerpo en linea. La calidad de la posicion importa mas que aguantar mucho tiempo.",
+        Dificultad.PRINCIPIANTE,
+        pasos = listOf(
+            "Apoya los antebrazos con los codos directamente debajo de los hombros.",
+            "Extiende las piernas y deja solo las puntas de los pies en el suelo.",
+            "Contrae abdomen y gluteos para formar una linea recta con el cuerpo.",
+            "Manten la posicion sin elevar ni dejar caer la cadera."
+        )
     ),
     Ejercicio(
         "rueda_abdominal", "Rueda abdominal",
         Musculo.CORE, listOf(Musculo.ESPALDA), Equipo.CORPORAL, false,
         "Estira sin dejar que la lumbar se hunda. Empieza de rodillas y con poco recorrido.",
-        Dificultad.AVANZADO
+        Dificultad.INTERMEDIO,
+        pasos = listOf(
+            "Arrodillate y sujeta la rueda con ambas manos debajo de los hombros.",
+            "Aprieta el abdomen y los gluteos antes de iniciar el movimiento.",
+            "Desliza la rueda hacia delante sin dejar que la zona lumbar se hunda.",
+            "Detente dentro de un recorrido controlable y regresa lentamente."
+        )
     ),
     Ejercicio(
-        "elevacion_piernas", "Elevacion de piernas colgado",
+        "elevacion_piernas", "Elevacion de rodillas colgado",
         Musculo.CORE, listOf(Musculo.ANTEBRAZO), Equipo.CORPORAL, false,
-        "Rueda la pelvis al final, que es donde trabaja el abdominal; solo subir las piernas es flexor de cadera.",
-        Dificultad.INTERMEDIO
+        "Sube las rodillas sin balancearte y acerca la pelvis a las costillas en la parte alta para que el abdomen complete el movimiento.",
+        Dificultad.PRINCIPIANTE,
+        pasos = listOf(
+            "Cuelgate de la barra con los brazos extendidos y el cuerpo inmovil.",
+            "Lleva lentamente las rodillas hacia el pecho.",
+            "En la parte alta, acerca ligeramente la pelvis hacia las costillas.",
+            "Baja las piernas de forma controlada sin balancearte."
+        )
     ),
     Ejercicio(
-        "crunch_polea", "Crunch en polea",
+        "crunch_polea", "Crunch arrodillado en polea",
         Musculo.CORE, emptyList(), Equipo.POLEA, false,
-        "El unico abdominal al que puedes anadirle peso con facilidad. Redondea la espalda al bajar.",
-        Dificultad.PRINCIPIANTE
+        "Permite progresar la carga con precision. Acerca las costillas a la pelvis sin convertir el ejercicio en un movimiento de cadera.",
+        Dificultad.PRINCIPIANTE,
+        pasos = listOf(
+            "Coloca la polea arriba y sujeta la cuerda junto a la cabeza.",
+            "Arrodillate a una distancia que mantenga el cable tenso.",
+            "Acerca las costillas hacia la pelvis flexionando el torso.",
+            "Regresa lentamente sin tirar de la cuerda con los brazos."
+        )
     ),
     Ejercicio(
         "pallof", "Press Pallof",
         Musculo.CORE, listOf(Musculo.HOMBRO), Equipo.POLEA, false,
         "Antigiro: la polea intenta girarte y tu no la dejas. Poco espectacular y muy util.",
-        Dificultad.PRINCIPIANTE
+        Dificultad.PRINCIPIANTE,
+        pasos = listOf(
+            "Coloca la polea a la altura del pecho y situate de lado.",
+            "Sujeta el asa con ambas manos frente al esternon.",
+            "Contrae el abdomen y extiende los brazos sin girar el torso.",
+            "Haz una pausa y devuelve el asa al pecho con control."
+        )
     ),
     Ejercicio(
         "paseo_granjero", "Paseo del granjero",
@@ -837,7 +867,61 @@ val CATALOGO: List<Ejercicio> = listOf(
         "bicho_muerto", "Bicho muerto",
         Musculo.CORE, emptyList(), Equipo.CORPORAL, false,
         "Lumbar pegada al suelo todo el rato. En cuanto se despega, se acabo la serie.",
-        Dificultad.PRINCIPIANTE
+        Dificultad.PRINCIPIANTE,
+        pasos = listOf(
+            "Tumbate boca arriba con los brazos verticales y las rodillas flexionadas.",
+            "Presiona suavemente la zona lumbar contra el suelo.",
+            "Baja al mismo tiempo un brazo y la pierna contraria.",
+            "Regresa y alterna los lados sin permitir que se arquee la espalda."
+        )
+    ),
+    Ejercicio(
+        "giro_ruso_mancuerna", "Giro ruso con mancuerna",
+        Musculo.CORE, emptyList(), Equipo.MANCUERNA, false,
+        "Gira desde el torso y controla la carga. Apoya los talones si necesitas una base mas estable.",
+        Dificultad.INTERMEDIO,
+        pasos = listOf(
+            "Sientate con las rodillas flexionadas y el torso ligeramente inclinado.",
+            "Sujeta la mancuerna con ambas manos y manten el pecho elevado.",
+            "Gira el torso para llevar la carga hacia un lado.",
+            "Cambia de lado con control sin mover las rodillas."
+        )
+    ),
+    Ejercicio(
+        "elevaciones_piernas_tumbado", "Elevaciones de piernas tumbado",
+        Musculo.CORE, emptyList(), Equipo.CORPORAL, false,
+        "Eleva y baja las piernas sin perder el control de la pelvis. Reduce el recorrido si la zona lumbar empieza a arquearse.",
+        Dificultad.PRINCIPIANTE,
+        pasos = listOf(
+            "Tumbate boca arriba con los brazos a los lados y las piernas juntas.",
+            "Manten la zona lumbar controlada mientras elevas las piernas.",
+            "Sube hasta unos noventa grados o hasta tu maximo comodo.",
+            "Baja lentamente sin apoyar las piernas ni arquear la espalda."
+        )
+    ),
+    Ejercicio(
+        "crunch_abdominal", "Crunch abdominal",
+        Musculo.CORE, emptyList(), Equipo.CORPORAL, false,
+        "Eleva la cabeza y los hombros acercando las costillas a la pelvis. Las manos acompanan, pero no tiran del cuello.",
+        Dificultad.PRINCIPIANTE,
+        pasos = listOf(
+            "Tumbate con las rodillas flexionadas y los pies apoyados.",
+            "Coloca las manos junto a las sienes sin tirar del cuello.",
+            "Acerca las costillas hacia la pelvis elevando cabeza y hombros.",
+            "Baja lentamente hasta apoyar de nuevo la parte alta de la espalda."
+        )
+    ),
+    Ejercicio(
+        "plancha_lateral", "Plancha lateral sobre el antebrazo",
+        Musculo.CORE, listOf(Musculo.HOMBRO), Equipo.CORPORAL, false,
+        "Manten la cadera elevada y el pecho estable. Es una forma sencilla de entrenar los oblicuos sin doblar la columna.",
+        Dificultad.PRINCIPIANTE,
+        pasos = listOf(
+            "Colocate de lado con el codo inferior debajo del hombro.",
+            "Extiende las piernas y apila o escalona los pies.",
+            "Eleva la cadera hasta formar una linea recta con el cuerpo.",
+            "Manten el pecho estable, completa el tiempo y cambia de lado."
+        )
     ),
     Ejercicio(
         "curl_muneca", "Curl de muneca",

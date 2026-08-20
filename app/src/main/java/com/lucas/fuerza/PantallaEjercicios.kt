@@ -88,6 +88,7 @@ fun filtrarCatalogo(texto: String, f: Filtros = Filtros()): List<Ejercicio> {
                 sinAcentos(e.nombre).contains(q) ||
                 sinAcentos(e.musculo.etiqueta).contains(q) ||
                 sinAcentos(e.equipo.etiqueta).contains(q) ||
+                (e.musculo == Musculo.CORE && q in setOf("abs", "abdomen", "core")) ||
                 e.secundarios.any { sinAcentos(it.etiqueta).contains(q) })
     }
 }

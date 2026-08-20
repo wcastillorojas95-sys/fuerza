@@ -17,7 +17,7 @@ enum class Musculo(val etiqueta: String) {
     FEMORAL("Femoral"),
     GLUTEO("Gluteo"),
     GEMELO("Gemelo"),
-    CORE("Core"),
+    CORE("Abdominales"),
     ANTEBRAZO("Antebrazo"),
     TRAPECIO("Trapecio")
 }
@@ -630,46 +630,124 @@ val CATALOGO: List<Ejercicio> = listOf(
         )
     ),
     Ejercicio(
-        "press_frances", "Press frances",
-        Musculo.TRICEPS, emptyList(), Equipo.BARRA, false,
-        "Los codos apuntan al techo y no se abren. Baja a la frente o justo por detras.",
-        Dificultad.INTERMEDIO
+        "press_frances", "Extension de triceps con mancuernas",
+        Musculo.TRICEPS, emptyList(), Equipo.MANCUERNA, false,
+        "Los brazos superiores apuntan al techo y permanecen quietos. Solo se flexionan y extienden los codos.",
+        Dificultad.PRINCIPIANTE,
+        pasos = listOf(
+            "Tumbate y extiende las mancuernas sobre el pecho con agarre neutro.",
+            "Manten los brazos superiores apuntando hacia el techo.",
+            "Flexiona los codos hasta acercar las mancuernas a las sienes.",
+            "Extiende los codos y contrae los triceps sin separar los brazos."
+        )
     ),
     Ejercicio(
-        "extension_polea", "Extension de triceps en polea",
+        "extension_polea", "Extension de triceps en polea con barra",
         Musculo.TRICEPS, emptyList(), Equipo.POLEA, false,
         "Codos pegados al costado. Solo se mueve el antebrazo; el hombro es una bisagra fija.",
-        Dificultad.PRINCIPIANTE
+        Dificultad.PRINCIPIANTE,
+        pasos = listOf(
+            "Coloca la polea arriba y toma la barra con agarre prono.",
+            "Fija los brazos superiores junto al torso.",
+            "Extiende los codos hasta llevar la barra hacia los muslos.",
+            "Regresa lentamente sin permitir que los codos se adelanten."
+        )
     ),
     Ejercicio(
-        "extension_cuerda", "Extension con cuerda",
+        "extension_cuerda", "Extension de triceps en polea con cuerda",
         Musculo.TRICEPS, emptyList(), Equipo.POLEA, false,
         "Abre la cuerda al final del recorrido para rematar la cabeza lateral.",
-        Dificultad.PRINCIPIANTE
+        Dificultad.PRINCIPIANTE,
+        pasos = listOf(
+            "Coloca la polea en la posicion alta y sujeta la cuerda.",
+            "Manten los codos pegados al costado y el torso estable.",
+            "Extiende los brazos y separa los extremos de la cuerda al final.",
+            "Flexiona los codos lentamente sin mover los hombros."
+        )
     ),
     Ejercicio(
         "fondos_banco", "Fondos en banco",
-        Musculo.TRICEPS, listOf(Musculo.HOMBRO), Equipo.CORPORAL, false,
+        Musculo.TRICEPS, listOf(Musculo.HOMBRO), Equipo.CORPORAL, true,
         "Facil de cargar poniendo peso en las piernas. Ojo al hombro: no bajes por debajo de los 90 grados.",
-        Dificultad.PRINCIPIANTE
+        Dificultad.PRINCIPIANTE,
+        pasos = listOf(
+            "Apoya las manos en el borde del banco y adelanta los pies.",
+            "Manten la cadera cerca del banco mientras flexionas los codos.",
+            "Baja hasta un recorrido comodo sin forzar los hombros.",
+            "Empuja el banco para extender los brazos y regresar."
+        )
     ),
     Ejercicio(
         "press_cerrado", "Press de banca agarre cerrado",
         Musculo.TRICEPS, listOf(Musculo.PECHO, Musculo.HOMBRO), Equipo.BARRA, true,
         "Manos a la anchura de los hombros, ni mas juntas. Codos pegados al cuerpo al bajar.",
-        Dificultad.INTERMEDIO
+        Dificultad.INTERMEDIO,
+        pasos = listOf(
+            "Tumbate con los pies apoyados y toma la barra aproximadamente al ancho de los hombros.",
+            "Saca la barra manteniendo las escapulas estables.",
+            "Baja hacia la parte media-baja del pecho con los codos cerca del cuerpo.",
+            "Empuja la barra hasta extender los brazos sin perder la posicion."
+        )
     ),
     Ejercicio(
         "patada_triceps", "Patada de triceps",
         Musculo.TRICEPS, emptyList(), Equipo.MANCUERNA, false,
         "Torso paralelo al suelo, brazo pegado. Poco peso y bloqueo completo arriba.",
-        Dificultad.PRINCIPIANTE
+        Dificultad.PRINCIPIANTE,
+        pasos = listOf(
+            "Inclina el torso y apoya la mano libre para estabilizarte.",
+            "Lleva el brazo de trabajo junto al torso con el codo flexionado.",
+            "Extiende el codo hasta dejar el brazo recto detras del cuerpo.",
+            "Regresa lentamente sin dejar caer el brazo superior."
+        )
     ),
     Ejercicio(
-        "extension_sobre_cabeza", "Extension sobre la cabeza",
+        "extension_sobre_cabeza", "Extension de triceps sobre la cabeza con mancuerna",
         Musculo.TRICEPS, emptyList(), Equipo.MANCUERNA, false,
         "Con el brazo por encima de la cabeza estiras la cabeza larga del triceps, que es la mas grande y la que casi nadie trabaja.",
-        Dificultad.PRINCIPIANTE
+        Dificultad.PRINCIPIANTE,
+        pasos = listOf(
+            "Sujeta una mancuerna con ambas manos por encima de la cabeza.",
+            "Manten los codos orientados hacia delante y cerca de la cabeza.",
+            "Flexiona los codos para bajar la mancuerna detras de la cabeza.",
+            "Extiende los brazos hasta volver arriba sin arquear la espalda."
+        )
+    ),
+    Ejercicio(
+        "extension_triceps_cuerda_sobre_cabeza", "Extension de triceps sobre la cabeza con cuerda",
+        Musculo.TRICEPS, emptyList(), Equipo.POLEA, false,
+        "La posicion por encima de la cabeza mantiene estirada la cabeza larga. Conserva los codos cerca de la cabeza durante todo el recorrido.",
+        Dificultad.PRINCIPIANTE,
+        pasos = listOf(
+            "Coloca la polea abajo, toma la cuerda y ponte de espaldas a la maquina.",
+            "Lleva los codos junto a la cabeza y adopta una base estable.",
+            "Extiende los codos hasta que las manos queden por encima de la cabeza.",
+            "Vuelve lentamente hasta sentir el estiramiento del triceps."
+        )
+    ),
+    Ejercicio(
+        "extension_triceps_unilateral_cuerda", "Extension unilateral de triceps con cuerda",
+        Musculo.TRICEPS, emptyList(), Equipo.POLEA, false,
+        "Trabaja cada brazo por separado y evita que el lado fuerte compense. El hombro permanece quieto junto al cuerpo.",
+        Dificultad.PRINCIPIANTE,
+        pasos = listOf(
+            "Coloca la polea arriba y toma un extremo de la cuerda con una mano.",
+            "Manten el brazo superior pegado al costado.",
+            "Extiende completamente el codo sin girar ni inclinar el torso.",
+            "Regresa con control y repite el mismo trabajo con el otro brazo."
+        )
+    ),
+    Ejercicio(
+        "flexiones_diamante", "Flexiones en diamante",
+        Musculo.TRICEPS, listOf(Musculo.PECHO, Musculo.HOMBRO), Equipo.CORPORAL, true,
+        "Las manos juntas y los codos cerca del cuerpo aumentan el trabajo del triceps. Manten el cuerpo alineado como en cualquier flexion.",
+        Dificultad.PRINCIPIANTE,
+        pasos = listOf(
+            "Coloca indices y pulgares juntos formando un diamante.",
+            "Extiende el cuerpo en posicion de flexion y contrae el abdomen.",
+            "Baja el pecho hacia las manos manteniendo los codos cerca del cuerpo.",
+            "Empuja el suelo hasta extender los brazos sin perder la postura."
+        )
     ),
     Ejercicio(
         "sentadilla", "Sentadilla con barra",

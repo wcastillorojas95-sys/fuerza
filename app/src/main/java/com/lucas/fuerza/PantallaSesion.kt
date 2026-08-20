@@ -365,7 +365,11 @@ private fun TarjetaEjercicio(
             Spacer(Modifier.height(12.dp))
             if (datos != null) {
                 DemostracionYVideo(datos, alto = 230.dp) {
-                    Spacer(Modifier.height(10.dp))
+                    if (datos.pasos.isNotEmpty()) {
+                        Spacer(Modifier.height(18.dp))
+                        Pasos(datos.pasos)
+                    }
+                    Spacer(Modifier.height(14.dp))
                     Text(
                         datos.claves,
                         style = MaterialTheme.typography.bodyMedium,

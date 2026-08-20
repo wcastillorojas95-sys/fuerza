@@ -406,7 +406,11 @@ private fun FilaEjercicio(
         if (desplegado) {
             Spacer(Modifier.height(14.dp))
             DemostracionYVideo(ejercicio) {
-                Spacer(Modifier.height(12.dp))
+                if (ejercicio.pasos.isNotEmpty()) {
+                    Spacer(Modifier.height(18.dp))
+                    Pasos(ejercicio.pasos)
+                }
+                Spacer(Modifier.height(16.dp))
                 Text(
                     ejercicio.claves,
                     style = MaterialTheme.typography.bodyMedium,

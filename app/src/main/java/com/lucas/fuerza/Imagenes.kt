@@ -87,7 +87,6 @@ private val CUATRO_POSES = listOf(1000, 500, 500, 1000)
 val FOTOGRAMAS: Map<String, Fotos> = mapOf(
     "abduccion_maquina" to Fotos(R.drawable.ej_abduccion_maquina_tira, R.drawable.ej_abduccion_maquina_m, DOS_POSES),
     "aperturas_mancuerna" to Fotos(R.drawable.ej_aperturas_mancuerna_tira, R.drawable.ej_aperturas_mancuerna_m, DOS_POSES),
-    "aperturas_polea" to Fotos(R.drawable.ej_aperturas_polea_tira, R.drawable.ej_aperturas_polea_m, DOS_POSES),
     "bicho_muerto" to Fotos(R.drawable.ej_bicho_muerto_tira, R.drawable.ej_bicho_muerto_m, DOS_POSES),
     "buenos_dias" to Fotos(R.drawable.ej_buenos_dias_tira, R.drawable.ej_buenos_dias_m, DOS_POSES),
     "bulgara" to Fotos(R.drawable.ej_bulgara_tira, R.drawable.ej_bulgara_m, DOS_POSES),
@@ -97,8 +96,6 @@ val FOTOGRAMAS: Map<String, Fotos> = mapOf(
     "curl_femoral_sentado" to Fotos(R.drawable.ej_curl_femoral_sentado_tira, R.drawable.ej_curl_femoral_sentado_m, DOS_POSES),
     "curl_femoral_tumbado" to Fotos(R.drawable.ej_curl_femoral_tumbado_tira, R.drawable.ej_curl_femoral_tumbado_m, DOS_POSES),
     "curl_inclinado" to Fotos(R.drawable.ej_curl_inclinado_tira, R.drawable.ej_curl_inclinado_m, DOS_POSES),
-    "curl_mancuernas" to Fotos(R.drawable.ej_curl_mancuernas_tira, R.drawable.ej_curl_mancuernas_m, DOS_POSES),
-    "curl_martillo" to Fotos(R.drawable.ej_curl_martillo_tira, R.drawable.ej_curl_martillo_m, DOS_POSES),
     "curl_muneca" to Fotos(R.drawable.ej_curl_muneca_tira, R.drawable.ej_curl_muneca_m, DOS_POSES),
     "curl_polea" to Fotos(R.drawable.ej_curl_polea_tira, R.drawable.ej_curl_polea_m, DOS_POSES),
     "curl_predicador" to Fotos(R.drawable.ej_curl_predicador_tira, R.drawable.ej_curl_predicador_m, DOS_POSES),
@@ -114,9 +111,7 @@ val FOTOGRAMAS: Map<String, Fotos> = mapOf(
     "extension_polea" to Fotos(R.drawable.ej_extension_polea_tira, R.drawable.ej_extension_polea_m, DOS_POSES),
     "extension_sobre_cabeza" to Fotos(R.drawable.ej_extension_sobre_cabeza_tira, R.drawable.ej_extension_sobre_cabeza_m, DOS_POSES),
     "face_pull" to Fotos(R.drawable.ej_face_pull_tira, R.drawable.ej_face_pull_m, DOS_POSES),
-    "flexiones" to Fotos(R.drawable.ej_flexiones_tira, R.drawable.ej_flexiones_m, DOS_POSES),
     "fondos_banco" to Fotos(R.drawable.ej_fondos_banco_tira, R.drawable.ej_fondos_banco_m, DOS_POSES),
-    "fondos_pecho" to Fotos(R.drawable.ej_fondos_pecho_tira, R.drawable.ej_fondos_pecho_m, DOS_POSES),
     "gemelo_de_pie" to Fotos(R.drawable.ej_gemelo_de_pie_tira, R.drawable.ej_gemelo_de_pie_m, DOS_POSES),
     "gemelo_prensa" to Fotos(R.drawable.ej_gemelo_prensa_tira, R.drawable.ej_gemelo_prensa_m, DOS_POSES),
     "gemelo_sentado" to Fotos(R.drawable.ej_gemelo_sentado_tira, R.drawable.ej_gemelo_sentado_m, DOS_POSES),
@@ -138,16 +133,13 @@ val FOTOGRAMAS: Map<String, Fotos> = mapOf(
     "plancha" to Fotos(R.drawable.ej_plancha_tira, R.drawable.ej_plancha_m, PLANCHA),
     "prensa" to Fotos(R.drawable.ej_prensa_tira, R.drawable.ej_prensa_m, DOS_POSES),
     "press_arnold" to Fotos(R.drawable.ej_press_arnold_tira, R.drawable.ej_press_arnold_m, DOS_POSES),
-    "press_banca" to Fotos(R.drawable.ej_press_banca_tira, R.drawable.ej_press_banca_m, DOS_POSES),
     "press_banca_declinado" to Fotos(R.drawable.ej_press_banca_declinado_tira, R.drawable.ej_press_banca_declinado_m, DOS_POSES),
     "press_banca_inclinado" to Fotos(R.drawable.ej_press_banca_inclinado_tira, R.drawable.ej_press_banca_inclinado_m, DOS_POSES),
     "press_cerrado" to Fotos(R.drawable.ej_press_cerrado_tira, R.drawable.ej_press_cerrado_m, DOS_POSES),
     "press_frances" to Fotos(R.drawable.ej_press_frances_tira, R.drawable.ej_press_frances_m, DOS_POSES),
     "press_hombro_mancuernas" to Fotos(R.drawable.ej_press_hombro_mancuernas_tira, R.drawable.ej_press_hombro_mancuernas_m, DOS_POSES),
     "press_hombro_maquina" to Fotos(R.drawable.ej_press_hombro_maquina_tira, R.drawable.ej_press_hombro_maquina_m, DOS_POSES),
-    "press_incl_mancuernas" to Fotos(R.drawable.ej_press_incl_mancuernas_tira, R.drawable.ej_press_incl_mancuernas_m, DOS_POSES),
     "press_mancuernas" to Fotos(R.drawable.ej_press_mancuernas_tira, R.drawable.ej_press_mancuernas_m, DOS_POSES),
-    "press_maquina_pecho" to Fotos(R.drawable.ej_press_maquina_pecho_tira, R.drawable.ej_press_maquina_pecho_m, DOS_POSES),
     "press_militar" to Fotos(R.drawable.ej_press_militar_tira, R.drawable.ej_press_militar_m, DOS_POSES),
     "puente_gluteo" to Fotos(R.drawable.ej_puente_gluteo_tira, R.drawable.ej_puente_gluteo_m, CUATRO_POSES),
     "pullover" to Fotos(R.drawable.ej_pullover_tira, R.drawable.ej_pullover_m, DOS_POSES),
@@ -172,5 +164,56 @@ val FOTOGRAMAS: Map<String, Fotos> = mapOf(
 /** El credito que exige la licencia de las imagenes. Va visible en pantalla. */
 const val CREDITO_IMAGENES = "\u00a9 Gym visual - gymvisual.com"
 
+/** Fuente de los MP4 locales. La marca tambien permanece dentro del video. */
+const val CREDITO_VIDEOS = "Video: MuscleWiki - musclewiki.com"
+
 /** Las fotos de un ejercicio, o null si es uno que no tiene. */
 fun fotogramasDe(id: String): Fotos? = FOTOGRAMAS[id]
+
+// ------------------------------------------------------------------ video ---
+
+/**
+ * La demostracion en video de un ejercicio.
+ *
+ * [video] es el archivo dentro del APK y [mini] un cuadro suelto para las
+ * listas, sacado del propio video.
+ */
+class DemoVideo(val video: Int, val mini: Int)
+
+/**
+ * Los ejercicios que tienen video de verdad.
+ *
+ * Un video pesa unos cientos de KB y sustituye por completo al dibujo de dos poses:
+ * ahi hay una persona haciendo el movimiento entero, con su ritmo, y no dos
+ * fotos fundiendose. Cuando un ejercicio esta aqui, su entrada en [FOTOGRAMAS]
+ * sobra y se quita.
+ *
+ * Van dentro del APK, sin streaming y sin depender de nadie: siguen funcionando
+ * en un gimnasio de sotano, que es la razon por la que las demostraciones no se
+ * bajan de internet.
+ */
+val VIDEOS: Map<String, DemoVideo> = mapOf(
+    "press_banca" to DemoVideo(R.raw.press_banca, R.drawable.vm_press_banca),
+    "press_suelo_mancuernas" to DemoVideo(R.raw.press_suelo_mancuernas, R.drawable.vm_press_suelo_mancuernas),
+    "press_incl_mancuernas" to DemoVideo(R.raw.press_incl_mancuernas, R.drawable.vm_press_incl_mancuernas),
+    "flexiones_declinadas" to DemoVideo(R.raw.flexiones_declinadas, R.drawable.vm_flexiones_declinadas),
+    "press_maquina_pecho" to DemoVideo(R.raw.press_maquina_pecho, R.drawable.vm_press_maquina_pecho),
+    "press_pecho_banda" to DemoVideo(R.raw.press_pecho_banda, R.drawable.vm_press_pecho_banda),
+    "aperturas_polea" to DemoVideo(R.raw.aperturas_polea, R.drawable.vm_aperturas_polea),
+    "aperturas_banda_unilateral" to DemoVideo(R.raw.aperturas_banda_unilateral, R.drawable.vm_aperturas_banda_unilateral),
+    "flexiones" to DemoVideo(R.raw.flexiones, R.drawable.vm_flexiones),
+    "flexiones_banda" to DemoVideo(R.raw.flexiones_banda, R.drawable.vm_flexiones_banda),
+    "fondos_pecho" to DemoVideo(R.raw.fondos_pecho, R.drawable.vm_fondos_pecho),
+    "flexiones_diamante_peso" to DemoVideo(R.raw.flexiones_diamante_peso, R.drawable.vm_flexiones_diamante_peso),
+    "curl_mancuernas" to DemoVideo(R.raw.curl_mancuernas, R.drawable.vm_curl_mancuernas),
+    "curl_martillo" to DemoVideo(R.raw.curl_martillo, R.drawable.vm_curl_martillo),
+    "curl_inverso_mancuernas" to DemoVideo(R.raw.curl_inverso_mancuernas, R.drawable.vm_curl_inverso_mancuernas),
+    "curl_giratorio_polea" to DemoVideo(R.raw.curl_giratorio_polea, R.drawable.vm_curl_giratorio_polea),
+    "curl_invertido_barra" to DemoVideo(R.raw.curl_invertido_barra, R.drawable.vm_curl_invertido_barra),
+    "curl_polea_alta" to DemoVideo(R.raw.curl_polea_alta, R.drawable.vm_curl_polea_alta),
+    "curl_bayesian" to DemoVideo(R.raw.curl_bayesian, R.drawable.vm_curl_bayesian),
+    "curl_martillo_polea" to DemoVideo(R.raw.curl_martillo_polea, R.drawable.vm_curl_martillo_polea)
+)
+
+/** El video de un ejercicio, o null si todavia no tiene. */
+fun videoDe(id: String): DemoVideo? = VIDEOS[id]

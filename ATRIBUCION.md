@@ -12,6 +12,20 @@ de mantener el crédito visible.
 La app cumple las dos condiciones: las imágenes van a su resolución original sin
 escalar, y el crédito aparece bajo cada demostración (`CreditoImagenes()`).
 
+## Vídeos de demostración
+
+Los `.mp4` de `res/raw/` son de **MuscleWiki** — llevan su marca dentro del
+propio vídeo y no se recorta.
+
+Hay que decirlo claro: los [términos de su API](https://api.musclewiki.com/api-terms)
+prohíben descargar y re-alojar sus vídeos, y esto es exactamente eso. Este APK
+se instala a mano en un teléfono y no se distribuye, así que es un asunto entre
+su dueño y ellos; **para publicar la app en cualquier tienda esto es un bloqueo
+que hay que resolver antes**, sacando licencia de su API o grabando los vídeos.
+
+El mecanismo que los reproduce sirve para cualquier `.mp4`, incluido uno grabado
+por ti. Sustituir los archivos no toca ni una línea de código.
+
 ## Datos del catálogo
 
 Los nombres, categorías, material e instrucciones del conjunto de datos van bajo

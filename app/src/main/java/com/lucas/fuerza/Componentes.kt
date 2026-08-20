@@ -1,5 +1,7 @@
 package com.lucas.fuerza
 
+import android.net.Uri
+import android.widget.VideoView
 import androidx.annotation.DrawableRes
 import androidx.compose.foundation.Canvas
 import androidx.compose.foundation.Image
@@ -48,6 +50,7 @@ import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.IntOffset
 import androidx.compose.ui.unit.IntSize
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.viewinterop.AndroidView
 
 /**
  * Un titular de los grandes.
@@ -398,14 +401,51 @@ fun DemoEjercicio(
     animar: Boolean = true,
     radio: Dp = 16.dp
 ) {
+    val video = videoDe(ejercicioId)
     val fotos = fotogramasDe(ejercicioId)
     Box(
         modifier = modifier
             .clip(RoundedCornerShape(radio))
-            .background(if (fotos == null) CarbonAlto else Carbon),
+            .background(
+                when {
+                    video != null && animar -> Tinta
+                    video != null || fotos != null -> Carbon
+                    else -> CarbonAlto
+                }
+            ),
         contentAlignment = Alignment.Center
     ) {
-        if (fotos == null) {
+        if (video != null) {
+            // Quieto en las listas, en marcha cuando ocupa la pantalla: varios
+            // videos reproduciendose a la vez en un catalogo no ayudan a nada.
+            if (animar) {
+                AndroidView(
+                    modifier = Modifier.fillMaxSize(),
+                    factory = { ctx ->
+                        VideoView(ctx).apply {
+                            setVideoURI(
+                                Uri.parse("android.resource://${ctx.packageName}/${video.video}")
+                            )
+                            setOnPreparedListener { reproductor ->
+                                reproductor.isLooping = true
+                                // Mudo: esto se mira de reojo entre serie y
+                                // serie, no se escucha.
+                                reproductor.setVolume(0f, 0f)
+                                start()
+                            }
+                        }
+                    },
+                    onRelease = { it.stopPlayback() }
+                )
+            } else {
+                Image(
+                    painter = painterResource(video.mini),
+                    contentDescription = null,
+                    contentScale = ContentScale.Crop,
+                    modifier = Modifier.fillMaxSize()
+                )
+            }
+        } else if (fotos == null) {
             Text(
                 "SIN DEMO",
                 style = MaterialTheme.typography.labelMedium,
@@ -469,6 +509,48 @@ fun DemoEjercicio(
 }
 
 /**
+ * Los pasos del movimiento, numerados.
+ *
+ * Van encima de las claves y no debajo por un motivo: los pasos se leen una vez
+ * -- cuando el ejercicio es nuevo para ti -- y las claves se leen mil, entre
+ * serie y serie. Lo que se consulta a diario tiene que quedar lo mas cerca
+ * posible del final, que es donde para el dedo al desplazar.
+ */
+@Composable
+fun Pasos(pasos: List<String>, modifier: Modifier = Modifier) {
+    if (pasos.isEmpty()) return
+    Column(modifier) {
+        Etiqueta("Como se hace", color = Rojo)
+        Spacer(Modifier.height(12.dp))
+        pasos.forEachIndexed { i, texto ->
+            Row(verticalAlignment = Alignment.Top) {
+                Box(
+                    modifier = Modifier
+                        .size(22.dp)
+                        .clip(RoundedCornerShape(50))
+                        .background(VioletaSuave),
+                    contentAlignment = Alignment.Center
+                ) {
+                    Text(
+                        "${i + 1}",
+                        style = MaterialTheme.typography.labelMedium,
+                        color = Rojo
+                    )
+                }
+                Spacer(Modifier.width(12.dp))
+                Text(
+                    texto,
+                    style = MaterialTheme.typography.bodyMedium,
+                    color = Humo,
+                    modifier = Modifier.weight(1f)
+                )
+            }
+            if (i < pasos.lastIndex) Spacer(Modifier.height(11.dp))
+        }
+    }
+}
+
+/**
  * El credito de las imagenes.
  *
  * No es decoracion: la licencia con la que se pueden usar estas demostraciones
@@ -478,6 +560,17 @@ fun DemoEjercicio(
 fun CreditoImagenes(modifier: Modifier = Modifier) {
     Text(
         text = CREDITO_IMAGENES,
+        style = MaterialTheme.typography.labelMedium,
+        color = HumoTenue,
+        modifier = modifier
+    )
+}
+
+/** Fuente visible de las demostraciones locales en video. */
+@Composable
+fun CreditoVideos(modifier: Modifier = Modifier) {
+    Text(
+        text = CREDITO_VIDEOS,
         style = MaterialTheme.typography.labelMedium,
         color = HumoTenue,
         modifier = modifier

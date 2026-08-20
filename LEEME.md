@@ -76,7 +76,18 @@ color en cada cruce. Eso era el titileo.
 
 Van dentro del APK y funcionan sin cobertura.
 
-De los 83 del catálogo, **colgarse de la barra** se queda sin demostración porque
+### Los que ya tienen vídeo
+
+Un ejercicio con vídeo no usa nada de lo anterior: ahí hay una persona haciendo
+el movimiento entero, en bucle y sin sonido, en vez de dos poses fundiéndose.
+Cuesta unos cientos de KB por ejercicio y se lleva por delante el dibujo, que se borra
+en cuanto entra el vídeo — la miniatura de las listas sale de un fotograma del
+propio vídeo.
+
+Sigue siendo todo local: nada de streaming, así que en el sótano funcionan
+igual. De dónde salen y qué hay que tener en cuenta está en `ATRIBUCION.md`.
+
+De los 95 del catálogo, **colgarse de la barra** se queda sin demostración porque
 no hay ninguna equivalente en el conjunto de datos. La app lo dibuja con su hueco
 en vez de enseñar otro ejercicio distinto.
 

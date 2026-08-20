@@ -73,9 +73,8 @@ data class Ejercicio(
     /**
      * Los pasos del movimiento, en orden.
      *
-     * Vacio en los que todavia no los tienen. No es lo mismo que [claves]:
-     * las claves son los dos errores que hay que evitar cuando ya sabes hacerlo,
-     * los pasos son como se hace desde cero.
+     * No es lo mismo que [claves]: las claves son los errores que hay que evitar
+     * cuando ya sabes hacerlo; los pasos explican el movimiento desde cero.
      */
     val pasos: List<String> = emptyList()
 )
@@ -120,19 +119,37 @@ val CATALOGO: List<Ejercicio> = listOf(
         "press_banca_inclinado", "Press inclinado con barra",
         Musculo.PECHO, listOf(Musculo.HOMBRO, Musculo.TRICEPS), Equipo.BARRA, true,
         "Banco entre 30 y 45 grados; mas inclinacion y el trabajo se va al hombro. Baja a la clavicula.",
-        Dificultad.INTERMEDIO
+        Dificultad.INTERMEDIO,
+        pasos = listOf(
+            "Ajusta el banco entre 30 y 45 grados y apoya los pies firmemente en el suelo.",
+            "Tumbate, retrae los omoplatos y saca la barra del soporte con los brazos extendidos.",
+            "Baja la barra de forma controlada hacia la zona media o superior del pecho.",
+            "Empuja hasta extender los brazos sin perder el apoyo de la espalda ni de los pies."
+        )
     ),
     Ejercicio(
         "press_banca_declinado", "Press declinado con barra",
         Musculo.PECHO, listOf(Musculo.TRICEPS), Equipo.BARRA, true,
         "Pega mas al pectoral bajo. Baja al final de las costillas y no bloquees del todo arriba.",
-        Dificultad.INTERMEDIO
+        Dificultad.INTERMEDIO,
+        pasos = listOf(
+            "Asegura los pies en los soportes del banco declinado y recuestate con la espalda apoyada.",
+            "Toma la barra un poco mas ancho que los hombros y sacala del soporte.",
+            "Bajala despacio hacia la zona media o inferior del pecho.",
+            "Empuja hasta extender los brazos manteniendo el cuerpo estable."
+        )
     ),
     Ejercicio(
         "press_mancuernas", "Press de banca con mancuernas",
         Musculo.PECHO, listOf(Musculo.TRICEPS, Musculo.HOMBRO), Equipo.MANCUERNA, true,
         "Mas recorrido que con barra y cada lado carga lo suyo. Abajo, los codos no pasan mucho de la linea del torso.",
-        Dificultad.INTERMEDIO
+        Dificultad.INTERMEDIO,
+        pasos = listOf(
+            "Tumbate en el banco con una mancuerna a cada lado del pecho y las palmas hacia delante.",
+            "Afirma los pies, el abdomen y los omoplatos contra el banco.",
+            "Empuja las mancuernas hacia arriba hasta casi extender los codos.",
+            "Bajalas de forma controlada hasta recuperar la posicion inicial."
+        )
     ),
     Ejercicio(
         "press_incl_mancuernas", "Press inclinado con mancuernas",
@@ -162,7 +179,13 @@ val CATALOGO: List<Ejercicio> = listOf(
         "aperturas_mancuerna", "Aperturas con mancuernas",
         Musculo.PECHO, emptyList(), Equipo.MANCUERNA, false,
         "Codos semiflexionados y fijos todo el rato: si se abren y cierran, es un press. Abre hasta notar el estiramiento, no mas.",
-        Dificultad.PRINCIPIANTE
+        Dificultad.PRINCIPIANTE,
+        pasos = listOf(
+            "Tumbate en el banco y sosten las mancuernas sobre el pecho con los codos apenas flexionados.",
+            "Abre los brazos en arco desde los hombros manteniendo fija la flexion de los codos.",
+            "Detente antes de que los brazos queden muy por detras del torso.",
+            "Cierra el arco hasta juntar las mancuernas sobre el pecho sin golpearlas."
+        )
     ),
     Ejercicio(
         "aperturas_polea", "Cruce de poleas",
@@ -216,7 +239,13 @@ val CATALOGO: List<Ejercicio> = listOf(
         "peck_deck", "Contractor de pecho (peck deck)",
         Musculo.PECHO, emptyList(), Equipo.MAQUINA, false,
         "Aislamiento puro. Aprieta un segundo al juntar y vuelve despacio.",
-        Dificultad.PRINCIPIANTE
+        Dificultad.PRINCIPIANTE,
+        pasos = listOf(
+            "Ajusta el asiento para que las agarraderas o almohadillas queden a la altura del pecho.",
+            "Apoya la espalda, toma las asas y conserva una ligera flexion en los codos.",
+            "Acerca los brazos delante del cuerpo y contrae el pecho un instante.",
+            "Regresa lentamente hasta sentir un estiramiento comodo."
+        )
     ),
     Ejercicio(
         "fondos_pecho", "Fondos en paralelas",
@@ -270,7 +299,13 @@ val CATALOGO: List<Ejercicio> = listOf(
         "pullover", "Pullover con mancuerna",
         Musculo.PECHO, listOf(Musculo.ESPALDA, Musculo.CORE), Equipo.MANCUERNA, false,
         "Tumbado, la mancuerna baja por detras de la cabeza con los codos casi rectos. Abre caja toracica y toca dorsal a la vez.",
-        Dificultad.INTERMEDIO
+        Dificultad.INTERMEDIO,
+        pasos = listOf(
+            "Tumbate y sujeta una mancuerna con ambas manos sobre el pecho.",
+            "Manteniendo los codos casi extendidos, baja la mancuerna en arco por detras de la cabeza.",
+            "Detente cuando notes un estiramiento comodo en pecho y dorsales.",
+            "Lleva la mancuerna de nuevo sobre el pecho siguiendo el mismo arco."
+        )
     ),
     Ejercicio(
         "dominadas", "Dominadas",
@@ -288,7 +323,13 @@ val CATALOGO: List<Ejercicio> = listOf(
         "dominadas_supinas", "Dominadas supinas",
         Musculo.ESPALDA, listOf(Musculo.BICEPS), Equipo.CORPORAL, true,
         "Palmas hacia ti: entra mucho mas biceps y suele salir alguna repeticion mas que en pronacion.",
-        Dificultad.INTERMEDIO
+        Dificultad.INTERMEDIO,
+        pasos = listOf(
+            "Sujeta la barra con las palmas hacia ti y las manos aproximadamente al ancho de los hombros.",
+            "Empieza colgado con los brazos extendidos y el cuerpo estable.",
+            "Tira de los codos hacia abajo hasta que la barbilla supere la barra.",
+            "Desciende de forma controlada hasta extender de nuevo los brazos."
+        )
     ),
     Ejercicio(
         "jalon_pecho", "Jalon en maquina",
@@ -306,7 +347,13 @@ val CATALOGO: List<Ejercicio> = listOf(
         "jalon_agarre_neutro", "Jalon con agarre neutro",
         Musculo.ESPALDA, listOf(Musculo.BICEPS), Equipo.POLEA, true,
         "Manos enfrentadas. Es el agarre mas amable con el hombro y el que mas dorsal bajo pilla.",
-        Dificultad.PRINCIPIANTE
+        Dificultad.PRINCIPIANTE,
+        pasos = listOf(
+            "Coloca la barra en V y ajusta las almohadillas para sujetar los muslos.",
+            "Sientate, toma el agarre con las palmas enfrentadas y eleva el pecho.",
+            "Tira del accesorio hacia la clavicula llevando los codos junto al cuerpo.",
+            "Deja subir el peso lentamente hasta extender los brazos."
+        )
     ),
     Ejercicio(
         "remo_barra", "Remo con barra",
@@ -324,7 +371,13 @@ val CATALOGO: List<Ejercicio> = listOf(
         "remo_pendlay", "Remo Pendlay",
         Musculo.ESPALDA, listOf(Musculo.TRAPECIO, Musculo.BICEPS), Equipo.BARRA, true,
         "Torso paralelo al suelo y la barra se apoya en el suelo en cada repeticion. Explosivo al subir, estricto en la posicion.",
-        Dificultad.AVANZADO
+        Dificultad.AVANZADO,
+        pasos = listOf(
+            "Coloca la barra en el suelo e inclina el torso desde la cadera con la espalda neutra.",
+            "Toma la barra con agarre prono y deja los codos completamente extendidos.",
+            "Tira con fuerza hasta llevar la barra al esternon sin levantar el torso.",
+            "Devuelve los discos al suelo, deja que se detengan y empieza la siguiente repeticion."
+        )
     ),
     Ejercicio(
         "remo_mancuerna", "Remo con mancuerna a una mano",
@@ -354,7 +407,13 @@ val CATALOGO: List<Ejercicio> = listOf(
         "remo_maquina", "Remo en maquina",
         Musculo.ESPALDA, listOf(Musculo.BICEPS), Equipo.MAQUINA, true,
         "Pecho apoyado, que quita a la lumbar del medio. Ideal para acumular volumen sin castigar la espalda baja.",
-        Dificultad.PRINCIPIANTE
+        Dificultad.PRINCIPIANTE,
+        pasos = listOf(
+            "Sientate con los pies apoyados y toma las empunaduras con las palmas enfrentadas.",
+            "Manten la espalda recta y el pecho estable.",
+            "Lleva las asas hacia la parte baja del abdomen y junta los omoplatos.",
+            "Extiende los brazos lentamente sin bloquear los codos ni encorvarte."
+        )
     ),
     Ejercicio(
         "remo_t", "Remo en T con apoyo pectoral",
@@ -384,7 +443,13 @@ val CATALOGO: List<Ejercicio> = listOf(
         "peso_muerto", "Peso muerto",
         Musculo.ESPALDA, listOf(Musculo.FEMORAL, Musculo.GLUTEO, Musculo.TRAPECIO), Equipo.BARRA, true,
         "La barra roza la espinilla todo el camino. Empuja el suelo con los pies en vez de tirar con la espalda; el bloqueo es de cadera, no de lumbar.",
-        Dificultad.AVANZADO
+        Dificultad.AVANZADO,
+        pasos = listOf(
+            "Coloca la mitad del pie debajo de la barra y sujetala aproximadamente al ancho de los hombros.",
+            "Flexiona rodillas y caderas mientras mantienes la espalda neutra y el pecho firme.",
+            "Empuja el suelo y ponte de pie llevando la barra cerca de las piernas.",
+            "Baja la barra controlando cadera y rodillas hasta apoyarla de nuevo en el suelo."
+        )
     ),
     Ejercicio(
         "peso_muerto_rumano", "Peso muerto rumano con barra",
@@ -426,7 +491,13 @@ val CATALOGO: List<Ejercicio> = listOf(
         "encogimientos", "Encogimientos de hombros",
         Musculo.TRAPECIO, listOf(Musculo.ANTEBRAZO), Equipo.MANCUERNA, false,
         "Sube recto, sin rodar el hombro hacia atras. Aguanta arriba un segundo.",
-        Dificultad.PRINCIPIANTE
+        Dificultad.PRINCIPIANTE,
+        pasos = listOf(
+            "Ponte de pie con una mancuerna en cada mano y los brazos relajados a los lados.",
+            "Eleva los hombros en linea recta hacia las orejas sin doblar los codos.",
+            "Haz una pausa breve en la posicion mas alta.",
+            "Baja los hombros lentamente sin hacer circulos con ellos."
+        )
     ),
     Ejercicio(
         "hiperextensiones", "Hiperextension a 45 grados",
@@ -444,67 +515,133 @@ val CATALOGO: List<Ejercicio> = listOf(
         "buenos_dias", "Buenos dias",
         Musculo.FEMORAL, listOf(Musculo.ESPALDA, Musculo.GLUTEO), Equipo.BARRA, true,
         "Poco peso y mucha tecnica. La barra alta en la espalda, cadera atras y espalda plana como una mesa.",
-        Dificultad.INTERMEDIO
+        Dificultad.AVANZADO,
+        pasos = listOf(
+            "Apoya la barra entre los trapecios y deltoides posteriores y junta los omoplatos para estabilizarla.",
+            "Flexiona ligeramente las rodillas, afirma el abdomen y conserva la espalda neutra.",
+            "Lleva las caderas hacia atras hasta sentir un estiramiento en los femorales.",
+            "Empuja las caderas hacia delante hasta volver a la posicion erguida."
+        )
     ),
     Ejercicio(
         "press_militar", "Press militar con barra",
         Musculo.HOMBRO, listOf(Musculo.TRICEPS, Musculo.CORE), Equipo.BARRA, true,
         "De pie, gluteo y abdomen apretados para no arquear la lumbar. La cabeza se retira un poco para dejar pasar la barra.",
-        Dificultad.INTERMEDIO
+        Dificultad.INTERMEDIO,
+        pasos = listOf(
+            "Toma la barra al ancho de los hombros con los antebrazos verticales y apoyala delante de los hombros.",
+            "Aprieta abdomen y gluteos y retira ligeramente la barbilla.",
+            "Empuja la barra sobre la cabeza hasta extender los brazos y lleva la cabeza al frente.",
+            "Baja la barra de forma controlada hasta los hombros."
+        )
     ),
     Ejercicio(
         "press_hombro_mancuernas", "Press de hombro con mancuernas",
         Musculo.HOMBRO, listOf(Musculo.TRICEPS), Equipo.MANCUERNA, true,
         "Sentado con respaldo si te cuesta mantener la lumbar. Codos ligeramente adelantados, no en cruz.",
-        Dificultad.INTERMEDIO
+        Dificultad.INTERMEDIO,
+        pasos = listOf(
+            "Sientate con la espalda apoyada y coloca las mancuernas a la altura de los hombros.",
+            "Orienta las palmas al frente y manten los pies firmes en el suelo.",
+            "Empuja las mancuernas hacia arriba hasta casi extender los codos.",
+            "Haz una pausa y bajalas lentamente a la posicion inicial."
+        )
     ),
     Ejercicio(
         "press_arnold", "Press Arnold",
         Musculo.HOMBRO, listOf(Musculo.TRICEPS), Equipo.MANCUERNA, true,
         "Empieza con palmas hacia ti y gira al subir. Pilla deltoides anterior y medio en el mismo viaje.",
-        Dificultad.INTERMEDIO
+        Dificultad.INTERMEDIO,
+        pasos = listOf(
+            "Sientate con las mancuernas delante de los hombros y las palmas mirando hacia ti.",
+            "Empuja hacia arriba mientras giras las manos hacia delante.",
+            "Termina con los brazos casi extendidos y las palmas al frente.",
+            "Invierte el giro al bajar hasta recuperar la posicion inicial."
+        )
     ),
     Ejercicio(
         "elevaciones_laterales", "Elevaciones laterales",
         Musculo.HOMBRO, emptyList(), Equipo.MANCUERNA, false,
         "El ejercicio que ensancha. Sube hasta la horizontal guiando con el codo, no con la mano, y baja en tres tiempos.",
-        Dificultad.PRINCIPIANTE
+        Dificultad.PRINCIPIANTE,
+        pasos = listOf(
+            "Ponte de pie con las mancuernas a los lados y las palmas hacia las caderas.",
+            "Con los codos ligeramente flexionados, eleva los brazos hacia los lados.",
+            "Detente cuando los brazos queden aproximadamente paralelos al suelo.",
+            "Baja las mancuernas despacio sin balancear el torso."
+        )
     ),
     Ejercicio(
         "elevaciones_lateral_polea", "Elevacion lateral en polea",
         Musculo.HOMBRO, emptyList(), Equipo.POLEA, false,
         "La polea da tension desde el primer grado, que es justo donde la mancuerna no da nada.",
-        Dificultad.PRINCIPIANTE
+        Dificultad.PRINCIPIANTE,
+        pasos = listOf(
+            "Coloca una agarradera en la posicion mas baja de la polea y sujetala con la mano contraria.",
+            "Ponte de lado con el brazo delante del cuerpo y el torso inmovil.",
+            "Eleva el brazo recto hacia un lado hasta dejarlo paralelo al suelo.",
+            "Regresa de forma controlada y completa las repeticiones antes de cambiar de lado."
+        )
     ),
     Ejercicio(
         "elevaciones_frontales", "Elevaciones frontales",
         Musculo.HOMBRO, emptyList(), Equipo.MANCUERNA, false,
         "Suele sobrar si haces press: el deltoides anterior ya trabaja de mas. Uselo con moderacion.",
-        Dificultad.PRINCIPIANTE
+        Dificultad.PRINCIPIANTE,
+        pasos = listOf(
+            "Ponte de pie con una mancuerna en cada mano y los brazos a los lados.",
+            "Manten los codos casi extendidos y eleva las mancuernas hacia delante.",
+            "Detente aproximadamente a la altura de los ojos o de los hombros.",
+            "Baja las mancuernas lentamente sin usar impulso."
+        )
     ),
     Ejercicio(
         "pajaros", "Pajaros (deltoides posterior)",
         Musculo.HOMBRO, listOf(Musculo.ESPALDA), Equipo.MANCUERNA, false,
         "Torso casi paralelo al suelo. Abre con los codos, no con las manos, y no cojas peso: aqui nadie es fuerte.",
-        Dificultad.INTERMEDIO
+        Dificultad.INTERMEDIO,
+        pasos = listOf(
+            "Flexiona ligeramente las rodillas e inclina el torso desde la cadera con la espalda neutra.",
+            "Deja las mancuernas juntas debajo del pecho y manten los codos algo flexionados.",
+            "Abre los brazos hasta que los codos alcancen aproximadamente la altura de los hombros.",
+            "Baja las mancuernas de forma controlada sin cambiar la posicion del torso."
+        )
     ),
     Ejercicio(
         "press_hombro_maquina", "Press de hombro en maquina",
         Musculo.HOMBRO, listOf(Musculo.TRICEPS), Equipo.MAQUINA, true,
         "Trayectoria fija, ideal para las ultimas series cuando el equilibrio ya falla.",
-        Dificultad.PRINCIPIANTE
+        Dificultad.PRINCIPIANTE,
+        pasos = listOf(
+            "Ajusta el asiento a tu altura y apoya por completo la espalda en el respaldo.",
+            "Toma las empunaduras con agarre neutro y coloca los codos debajo de las manos.",
+            "Empuja hacia arriba hasta que los codos queden casi extendidos, sin bloquearlos.",
+            "Baja lentamente hasta que el peso casi vuelva a apoyarse."
+        )
     ),
     Ejercicio(
         "remo_menton", "Remo al menton",
         Musculo.HOMBRO, listOf(Musculo.TRAPECIO), Equipo.BARRA, true,
         "Agarre ancho y sube solo hasta el pecho. Agarre estrecho y subir hasta la barbilla pinza el hombro.",
-        Dificultad.INTERMEDIO
+        Dificultad.INTERMEDIO,
+        pasos = listOf(
+            "Toma la barra con agarre prono aproximadamente al ancho de los hombros.",
+            "Manten el torso erguido y la barra cerca del cuerpo.",
+            "Tira de los codos hacia arriba hasta llevar la barra a la altura del pecho o la barbilla.",
+            "Baja la barra lentamente hasta extender los brazos."
+        )
     ),
     Ejercicio(
         "curl_barra", "Curl con barra",
         Musculo.BICEPS, listOf(Musculo.ANTEBRAZO), Equipo.BARRA, false,
         "Codos pegados al costado y quietos. Si la cadera acompana el movimiento, es que hay demasiado disco.",
-        Dificultad.PRINCIPIANTE
+        Dificultad.PRINCIPIANTE,
+        pasos = listOf(
+            "Ponte de pie con la barra en agarre supino y los brazos extendidos.",
+            "Manten la parte superior de los brazos inmovil junto al torso.",
+            "Flexiona los codos hasta acercar la barra a los hombros y contrae los biceps.",
+            "Baja la barra de forma controlada hasta extender los codos."
+        )
     ),
     Ejercicio(
         "curl_mancuernas", "Curl con mancuernas",
@@ -532,19 +669,37 @@ val CATALOGO: List<Ejercicio> = listOf(
         "curl_predicador", "Curl en banco predicador",
         Musculo.BICEPS, emptyList(), Equipo.BARRA, false,
         "El banco impide hacer trampa con el hombro. No estires del todo abajo si tienes el codo delicado.",
-        Dificultad.PRINCIPIANTE
+        Dificultad.PRINCIPIANTE,
+        pasos = listOf(
+            "Sientate en el banco Scott y apoya por completo la parte superior de los brazos.",
+            "Toma la barra EZ con agarre supino y empieza con los codos extendidos sin bloquearlos.",
+            "Lleva la barra lentamente hacia los hombros sin levantar los brazos del apoyo.",
+            "Baja la barra con control hasta la posicion inicial."
+        )
     ),
     Ejercicio(
         "curl_inclinado", "Curl inclinado en banco",
         Musculo.BICEPS, emptyList(), Equipo.MANCUERNA, false,
         "El brazo cae por detras del cuerpo y estira el biceps al maximo. Duele bien.",
-        Dificultad.PRINCIPIANTE
+        Dificultad.PRINCIPIANTE,
+        pasos = listOf(
+            "Recuestate en un banco inclinado con una mancuerna en cada mano y las palmas hacia delante.",
+            "Deja los brazos extendidos debajo de los hombros sin adelantarlos.",
+            "Flexiona los codos y acerca las mancuernas al pecho.",
+            "Baja lentamente hasta recuperar la extension completa."
+        )
     ),
     Ejercicio(
         "curl_polea", "Curl en polea baja",
         Musculo.BICEPS, emptyList(), Equipo.POLEA, false,
         "Tension constante de abajo arriba. Va muy bien como ultimo ejercicio del dia de tiron.",
-        Dificultad.PRINCIPIANTE
+        Dificultad.PRINCIPIANTE,
+        pasos = listOf(
+            "Coloca la polea abajo, conecta una barra y tomala con las palmas hacia delante.",
+            "Ponte erguido con una base estable y los codos junto al torso.",
+            "Flexiona los codos hasta acercar la barra al pecho.",
+            "Extiende los brazos lentamente manteniendo tension en el cable."
+        )
     ),
     Ejercicio(
         "curl_concentrado", "Curl concentrado",
@@ -552,10 +707,10 @@ val CATALOGO: List<Ejercicio> = listOf(
         "Codo apoyado en el muslo. Nada de peso, todo de contraccion.",
         Dificultad.PRINCIPIANTE,
         pasos = listOf(
-            "Sientate en un banco con las piernas separadas.",
-            "Apoya el brazo en la cara interna del muslo y deja el peso colgando hacia el suelo.",
-            "Flexiona el codo y sube hasta que la palma mire al hombro.",
-            "Baja controlando y repite."
+            "Sientate con los pies firmes, inclina el torso y apoya el codo en la cara interna del muslo.",
+            "Empieza con el brazo extendido y la mancuerna colgando hacia el suelo.",
+            "Flexiona el codo sin separarlo del muslo y acerca la mancuerna al hombro.",
+            "Baja con control hasta extender de nuevo el brazo."
         )
     ),
     Ejercicio(
@@ -765,7 +920,13 @@ val CATALOGO: List<Ejercicio> = listOf(
         "sentadilla_frontal", "Sentadilla frontal",
         Musculo.CUADRICEPS, listOf(Musculo.CORE, Musculo.GLUTEO), Equipo.BARRA, true,
         "La barra delante obliga a llevar el torso vertical y carga mucho mas cuadriceps. Codos altos siempre.",
-        Dificultad.AVANZADO
+        Dificultad.AVANZADO,
+        pasos = listOf(
+            "Coloca la barra sobre la parte delantera de los hombros con las manos simetricas.",
+            "Eleva los codos, afirma el abdomen y separa los pies al ancho de los hombros.",
+            "Flexiona caderas y rodillas manteniendo el torso erguido hasta alcanzar una profundidad controlada.",
+            "Empuja el suelo y vuelve a quedar de pie sin dejar caer los codos."
+        )
     ),
     Ejercicio(
         "prensa", "Prensa de piernas en maquina",
@@ -783,7 +944,13 @@ val CATALOGO: List<Ejercicio> = listOf(
         "hack", "Sentadilla hack",
         Musculo.CUADRICEPS, listOf(Musculo.GLUTEO), Equipo.MAQUINA, true,
         "Trayectoria guiada: puedes ir al fallo con seguridad. Pies algo adelantados protegen la rodilla.",
-        Dificultad.PRINCIPIANTE
+        Dificultad.PRINCIPIANTE,
+        pasos = listOf(
+            "Apoya la espalda en la almohadilla, coloca los hombros bajo los soportes y separa los pies.",
+            "Libera los seguros y conserva la espalda pegada al respaldo.",
+            "Flexiona las rodillas y baja hasta una profundidad que puedas controlar.",
+            "Empuja con los talones para extender las piernas sin bloquear las rodillas."
+        )
     ),
     Ejercicio(
         "zancadas", "Zancada frontal con mancuernas",
@@ -825,25 +992,49 @@ val CATALOGO: List<Ejercicio> = listOf(
         "sentadilla_goblet", "Sentadilla goblet",
         Musculo.CUADRICEPS, listOf(Musculo.GLUTEO, Musculo.CORE), Equipo.MANCUERNA, true,
         "La mancuerna al pecho hace de contrapeso y corrige sola la tecnica. El mejor sitio para aprender a sentadillar.",
-        Dificultad.PRINCIPIANTE
+        Dificultad.PRINCIPIANTE,
+        pasos = listOf(
+            "Sujeta una mancuerna contra el pecho y coloca los pies algo mas anchos que los hombros.",
+            "Manten el pecho elevado y los codos apuntando hacia abajo.",
+            "Baja la cadera dejando que los codos pasen por dentro de las rodillas.",
+            "Empuja con los talones para volver a la posicion erguida."
+        )
     ),
     Ejercicio(
         "step_up", "Subida al cajon",
         Musculo.CUADRICEPS, listOf(Musculo.GLUTEO), Equipo.MANCUERNA, true,
         "Sube empujando con el talon de la pierna de arriba, sin impulsarte con la de abajo.",
-        Dificultad.PRINCIPIANTE
+        Dificultad.PRINCIPIANTE,
+        pasos = listOf(
+            "Ponte frente a un cajon o banco estable con una mancuerna en cada mano.",
+            "Apoya por completo un pie sobre la superficie.",
+            "Empuja con ese pie para subir y termina erguido sobre el cajon.",
+            "Baja con control y repite antes de cambiar de pierna."
+        )
     ),
     Ejercicio(
-        "sissy", "Sentadilla sissy",
-        Musculo.CUADRICEPS, emptyList(), Equipo.CORPORAL, false,
-        "Muy exigente para la rodilla, muy buena para el recto femoral. Solo si no tienes molestias previas.",
-        Dificultad.AVANZADO
+        "sissy", "Sissy squat en maquina",
+        Musculo.CUADRICEPS, emptyList(), Equipo.MAQUINA, true,
+        "Ajusta las almohadillas para fijar rodillas y tobillos. Baja con la espalda recta y usa una mancuerna solo cuando domines el recorrido.",
+        Dificultad.INTERMEDIO,
+        pasos = listOf(
+            "Coloca la almohadilla trasera justo detras de las rodillas y la delantera contra los tobillos.",
+            "Fija los pies, manten el torso erguido y sujeta una mancuerna al pecho si corresponde.",
+            "Sientate hacia atras y baja de forma controlada hasta la posicion de sentadilla.",
+            "Empuja las pantorrillas contra la almohadilla y extiende las rodillas para subir."
+        )
     ),
     Ejercicio(
         "curl_femoral_tumbado", "Curl femoral tumbado",
         Musculo.FEMORAL, listOf(Musculo.GEMELO), Equipo.MAQUINA, false,
         "Cadera pegada al banco. Si se levanta, sobra peso.",
-        Dificultad.PRINCIPIANTE
+        Dificultad.PRINCIPIANTE,
+        pasos = listOf(
+            "Tumbate en la maquina y coloca la palanca acolchada debajo de las pantorrillas.",
+            "Sujeta las asas laterales y manten la cadera apoyada.",
+            "Flexiona las rodillas para elevar el peso con las puntas de los pies hacia delante.",
+            "Haz una pausa arriba y regresa lentamente a la posicion inicial."
+        )
     ),
     Ejercicio(
         "curl_femoral_sentado", "Curl femoral sentado en maquina",
@@ -858,10 +1049,16 @@ val CATALOGO: List<Ejercicio> = listOf(
         )
     ),
     Ejercicio(
-        "peso_muerto_piernas_rectas", "Peso muerto a piernas rectas",
+        "peso_muerto_piernas_rectas", "Peso muerto rumano con mancuernas",
         Musculo.FEMORAL, listOf(Musculo.GLUTEO, Musculo.ESPALDA), Equipo.MANCUERNA, true,
-        "Version con mancuernas del rumano. Mas facil de aprender y mas amable con la lumbar.",
-        Dificultad.INTERMEDIO
+        "Lleva las caderas hacia atras con las rodillas apenas flexionadas. Las mancuernas bajan cerca de las piernas y la espalda se mantiene neutra.",
+        Dificultad.PRINCIPIANTE,
+        pasos = listOf(
+            "Ponte de pie al ancho de los hombros con las mancuernas delante de los muslos.",
+            "Lleva las caderas hacia atras dejando las rodillas ligeramente flexionadas.",
+            "Baja las mancuernas cerca de las piernas hasta sentir el estiramiento de los femorales.",
+            "Empuja las caderas hacia delante y termina en una posicion erguida normal."
+        )
     ),
     Ejercicio(
         "hip_thrust", "Hip thrust con barra",
@@ -879,31 +1076,61 @@ val CATALOGO: List<Ejercicio> = listOf(
         "puente_gluteo", "Puente de gluteo",
         Musculo.GLUTEO, listOf(Musculo.FEMORAL), Equipo.CORPORAL, false,
         "La version de suelo del hip thrust. Sirve para calentar antes de sentadilla.",
-        Dificultad.PRINCIPIANTE
+        Dificultad.PRINCIPIANTE,
+        pasos = listOf(
+            "Acuestate boca arriba con las rodillas flexionadas y los pies firmes en el suelo.",
+            "Aprieta el abdomen y empuja con los pies para elevar la cadera.",
+            "Contrae los gluteos arriba manteniendo la espalda alineada.",
+            "Baja lentamente la cadera hasta volver al suelo."
+        )
     ),
     Ejercicio(
         "patada_gluteo_polea", "Patada de gluteo en polea",
         Musculo.GLUTEO, listOf(Musculo.FEMORAL), Equipo.POLEA, false,
         "Torso quieto y la pierna sale hacia atras y arriba. Sin arquear la espalda para ganar recorrido.",
-        Dificultad.PRINCIPIANTE
+        Dificultad.PRINCIPIANTE,
+        pasos = listOf(
+            "Fija una tobillera a la polea baja y sujetate de la maquina para mantener el equilibrio.",
+            "Flexiona un poco la rodilla y estabiliza el torso.",
+            "Extiende la cadera llevando el pie hacia atras sin arquear la zona lumbar.",
+            "Contrae el gluteo y regresa lentamente antes de cambiar de lado."
+        )
     ),
     Ejercicio(
         "abduccion_maquina", "Abductores en maquina",
         Musculo.GLUTEO, emptyList(), Equipo.MAQUINA, false,
         "Gluteo medio, que es el que estabiliza la cadera al correr y al sentadillar. Inclinar el torso adelante lo pilla mejor.",
-        Dificultad.PRINCIPIANTE
+        Dificultad.PRINCIPIANTE,
+        pasos = listOf(
+            "Ajusta la maquina, sientate con la espalda apoyada y coloca las piernas juntas.",
+            "Afirma el torso y sujeta las asas.",
+            "Empuja las almohadillas hacia fuera separando las piernas.",
+            "Haz una pausa y vuelve lentamente a la posicion inicial."
+        )
     ),
     Ejercicio(
         "nordic", "Curl nordico",
         Musculo.FEMORAL, emptyList(), Equipo.CORPORAL, false,
         "Baja lo mas despacio que puedas y ayudate con las manos al final. Lo mejor que hay contra las roturas de isquios.",
-        Dificultad.AVANZADO
+        Dificultad.INTERMEDIO,
+        pasos = listOf(
+            "Arrodillate sobre una superficie acolchada y pide a alguien que fije tus tobillos.",
+            "Manten caderas, espalda y cabeza alineadas y coloca las manos preparadas delante de ti.",
+            "Baja el cuerpo hacia el suelo tan despacio como puedas usando los femorales.",
+            "Apoya las manos, ayudate con una flexion y regresa a la posicion inicial."
+        )
     ),
     Ejercicio(
         "swing_kettlebell", "Swing con kettlebell",
         Musculo.GLUTEO, listOf(Musculo.FEMORAL, Musculo.CORE), Equipo.KETTLEBELL, true,
         "Es una bisagra de cadera, no una sentadilla ni una elevacion de brazos. La pesa vuela por el impulso del gluteo.",
-        Dificultad.AVANZADO
+        Dificultad.AVANZADO,
+        pasos = listOf(
+            "Separa los pies algo mas que los hombros y coloca la kettlebell entre ellos.",
+            "Lleva la cadera hacia atras y deja que la pesa pase entre las piernas.",
+            "Extiende la cadera con fuerza para impulsar la pesa hasta la altura del pecho.",
+            "Deja que regrese de forma controlada y enlaza la siguiente bisagra de cadera."
+        )
     ),
     Ejercicio(
         "gemelo_de_pie", "Elevacion de gemelos de pie en maquina",
@@ -933,7 +1160,13 @@ val CATALOGO: List<Ejercicio> = listOf(
         "gemelo_prensa", "Gemelos en prensa",
         Musculo.GEMELO, emptyList(), Equipo.MAQUINA, false,
         "Punta de los pies en el borde de la plataforma y rodillas casi rectas.",
-        Dificultad.PRINCIPIANTE
+        Dificultad.PRINCIPIANTE,
+        pasos = listOf(
+            "Ajusta la prensa y apoya solo la parte delantera de los pies en el borde de la plataforma.",
+            "Manten las rodillas inmoviles y deja los talones libres.",
+            "Eleva los talones todo lo posible y haz una pausa en la contraccion.",
+            "Baja lentamente hasta sentir el estiramiento de los gemelos."
+        )
     ),
     Ejercicio(
         "plancha", "Plancha de antebrazos",
@@ -999,7 +1232,13 @@ val CATALOGO: List<Ejercicio> = listOf(
         "paseo_granjero", "Paseo del granjero",
         Musculo.CORE, listOf(Musculo.ANTEBRAZO, Musculo.TRAPECIO), Equipo.MANCUERNA, true,
         "Camina con dos mancuernas pesadas, hombros atras y sin inclinarte. Agarre, core y caracter en un solo ejercicio.",
-        Dificultad.INTERMEDIO
+        Dificultad.INTERMEDIO,
+        pasos = listOf(
+            "Toma una mancuerna pesada en cada mano con los brazos extendidos a los lados.",
+            "Ponte erguido, baja los hombros y afirma el abdomen.",
+            "Camina con pasos cortos y controlados sin inclinar el torso.",
+            "Detente de forma estable y deja las mancuernas en el suelo con control."
+        )
     ),
     Ejercicio(
         "bicho_muerto", "Bicho muerto",
@@ -1065,13 +1304,25 @@ val CATALOGO: List<Ejercicio> = listOf(
         "curl_muneca", "Curl de muneca",
         Musculo.ANTEBRAZO, emptyList(), Equipo.BARRA, false,
         "Antebrazos apoyados en el banco. Recorrido corto y repeticiones altas.",
-        Dificultad.PRINCIPIANTE
+        Dificultad.PRINCIPIANTE,
+        pasos = listOf(
+            "Toma la barra con las palmas hacia arriba y apoya los antebrazos en un banco.",
+            "Deja las munecas fuera del borde y extiendelas para bajar la barra.",
+            "Flexiona las munecas y eleva la barra sin levantar los antebrazos.",
+            "Baja lentamente y repite dentro de un recorrido comodo."
+        )
     ),
     Ejercicio(
         "colgarse_barra", "Colgarse de la barra",
         Musculo.ANTEBRAZO, listOf(Musculo.ESPALDA), Equipo.CORPORAL, false,
         "Aguanta lo que puedas. Mejora el agarre y descomprime la columna, que despues de sentadillar se agradece.",
-        Dificultad.PRINCIPIANTE
+        Dificultad.PRINCIPIANTE,
+        pasos = listOf(
+            "Sujeta una barra de dominadas con agarre prono y las manos al ancho de los hombros.",
+            "Deja los brazos completamente extendidos y separa los pies del suelo.",
+            "Afirma el abdomen y manten el cuerpo estable mientras sostienes la posicion.",
+            "Baja de la barra con control cuando termine el tiempo."
+        )
     )
 )
 

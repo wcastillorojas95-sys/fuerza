@@ -1,21 +1,10 @@
 # Atribución
 
-## Imágenes de los ejercicios
-
-© **Gym visual** — https://gymvisual.com/
-
-Las demostraciones animadas son propiedad de Gym visual. Llegan a este proyecto
-a través de [hasaneyldrm/exercises-dataset](https://github.com/hasaneyldrm/exercises-dataset),
-que las redistribuye con permiso escrito del autor, a 180×180 y con la condición
-de mantener el crédito visible.
-
-La app cumple las dos condiciones: las imágenes van a su resolución original sin
-escalar, y el crédito aparece bajo cada demostración (`CreditoImagenes()`).
-
 ## Vídeos de demostración
 
-Los `.mp4` de `res/raw/` son de **MuscleWiki** — llevan su marca dentro del
-propio vídeo y no se recorta.
+Los 103 archivos `.mp4` de `res/raw/` son de **MuscleWiki** — llevan su marca
+dentro del propio vídeo y no se recorta. Las miniaturas `vm_*.webp` se extraen
+de esos mismos vídeos.
 
 Hay que decirlo claro: los [términos de su API](https://api.musclewiki.com/api-terms)
 prohíben descargar y re-alojar sus vídeos, y esto es exactamente eso. Este APK
@@ -28,11 +17,9 @@ por ti. Sustituir los archivos no toca ni una línea de código.
 
 ## Datos del catálogo
 
-Los nombres, categorías, material e instrucciones del conjunto de datos van bajo
-licencia MIT, © 2026 Hasan Emir Yıldırım.
-
-Los nombres en español, las claves de técnica y las rutinas de esta app están
-escritos para ella.
+Los pasos de ejecución se adaptaron y resumieron en español a partir de las
+páginas de ejercicios de MuscleWiki. Los nombres, las claves de técnica y las
+rutinas están ajustados para esta app.
 
 ## Iconos
 
@@ -66,8 +53,8 @@ ninguna de las dos declara nombre de fuente reservado en su aviso de copyright,
 así que conservan su nombre. Las licencias completas, tal cual vienen, están en
 `tipografias/`.
 
-## Vídeo
+## Vídeos opcionales de YouTube
 
-La app no aloja ni descarga vídeo. El botón de vídeo abre YouTube mediante un
-Intent, así que la reproducción, la publicidad y las visitas son de YouTube y del
-autor del vídeo, como debe ser.
+Además de la demostración local, el botón para fijar un vídeo abre YouTube
+mediante un Intent o su reproductor incrustado. La reproducción, la publicidad y
+las visitas de ese vídeo opcional siguen perteneciendo a YouTube y a su autor.

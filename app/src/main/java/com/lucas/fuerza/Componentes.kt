@@ -550,22 +550,6 @@ fun Pasos(pasos: List<String>, modifier: Modifier = Modifier) {
     }
 }
 
-/**
- * El credito de las imagenes.
- *
- * No es decoracion: la licencia con la que se pueden usar estas demostraciones
- * exige que se vea. Va debajo de cada demostracion grande.
- */
-@Composable
-fun CreditoImagenes(modifier: Modifier = Modifier) {
-    Text(
-        text = CREDITO_IMAGENES,
-        style = MaterialTheme.typography.labelMedium,
-        color = HumoTenue,
-        modifier = modifier
-    )
-}
-
 /** Fuente visible de las demostraciones locales en video. */
 @Composable
 fun CreditoVideos(modifier: Modifier = Modifier) {

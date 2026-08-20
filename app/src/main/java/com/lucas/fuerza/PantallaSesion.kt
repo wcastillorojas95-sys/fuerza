@@ -382,8 +382,6 @@ private fun TarjetaEjercicio(
                     animar = true,
                     modifier = Modifier.fillMaxWidth().height(230.dp)
                 )
-                Spacer(Modifier.height(6.dp))
-                CreditoImagenes()
             }
         }
 

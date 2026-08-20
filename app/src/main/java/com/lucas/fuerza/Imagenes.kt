@@ -1,24 +1,10 @@
 package com.lucas.fuerza
 
 /**
- * La demostracion de un ejercicio.
+ * Formato heredado para una demostracion por poses.
  *
- * Conviene saber que hay debajo, porque no es lo que parece. Los GIF originales
- * de Gym visual no son una animacion del movimiento: son **dos poses** -- la de
- * inicio y la de final -- que se funden la una en la otra. El GIF esta un
- * segundo quieto en cada pose y dedica medio segundo a pasar de una a otra con
- * cinco cuadros de fundido. No hay ningun fotograma intermedio de verdad: el
- * cuadro de en medio son los dos cuerpos superpuestos al 50%.
- *
- * Asi que aqui se guardan solo las poses de verdad -- dos, o cuatro en los dos
- * ejercicios que las tienen -- y el fundido lo hace la app. Sale ganando por
- * todos lados: pesa cuatro veces menos que guardar los doce cuadros, el fundido
- * va a la velocidad de la pantalla en vez de a cinco pasos, y no arrastra el
- * emborronado de la paleta de 256 colores del GIF.
- *
- * [tira] lleva las poses una al lado de otra, cuadradas. [mini] es la primera
- * suelta, para las listas. [esperas] son los milisegundos que se esta quieto en
- * cada pose y [transito] los que tarda en pasar a la siguiente.
+ * Se conserva como respaldo del componente visual, aunque el catalogo actual
+ * usa exclusivamente [DemoVideo].
  */
 class Fotos(
     val tira: Int,
@@ -54,75 +40,12 @@ class Fotos(
 /** Medio segundo de fundido entre pose y pose, que es el del GIF original. */
 const val TRANSITO = 500
 
-/** Un segundo quieto en cada una de las dos poses. Es lo normal. */
-private val DOS_POSES = listOf(1000, 1000)
-
-/** Cuatro poses: los dos ejercicios que van y vuelven pasando por el medio. */
-private val CUATRO_POSES = listOf(1000, 500, 500, 1000)
-
 /**
- * Las demostraciones, dentro del APK.
+ * Compatibilidad con la antigua demostracion por poses.
  *
- * Cuerpo gris con los musculos que trabajan en rojo, sobre fondo blanco.
- *
- * Las imagenes son propiedad de Gym visual y vienen del conjunto de datos de
- * hasaneyldrm/exercises-dataset, que las redistribuye con permiso escrito del
- * autor bajo dos condiciones: 180x180 como maximo, y que se vea el credito. Por
- * eso la app lo muestra debajo de cada demostracion, y por eso las imagenes no
- * se escalan mas alla de su tamano original.
- *
- *   (c) Gym visual - https://gymvisual.com/
- *
- * Los datos del catalogo -- nombres, musculos, material -- son otra cosa y van
- * bajo licencia MIT.
+ * El mapa queda vacio porque todos los ejercicios del catalogo usan video local.
  */
-val FOTOGRAMAS: Map<String, Fotos> = mapOf(
-    "abduccion_maquina" to Fotos(R.drawable.ej_abduccion_maquina_tira, R.drawable.ej_abduccion_maquina_m, DOS_POSES),
-    "aperturas_mancuerna" to Fotos(R.drawable.ej_aperturas_mancuerna_tira, R.drawable.ej_aperturas_mancuerna_m, DOS_POSES),
-    "buenos_dias" to Fotos(R.drawable.ej_buenos_dias_tira, R.drawable.ej_buenos_dias_m, DOS_POSES),
-    "curl_barra" to Fotos(R.drawable.ej_curl_barra_tira, R.drawable.ej_curl_barra_m, DOS_POSES),
-    "curl_concentrado" to Fotos(R.drawable.ej_curl_concentrado_tira, R.drawable.ej_curl_concentrado_m, DOS_POSES),
-    "curl_femoral_tumbado" to Fotos(R.drawable.ej_curl_femoral_tumbado_tira, R.drawable.ej_curl_femoral_tumbado_m, DOS_POSES),
-    "curl_inclinado" to Fotos(R.drawable.ej_curl_inclinado_tira, R.drawable.ej_curl_inclinado_m, DOS_POSES),
-    "curl_muneca" to Fotos(R.drawable.ej_curl_muneca_tira, R.drawable.ej_curl_muneca_m, DOS_POSES),
-    "curl_polea" to Fotos(R.drawable.ej_curl_polea_tira, R.drawable.ej_curl_polea_m, DOS_POSES),
-    "curl_predicador" to Fotos(R.drawable.ej_curl_predicador_tira, R.drawable.ej_curl_predicador_m, DOS_POSES),
-    "dominadas_supinas" to Fotos(R.drawable.ej_dominadas_supinas_tira, R.drawable.ej_dominadas_supinas_m, DOS_POSES),
-    "elevaciones_frontales" to Fotos(R.drawable.ej_elevaciones_frontales_tira, R.drawable.ej_elevaciones_frontales_m, DOS_POSES),
-    "elevaciones_lateral_polea" to Fotos(R.drawable.ej_elevaciones_lateral_polea_tira, R.drawable.ej_elevaciones_lateral_polea_m, DOS_POSES),
-    "elevaciones_laterales" to Fotos(R.drawable.ej_elevaciones_laterales_tira, R.drawable.ej_elevaciones_laterales_m, DOS_POSES),
-    "encogimientos" to Fotos(R.drawable.ej_encogimientos_tira, R.drawable.ej_encogimientos_m, DOS_POSES),
-    "gemelo_prensa" to Fotos(R.drawable.ej_gemelo_prensa_tira, R.drawable.ej_gemelo_prensa_m, DOS_POSES),
-    "hack" to Fotos(R.drawable.ej_hack_tira, R.drawable.ej_hack_m, DOS_POSES),
-    "jalon_agarre_neutro" to Fotos(R.drawable.ej_jalon_agarre_neutro_tira, R.drawable.ej_jalon_agarre_neutro_m, DOS_POSES),
-    "nordic" to Fotos(R.drawable.ej_nordic_tira, R.drawable.ej_nordic_m, DOS_POSES),
-    "pajaros" to Fotos(R.drawable.ej_pajaros_tira, R.drawable.ej_pajaros_m, DOS_POSES),
-    "paseo_granjero" to Fotos(R.drawable.ej_paseo_granjero_tira, R.drawable.ej_paseo_granjero_m, CUATRO_POSES),
-    "patada_gluteo_polea" to Fotos(R.drawable.ej_patada_gluteo_polea_tira, R.drawable.ej_patada_gluteo_polea_m, DOS_POSES),
-    "peck_deck" to Fotos(R.drawable.ej_peck_deck_tira, R.drawable.ej_peck_deck_m, DOS_POSES),
-    "peso_muerto" to Fotos(R.drawable.ej_peso_muerto_tira, R.drawable.ej_peso_muerto_m, DOS_POSES),
-    "peso_muerto_piernas_rectas" to Fotos(R.drawable.ej_peso_muerto_piernas_rectas_tira, R.drawable.ej_peso_muerto_piernas_rectas_m, DOS_POSES),
-    "press_arnold" to Fotos(R.drawable.ej_press_arnold_tira, R.drawable.ej_press_arnold_m, DOS_POSES),
-    "press_banca_declinado" to Fotos(R.drawable.ej_press_banca_declinado_tira, R.drawable.ej_press_banca_declinado_m, DOS_POSES),
-    "press_banca_inclinado" to Fotos(R.drawable.ej_press_banca_inclinado_tira, R.drawable.ej_press_banca_inclinado_m, DOS_POSES),
-    "press_hombro_mancuernas" to Fotos(R.drawable.ej_press_hombro_mancuernas_tira, R.drawable.ej_press_hombro_mancuernas_m, DOS_POSES),
-    "press_hombro_maquina" to Fotos(R.drawable.ej_press_hombro_maquina_tira, R.drawable.ej_press_hombro_maquina_m, DOS_POSES),
-    "press_mancuernas" to Fotos(R.drawable.ej_press_mancuernas_tira, R.drawable.ej_press_mancuernas_m, DOS_POSES),
-    "press_militar" to Fotos(R.drawable.ej_press_militar_tira, R.drawable.ej_press_militar_m, DOS_POSES),
-    "puente_gluteo" to Fotos(R.drawable.ej_puente_gluteo_tira, R.drawable.ej_puente_gluteo_m, CUATRO_POSES),
-    "pullover" to Fotos(R.drawable.ej_pullover_tira, R.drawable.ej_pullover_m, DOS_POSES),
-    "remo_maquina" to Fotos(R.drawable.ej_remo_maquina_tira, R.drawable.ej_remo_maquina_m, DOS_POSES),
-    "remo_menton" to Fotos(R.drawable.ej_remo_menton_tira, R.drawable.ej_remo_menton_m, DOS_POSES),
-    "remo_pendlay" to Fotos(R.drawable.ej_remo_pendlay_tira, R.drawable.ej_remo_pendlay_m, DOS_POSES),
-    "sentadilla_frontal" to Fotos(R.drawable.ej_sentadilla_frontal_tira, R.drawable.ej_sentadilla_frontal_m, DOS_POSES),
-    "sentadilla_goblet" to Fotos(R.drawable.ej_sentadilla_goblet_tira, R.drawable.ej_sentadilla_goblet_m, DOS_POSES),
-    "sissy" to Fotos(R.drawable.ej_sissy_tira, R.drawable.ej_sissy_m, DOS_POSES),
-    "step_up" to Fotos(R.drawable.ej_step_up_tira, R.drawable.ej_step_up_m, DOS_POSES),
-    "swing_kettlebell" to Fotos(R.drawable.ej_swing_kettlebell_tira, R.drawable.ej_swing_kettlebell_m, DOS_POSES)
-)
-
-/** El credito que exige la licencia de las imagenes. Va visible en pantalla. */
-const val CREDITO_IMAGENES = "\u00a9 Gym visual - gymvisual.com"
+val FOTOGRAMAS: Map<String, Fotos> = emptyMap()
 
 /** Fuente de los MP4 locales. La marca tambien permanece dentro del video. */
 const val CREDITO_VIDEOS = "Video: MuscleWiki - musclewiki.com"
@@ -141,12 +64,10 @@ fun fotogramasDe(id: String): Fotos? = FOTOGRAMAS[id]
 class DemoVideo(val video: Int, val mini: Int)
 
 /**
- * Los ejercicios que tienen video de verdad.
+ * Los videos de los 103 ejercicios del catalogo.
  *
- * Un video pesa unos cientos de KB y sustituye por completo al dibujo de dos poses:
- * ahi hay una persona haciendo el movimiento entero, con su ritmo, y no dos
- * fotos fundiendose. Cuando un ejercicio esta aqui, su entrada en [FOTOGRAMAS]
- * sobra y se quita.
+ * Cada archivo muestra a una persona haciendo el movimiento completo y sustituye
+ * cualquier demostracion antigua por poses.
  *
  * Van dentro del APK, sin streaming y sin depender de nadie: siguen funcionando
  * en un gimnasio de sotano, que es la razon por la que las demostraciones no se
@@ -212,8 +133,51 @@ val VIDEOS: Map<String, DemoVideo> = mapOf(
     "curl_invertido_barra" to DemoVideo(R.raw.curl_invertido_barra, R.drawable.vm_curl_invertido_barra),
     "curl_polea_alta" to DemoVideo(R.raw.curl_polea_alta, R.drawable.vm_curl_polea_alta),
     "curl_bayesian" to DemoVideo(R.raw.curl_bayesian, R.drawable.vm_curl_bayesian),
-    "curl_martillo_polea" to DemoVideo(R.raw.curl_martillo_polea, R.drawable.vm_curl_martillo_polea)
+    "curl_martillo_polea" to DemoVideo(R.raw.curl_martillo_polea, R.drawable.vm_curl_martillo_polea),
+    "press_banca_inclinado" to DemoVideo(R.raw.press_banca_inclinado, R.drawable.vm_press_banca_inclinado),
+    "press_banca_declinado" to DemoVideo(R.raw.press_banca_declinado, R.drawable.vm_press_banca_declinado),
+    "press_mancuernas" to DemoVideo(R.raw.press_mancuernas, R.drawable.vm_press_mancuernas),
+    "aperturas_mancuerna" to DemoVideo(R.raw.aperturas_mancuerna, R.drawable.vm_aperturas_mancuerna),
+    "peck_deck" to DemoVideo(R.raw.peck_deck, R.drawable.vm_peck_deck),
+    "pullover" to DemoVideo(R.raw.pullover, R.drawable.vm_pullover),
+    "dominadas_supinas" to DemoVideo(R.raw.dominadas_supinas, R.drawable.vm_dominadas_supinas),
+    "jalon_agarre_neutro" to DemoVideo(R.raw.jalon_agarre_neutro, R.drawable.vm_jalon_agarre_neutro),
+    "remo_pendlay" to DemoVideo(R.raw.remo_pendlay, R.drawable.vm_remo_pendlay),
+    "remo_maquina" to DemoVideo(R.raw.remo_maquina, R.drawable.vm_remo_maquina),
+    "peso_muerto" to DemoVideo(R.raw.peso_muerto, R.drawable.vm_peso_muerto),
+    "encogimientos" to DemoVideo(R.raw.encogimientos, R.drawable.vm_encogimientos),
+    "buenos_dias" to DemoVideo(R.raw.buenos_dias, R.drawable.vm_buenos_dias),
+    "press_militar" to DemoVideo(R.raw.press_militar, R.drawable.vm_press_militar),
+    "press_hombro_mancuernas" to DemoVideo(R.raw.press_hombro_mancuernas, R.drawable.vm_press_hombro_mancuernas),
+    "press_arnold" to DemoVideo(R.raw.press_arnold, R.drawable.vm_press_arnold),
+    "elevaciones_laterales" to DemoVideo(R.raw.elevaciones_laterales, R.drawable.vm_elevaciones_laterales),
+    "elevaciones_lateral_polea" to DemoVideo(R.raw.elevaciones_lateral_polea, R.drawable.vm_elevaciones_lateral_polea),
+    "elevaciones_frontales" to DemoVideo(R.raw.elevaciones_frontales, R.drawable.vm_elevaciones_frontales),
+    "pajaros" to DemoVideo(R.raw.pajaros, R.drawable.vm_pajaros),
+    "press_hombro_maquina" to DemoVideo(R.raw.press_hombro_maquina, R.drawable.vm_press_hombro_maquina),
+    "remo_menton" to DemoVideo(R.raw.remo_menton, R.drawable.vm_remo_menton),
+    "curl_barra" to DemoVideo(R.raw.curl_barra, R.drawable.vm_curl_barra),
+    "curl_predicador" to DemoVideo(R.raw.curl_predicador, R.drawable.vm_curl_predicador),
+    "curl_inclinado" to DemoVideo(R.raw.curl_inclinado, R.drawable.vm_curl_inclinado),
+    "curl_polea" to DemoVideo(R.raw.curl_polea, R.drawable.vm_curl_polea),
+    "curl_concentrado" to DemoVideo(R.raw.curl_concentrado, R.drawable.vm_curl_concentrado),
+    "sentadilla_frontal" to DemoVideo(R.raw.sentadilla_frontal, R.drawable.vm_sentadilla_frontal),
+    "hack" to DemoVideo(R.raw.hack, R.drawable.vm_hack),
+    "sentadilla_goblet" to DemoVideo(R.raw.sentadilla_goblet, R.drawable.vm_sentadilla_goblet),
+    "step_up" to DemoVideo(R.raw.step_up, R.drawable.vm_step_up),
+    "sissy" to DemoVideo(R.raw.sissy, R.drawable.vm_sissy),
+    "curl_femoral_tumbado" to DemoVideo(R.raw.curl_femoral_tumbado, R.drawable.vm_curl_femoral_tumbado),
+    "peso_muerto_piernas_rectas" to DemoVideo(R.raw.peso_muerto_piernas_rectas, R.drawable.vm_peso_muerto_piernas_rectas),
+    "puente_gluteo" to DemoVideo(R.raw.puente_gluteo, R.drawable.vm_puente_gluteo),
+    "patada_gluteo_polea" to DemoVideo(R.raw.patada_gluteo_polea, R.drawable.vm_patada_gluteo_polea),
+    "abduccion_maquina" to DemoVideo(R.raw.abduccion_maquina, R.drawable.vm_abduccion_maquina),
+    "nordic" to DemoVideo(R.raw.nordic, R.drawable.vm_nordic),
+    "swing_kettlebell" to DemoVideo(R.raw.swing_kettlebell, R.drawable.vm_swing_kettlebell),
+    "gemelo_prensa" to DemoVideo(R.raw.gemelo_prensa, R.drawable.vm_gemelo_prensa),
+    "paseo_granjero" to DemoVideo(R.raw.paseo_granjero, R.drawable.vm_paseo_granjero),
+    "curl_muneca" to DemoVideo(R.raw.curl_muneca, R.drawable.vm_curl_muneca),
+    "colgarse_barra" to DemoVideo(R.raw.colgarse_barra, R.drawable.vm_colgarse_barra)
 )
 
-/** El video de un ejercicio, o null si todavia no tiene. */
+/** El video de un ejercicio, o null si el id no pertenece al catalogo. */
 fun videoDe(id: String): DemoVideo? = VIDEOS[id]

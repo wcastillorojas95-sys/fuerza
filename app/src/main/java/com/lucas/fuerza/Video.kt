@@ -574,7 +574,7 @@ fun DemostracionYVideo(
             modifier = Modifier.fillMaxWidth().height(if (video != null) alto * 0.8f else alto)
         )
         Spacer(Modifier.height(6.dp))
-        if (videoDe(ejercicio.id) != null) CreditoVideos() else CreditoImagenes()
+        if (videoDe(ejercicio.id) != null) CreditoVideos()
 
         entreMedias()
 

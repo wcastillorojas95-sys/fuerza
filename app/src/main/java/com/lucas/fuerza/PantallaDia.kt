@@ -94,7 +94,7 @@ fun PantallaDia(
             }
 
             item {
-                CreditoImagenes(Modifier.padding(horizontal = 20.dp, vertical = 4.dp))
+                CreditoVideos(Modifier.padding(horizontal = 20.dp, vertical = 4.dp))
             }
         }
 

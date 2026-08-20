@@ -387,10 +387,16 @@ val CATALOGO: List<Ejercicio> = listOf(
         Dificultad.AVANZADO
     ),
     Ejercicio(
-        "peso_muerto_rumano", "Peso muerto rumano",
+        "peso_muerto_rumano", "Peso muerto rumano con barra",
         Musculo.FEMORAL, listOf(Musculo.GLUTEO, Musculo.ESPALDA), Equipo.BARRA, true,
         "Rodillas casi rectas y la cadera va hacia atras. Baja hasta notar el femoral, no hasta tocar el suelo.",
-        Dificultad.INTERMEDIO
+        Dificultad.INTERMEDIO,
+        pasos = listOf(
+            "Sujeta la barra al ancho de los hombros y flexiona ligeramente las rodillas.",
+            "Lleva la cadera hacia atras mientras la barra baja cerca de las piernas.",
+            "Detente al sentir los femorales sin permitir que la espalda se redondee.",
+            "Empuja la cadera hacia delante y vuelve a quedar erguido."
+        )
     ),
     Ejercicio(
         "pullover_polea", "Pullover en polea alta",
@@ -669,7 +675,13 @@ val CATALOGO: List<Ejercicio> = listOf(
         "sentadilla", "Sentadilla con barra",
         Musculo.CUADRICEPS, listOf(Musculo.GLUTEO, Musculo.FEMORAL, Musculo.CORE), Equipo.BARRA, true,
         "Rompe con cadera y rodilla a la vez. Baja hasta que la cadera pase por debajo de la rodilla si tu movilidad lo permite, y sube con el pecho arriba.",
-        Dificultad.INTERMEDIO
+        Dificultad.INTERMEDIO,
+        pasos = listOf(
+            "Apoya la barra sobre la parte alta de la espalda y separa los pies al ancho de los hombros.",
+            "Eleva el pecho y contrae el abdomen antes de iniciar el descenso.",
+            "Flexiona caderas y rodillas manteniendo las rodillas alineadas con los pies.",
+            "Empuja el suelo para subir sin perder la postura del torso."
+        )
     ),
     Ejercicio(
         "sentadilla_frontal", "Sentadilla frontal",
@@ -678,10 +690,16 @@ val CATALOGO: List<Ejercicio> = listOf(
         Dificultad.AVANZADO
     ),
     Ejercicio(
-        "prensa", "Prensa de piernas",
+        "prensa", "Prensa de piernas en maquina",
         Musculo.CUADRICEPS, listOf(Musculo.GLUTEO, Musculo.FEMORAL), Equipo.MAQUINA, true,
         "No bloquees las rodillas arriba y no dejes que la cadera se despegue abajo. Pies altos toca mas gluteo, pies bajos mas cuadriceps.",
-        Dificultad.PRINCIPIANTE
+        Dificultad.PRINCIPIANTE,
+        pasos = listOf(
+            "Coloca los pies sobre la plataforma aproximadamente al ancho de los hombros.",
+            "Libera el seguro y extiende las piernas sin bloquear las rodillas.",
+            "Baja hasta cerca de noventa grados sin separar la cadera ni la zona lumbar del respaldo.",
+            "Empuja la plataforma de forma controlada hasta volver al inicio."
+        )
     ),
     Ejercicio(
         "hack", "Sentadilla hack",
@@ -690,22 +708,40 @@ val CATALOGO: List<Ejercicio> = listOf(
         Dificultad.PRINCIPIANTE
     ),
     Ejercicio(
-        "zancadas", "Zancadas",
+        "zancadas", "Zancada frontal con mancuernas",
         Musculo.CUADRICEPS, listOf(Musculo.GLUTEO, Musculo.FEMORAL), Equipo.MANCUERNA, true,
-        "Paso largo carga gluteo, paso corto carga cuadriceps. La rodilla de atras baja hasta casi rozar.",
-        Dificultad.INTERMEDIO
+        "Da un paso suficientemente amplio para bajar con estabilidad. Empuja con el pie delantero para regresar sin impulsarte con la pierna trasera.",
+        Dificultad.PRINCIPIANTE,
+        pasos = listOf(
+            "Ponte de pie con una mancuerna en cada mano y el torso erguido.",
+            "Da un paso amplio hacia delante y apoya todo el pie.",
+            "Baja hasta acercar la rodilla trasera al suelo manteniendo estable la rodilla delantera.",
+            "Empuja con el pie delantero para volver y alterna las piernas."
+        )
     ),
     Ejercicio(
-        "bulgara", "Sentadilla bulgara",
+        "bulgara", "Sentadilla bulgara con mancuernas",
         Musculo.CUADRICEPS, listOf(Musculo.GLUTEO), Equipo.MANCUERNA, true,
         "Pie de atras en el banco. Brutal a poco peso y arregla desequilibrios entre piernas mejor que ningun otro.",
-        Dificultad.INTERMEDIO
+        Dificultad.INTERMEDIO,
+        pasos = listOf(
+            "Coloca el pie trasero sobre un banco y adelanta el pie de trabajo.",
+            "Sujeta las mancuernas a los lados y manten el torso estable.",
+            "Baja flexionando la rodilla delantera hasta una profundidad controlada.",
+            "Empuja con el pie delantero para subir y luego cambia de pierna."
+        )
     ),
     Ejercicio(
-        "extension_cuadriceps", "Extension de cuadriceps",
+        "extension_cuadriceps", "Extension de piernas en maquina",
         Musculo.CUADRICEPS, emptyList(), Equipo.MAQUINA, false,
         "Aislamiento puro. Aprieta un segundo arriba; no hace falta cargarla hasta el tope.",
-        Dificultad.PRINCIPIANTE
+        Dificultad.PRINCIPIANTE,
+        pasos = listOf(
+            "Ajusta el respaldo y alinea las rodillas con el eje de la maquina.",
+            "Coloca la almohadilla sobre la parte baja de las espinillas.",
+            "Extiende las rodillas y aprieta los cuadriceps en la parte alta.",
+            "Baja lentamente hasta el inicio sin dejar caer el peso."
+        )
     ),
     Ejercicio(
         "sentadilla_goblet", "Sentadilla goblet",
@@ -732,10 +768,16 @@ val CATALOGO: List<Ejercicio> = listOf(
         Dificultad.PRINCIPIANTE
     ),
     Ejercicio(
-        "curl_femoral_sentado", "Curl femoral sentado",
+        "curl_femoral_sentado", "Curl femoral sentado en maquina",
         Musculo.FEMORAL, emptyList(), Equipo.MAQUINA, false,
         "Con la cadera flexionada el femoral se estira mas, y es la version que mas hipertrofia da.",
-        Dificultad.PRINCIPIANTE
+        Dificultad.PRINCIPIANTE,
+        pasos = listOf(
+            "Ajusta el asiento, la sujecion de los muslos y la almohadilla inferior.",
+            "Apoya la espalda y empieza con las piernas casi extendidas.",
+            "Flexiona las rodillas llevando los talones hacia atras.",
+            "Extiende de nuevo con control sin dejar que las placas golpeen."
+        )
     ),
     Ejercicio(
         "peso_muerto_piernas_rectas", "Peso muerto a piernas rectas",
@@ -744,10 +786,16 @@ val CATALOGO: List<Ejercicio> = listOf(
         Dificultad.INTERMEDIO
     ),
     Ejercicio(
-        "hip_thrust", "Hip thrust",
+        "hip_thrust", "Hip thrust con barra",
         Musculo.GLUTEO, listOf(Musculo.FEMORAL), Equipo.BARRA, true,
         "Espalda alta apoyada en el banco, barbilla metida. Empuja con los talones y aprieta el gluteo arriba, sin arquear la lumbar.",
-        Dificultad.INTERMEDIO
+        Dificultad.PRINCIPIANTE,
+        pasos = listOf(
+            "Apoya la parte alta de la espalda en un banco y coloca la barra sobre la cadera.",
+            "Planta los pies y manten la barbilla ligeramente recogida.",
+            "Empuja con los pies hasta alinear hombros, cadera y rodillas.",
+            "Contrae los gluteos arriba y baja la cadera lentamente."
+        )
     ),
     Ejercicio(
         "puente_gluteo", "Puente de gluteo",
@@ -780,16 +828,28 @@ val CATALOGO: List<Ejercicio> = listOf(
         Dificultad.AVANZADO
     ),
     Ejercicio(
-        "gemelo_de_pie", "Elevacion de gemelos de pie",
+        "gemelo_de_pie", "Elevacion de gemelos de pie en maquina",
         Musculo.GEMELO, emptyList(), Equipo.MAQUINA, false,
         "Recorrido completo: baja el talon hasta el estiramiento y sube hasta la punta. Pausa arriba y abajo.",
-        Dificultad.PRINCIPIANTE
+        Dificultad.PRINCIPIANTE,
+        pasos = listOf(
+            "Ajusta la maquina y coloca los hombros debajo de las almohadillas.",
+            "Apoya la parte delantera de los pies y deja los talones libres.",
+            "Baja los talones hasta sentir el estiramiento de los gemelos.",
+            "Eleva los talones, haz una pausa arriba y desciende lentamente."
+        )
     ),
     Ejercicio(
-        "gemelo_sentado", "Elevacion de gemelos sentado",
+        "gemelo_sentado", "Elevacion de gemelos sentado en maquina",
         Musculo.GEMELO, emptyList(), Equipo.MAQUINA, false,
         "Con la rodilla doblada trabaja el soleo, que es el que da grosor por debajo.",
-        Dificultad.PRINCIPIANTE
+        Dificultad.PRINCIPIANTE,
+        pasos = listOf(
+            "Coloca la almohadilla sobre la parte baja de los muslos.",
+            "Apoya la parte delantera de los pies sobre la plataforma y libera el seguro.",
+            "Baja los talones hasta alcanzar un estiramiento comodo.",
+            "Eleva los talones, pausa arriba y vuelve lentamente al inicio."
+        )
     ),
     Ejercicio(
         "gemelo_prensa", "Gemelos en prensa",

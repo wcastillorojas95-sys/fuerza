@@ -80,10 +80,8 @@ val FOTOGRAMAS: Map<String, Fotos> = mapOf(
     "abduccion_maquina" to Fotos(R.drawable.ej_abduccion_maquina_tira, R.drawable.ej_abduccion_maquina_m, DOS_POSES),
     "aperturas_mancuerna" to Fotos(R.drawable.ej_aperturas_mancuerna_tira, R.drawable.ej_aperturas_mancuerna_m, DOS_POSES),
     "buenos_dias" to Fotos(R.drawable.ej_buenos_dias_tira, R.drawable.ej_buenos_dias_m, DOS_POSES),
-    "bulgara" to Fotos(R.drawable.ej_bulgara_tira, R.drawable.ej_bulgara_m, DOS_POSES),
     "curl_barra" to Fotos(R.drawable.ej_curl_barra_tira, R.drawable.ej_curl_barra_m, DOS_POSES),
     "curl_concentrado" to Fotos(R.drawable.ej_curl_concentrado_tira, R.drawable.ej_curl_concentrado_m, DOS_POSES),
-    "curl_femoral_sentado" to Fotos(R.drawable.ej_curl_femoral_sentado_tira, R.drawable.ej_curl_femoral_sentado_m, DOS_POSES),
     "curl_femoral_tumbado" to Fotos(R.drawable.ej_curl_femoral_tumbado_tira, R.drawable.ej_curl_femoral_tumbado_m, DOS_POSES),
     "curl_inclinado" to Fotos(R.drawable.ej_curl_inclinado_tira, R.drawable.ej_curl_inclinado_m, DOS_POSES),
     "curl_muneca" to Fotos(R.drawable.ej_curl_muneca_tira, R.drawable.ej_curl_muneca_m, DOS_POSES),
@@ -94,16 +92,12 @@ val FOTOGRAMAS: Map<String, Fotos> = mapOf(
     "elevaciones_lateral_polea" to Fotos(R.drawable.ej_elevaciones_lateral_polea_tira, R.drawable.ej_elevaciones_lateral_polea_m, DOS_POSES),
     "elevaciones_laterales" to Fotos(R.drawable.ej_elevaciones_laterales_tira, R.drawable.ej_elevaciones_laterales_m, DOS_POSES),
     "encogimientos" to Fotos(R.drawable.ej_encogimientos_tira, R.drawable.ej_encogimientos_m, DOS_POSES),
-    "extension_cuadriceps" to Fotos(R.drawable.ej_extension_cuadriceps_tira, R.drawable.ej_extension_cuadriceps_m, DOS_POSES),
     "extension_cuerda" to Fotos(R.drawable.ej_extension_cuerda_tira, R.drawable.ej_extension_cuerda_m, DOS_POSES),
     "extension_polea" to Fotos(R.drawable.ej_extension_polea_tira, R.drawable.ej_extension_polea_m, DOS_POSES),
     "extension_sobre_cabeza" to Fotos(R.drawable.ej_extension_sobre_cabeza_tira, R.drawable.ej_extension_sobre_cabeza_m, DOS_POSES),
     "fondos_banco" to Fotos(R.drawable.ej_fondos_banco_tira, R.drawable.ej_fondos_banco_m, DOS_POSES),
-    "gemelo_de_pie" to Fotos(R.drawable.ej_gemelo_de_pie_tira, R.drawable.ej_gemelo_de_pie_m, DOS_POSES),
     "gemelo_prensa" to Fotos(R.drawable.ej_gemelo_prensa_tira, R.drawable.ej_gemelo_prensa_m, DOS_POSES),
-    "gemelo_sentado" to Fotos(R.drawable.ej_gemelo_sentado_tira, R.drawable.ej_gemelo_sentado_m, DOS_POSES),
     "hack" to Fotos(R.drawable.ej_hack_tira, R.drawable.ej_hack_m, DOS_POSES),
-    "hip_thrust" to Fotos(R.drawable.ej_hip_thrust_tira, R.drawable.ej_hip_thrust_m, DOS_POSES),
     "jalon_agarre_neutro" to Fotos(R.drawable.ej_jalon_agarre_neutro_tira, R.drawable.ej_jalon_agarre_neutro_m, DOS_POSES),
     "nordic" to Fotos(R.drawable.ej_nordic_tira, R.drawable.ej_nordic_m, DOS_POSES),
     "pajaros" to Fotos(R.drawable.ej_pajaros_tira, R.drawable.ej_pajaros_m, DOS_POSES),
@@ -113,8 +107,6 @@ val FOTOGRAMAS: Map<String, Fotos> = mapOf(
     "peck_deck" to Fotos(R.drawable.ej_peck_deck_tira, R.drawable.ej_peck_deck_m, DOS_POSES),
     "peso_muerto" to Fotos(R.drawable.ej_peso_muerto_tira, R.drawable.ej_peso_muerto_m, DOS_POSES),
     "peso_muerto_piernas_rectas" to Fotos(R.drawable.ej_peso_muerto_piernas_rectas_tira, R.drawable.ej_peso_muerto_piernas_rectas_m, DOS_POSES),
-    "peso_muerto_rumano" to Fotos(R.drawable.ej_peso_muerto_rumano_tira, R.drawable.ej_peso_muerto_rumano_m, DOS_POSES),
-    "prensa" to Fotos(R.drawable.ej_prensa_tira, R.drawable.ej_prensa_m, DOS_POSES),
     "press_arnold" to Fotos(R.drawable.ej_press_arnold_tira, R.drawable.ej_press_arnold_m, DOS_POSES),
     "press_banca_declinado" to Fotos(R.drawable.ej_press_banca_declinado_tira, R.drawable.ej_press_banca_declinado_m, DOS_POSES),
     "press_banca_inclinado" to Fotos(R.drawable.ej_press_banca_inclinado_tira, R.drawable.ej_press_banca_inclinado_m, DOS_POSES),
@@ -129,13 +121,11 @@ val FOTOGRAMAS: Map<String, Fotos> = mapOf(
     "remo_maquina" to Fotos(R.drawable.ej_remo_maquina_tira, R.drawable.ej_remo_maquina_m, DOS_POSES),
     "remo_menton" to Fotos(R.drawable.ej_remo_menton_tira, R.drawable.ej_remo_menton_m, DOS_POSES),
     "remo_pendlay" to Fotos(R.drawable.ej_remo_pendlay_tira, R.drawable.ej_remo_pendlay_m, DOS_POSES),
-    "sentadilla" to Fotos(R.drawable.ej_sentadilla_tira, R.drawable.ej_sentadilla_m, DOS_POSES),
     "sentadilla_frontal" to Fotos(R.drawable.ej_sentadilla_frontal_tira, R.drawable.ej_sentadilla_frontal_m, DOS_POSES),
     "sentadilla_goblet" to Fotos(R.drawable.ej_sentadilla_goblet_tira, R.drawable.ej_sentadilla_goblet_m, DOS_POSES),
     "sissy" to Fotos(R.drawable.ej_sissy_tira, R.drawable.ej_sissy_m, DOS_POSES),
     "step_up" to Fotos(R.drawable.ej_step_up_tira, R.drawable.ej_step_up_m, DOS_POSES),
-    "swing_kettlebell" to Fotos(R.drawable.ej_swing_kettlebell_tira, R.drawable.ej_swing_kettlebell_m, DOS_POSES),
-    "zancadas" to Fotos(R.drawable.ej_zancadas_tira, R.drawable.ej_zancadas_m, DOS_POSES)
+    "swing_kettlebell" to Fotos(R.drawable.ej_swing_kettlebell_tira, R.drawable.ej_swing_kettlebell_m, DOS_POSES)
 )
 
 /** El credito que exige la licencia de las imagenes. Va visible en pantalla. */
@@ -170,6 +160,16 @@ class DemoVideo(val video: Int, val mini: Int)
  * bajan de internet.
  */
 val VIDEOS: Map<String, DemoVideo> = mapOf(
+    "sentadilla" to DemoVideo(R.raw.sentadilla, R.drawable.vm_sentadilla),
+    "peso_muerto_rumano" to DemoVideo(R.raw.peso_muerto_rumano, R.drawable.vm_peso_muerto_rumano),
+    "bulgara" to DemoVideo(R.raw.bulgara, R.drawable.vm_bulgara),
+    "prensa" to DemoVideo(R.raw.prensa, R.drawable.vm_prensa),
+    "extension_cuadriceps" to DemoVideo(R.raw.extension_cuadriceps, R.drawable.vm_extension_cuadriceps),
+    "curl_femoral_sentado" to DemoVideo(R.raw.curl_femoral_sentado, R.drawable.vm_curl_femoral_sentado),
+    "hip_thrust" to DemoVideo(R.raw.hip_thrust, R.drawable.vm_hip_thrust),
+    "zancadas" to DemoVideo(R.raw.zancadas, R.drawable.vm_zancadas),
+    "gemelo_de_pie" to DemoVideo(R.raw.gemelo_de_pie, R.drawable.vm_gemelo_de_pie),
+    "gemelo_sentado" to DemoVideo(R.raw.gemelo_sentado, R.drawable.vm_gemelo_sentado),
     "plancha" to DemoVideo(R.raw.plancha, R.drawable.vm_plancha),
     "rueda_abdominal" to DemoVideo(R.raw.rueda_abdominal, R.drawable.vm_rueda_abdominal),
     "elevacion_piernas" to DemoVideo(R.raw.elevacion_piernas, R.drawable.vm_elevacion_piernas),
